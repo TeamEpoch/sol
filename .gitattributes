@@ -3,5 +3,3 @@
 *.nim linguist-language=Nim
 *.rs linguist-language=Rust
 *.jift linguist-language=Jift
-
-lib/* linguist-vendored
