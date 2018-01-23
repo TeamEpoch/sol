@@ -1,7 +1,7 @@
 # Sol
 Sol is an experimental vector math library written in C11, with a goal of being fast, simple, and portable without compromise.
 
-Documentation can be found [here](https://davidgarland.gitbooks.io/sol/content/), although it needs a serious rework and doesn't contain up-to-date information yet.
+Documentation can be found [here](https://davidgarland.gitbooks.io/sol/content/), although it is undergoing a rework and doesn't contain up-to-date information yet.
 
 # Examples
 ```C
