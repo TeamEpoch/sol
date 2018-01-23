@@ -17,11 +17,8 @@ SOLSRC=*.h src/*.h
 
 # Build Options #
 
-default: build
-
-build:
-	-@git submodule init lib/*
-	-@git submodule update
+default:
+	-@make -B quicktest >/dev/null || true
 
 quicktest:
 	-@$(CC) -c $(CFLAGS) $(SOLSRC) $(LDFLAGS)
@@ -29,9 +26,6 @@ quicktest:
 test:
 	-@$(NIMC) $(NIMLANG) $(NIMFLAGS) unit/test.nim
 	-@mv unit/test .
-
-render:
-	-@$(CC) $(CFGLAGS) unit/render.c $(SOLSRC) $(LDFLAGS)
 
 bench:
 	-@$(NIMC) $(NIMLANG) $(NIMFLAGS) -d:release --opt:speed unit/bench.nim
