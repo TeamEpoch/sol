@@ -45,7 +45,7 @@ C11 in specific was chosen because it has access to nested anonymous unions and 
 Secondly, C is a simple language. C++ has access to all of the things listed above, but more abstraction makes things harder to reason about at a low level--
 and all Sol really does is math on structures of varying complexity, so modern features really wouldn't benefit it any.
 
-Rust is also simpler than C++, but it lacks the maturity C has in respect to SIMD, and the lack of simple conditional compilation in Rust makes it less appealing to me.
+Rust is also simpler than C++ in some aspects, but it lacks the maturity C has in respect to SIMD, and the lack of simple conditional compilation in Rust makes it less appealing to me.
 
 ## Portability
 Finally, C is a portable language. Thanks to the powerful -- albeit messy -- preprocessor that C sports, it is possible to detect which SIMD intrinsics are available for the target architecture at compile time and adjust the code accordingly.
