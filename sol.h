@@ -192,26 +192,26 @@
 // Description
 //   The constant used to equal the value of Pi for Sol's internal calculations.
 
-const Float sol_pi = ((Float)(3.14159265358979323846))
+static const Float sol_pi = ((Float)(3.14159265358979323846));
 
 /// sol_tau ///
 // Description
 //   A constant which is equal to two times the value of Pi for Sol's internal
 //   calculations.
 
-const Float sol_tau = ((Float)(6.28318530717958647692))
+static const Float sol_tau = ((Float)(6.28318530717958647692));
 
 /// sol_g ///
 // Description
 //   A constant which is equal to the acceleration of gravity in m/s/s.
 
-const Float sol_g = ((Float)(9.80665))
+static const Float sol_g = ((Float)(9.80665));
 
 /// M_C ///
 // Description
 //   A constant which is equal to the speed of light in m/s.
 
-const Float sol_c = ((Float)(299792000))
+static const Float sol_c = ((Float)(299792000));
 
   //////////////////////////////////////////////////////////////////////////////
  // Struct Type Definitions ///////////////////////////////////////////////////
