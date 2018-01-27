@@ -44,11 +44,11 @@ Float flt_clamp(Float f, Float lower, Float upper) {
 sol
 Float flt_abs(Float f) {
   #if SOL_F_SIZE > 64
-        return fabsl(f);
+    return fabsl(f);
   #elif SOL_F_SIZE > 32
-        return fabs(f);
+    return fabs(f);
   #else
-        return fabsf(f);
+    return fabsf(f);
   #endif
 }
 
@@ -65,11 +65,11 @@ Float flt_abs(Float f) {
 sol
 Float flt_pow(Float a, Float b) {
   #if SOL_F_SIZE > 64
-        return powl(a, b);
+    return powl(a, b);
   #elif SOL_F_SIZE > 32
-        return pow(a, b);
+    return pow(a, b);
   #else
-        return powf(a, b);
+    return powf(a, b);
   #endif
 }
 
@@ -85,11 +85,11 @@ Float flt_pow(Float a, Float b) {
 sol
 Float flt_sqrt(Float f) {
   #if SOL_F_SIZE > 64
-        return sqrtl(f);
+    return sqrtl(f);
   #elif SOL_F_SIZE > 32
-        return sqrt(f);
+    return sqrt(f);
   #else
-        return sqrtf(f);
+    return sqrtf(f);
   #endif
 }
 
@@ -105,11 +105,11 @@ Float flt_sqrt(Float f) {
 sol
 Float flt_sin(Float f) {
   #if SOL_F_SIZE > 64
-        return sinl(f);
+    return sinl(f);
   #elif SOL_F_SIZE > 32
-        return sin(f);
+    return sin(f);
   #else
-        return sinf(f);
+    return sinf(f);
   #endif
 }
 
@@ -125,11 +125,11 @@ Float flt_sin(Float f) {
 sol
 Float flt_cos(Float f) {
   #if SOL_F_SIZE > 64
-        return cosl(f);
+    return cosl(f);
   #elif SOL_F_SIZE > 32
-        return cos(f);
+    return cos(f);
   #else
-        return cosf(f);
+    return cosf(f);
   #endif
 }
 
@@ -145,11 +145,11 @@ Float flt_cos(Float f) {
 sol
 Float flt_acos(Float f) {
   #if SOL_F_SIZE > 64
-        return acosl(f);
+    return acosl(f);
   #elif SOL_F_SIZE > 32
-        return acos(f);
+    return acos(f);
   #else
-        return acosf(f);
+    return acosf(f);
   #endif
 }
 

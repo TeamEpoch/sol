@@ -163,7 +163,7 @@ Vec4 cv_vec3_vec4(Vec3 v, Float w) {
 
 sol
 Float cv_deg_rad(Float deg) {
-  return deg * ((Float) (M_PI / 180));
+  return deg * ((Float) (sol_pi / 180));
 }
 
 /// cv_rad_deg ///
@@ -176,7 +176,7 @@ Float cv_deg_rad(Float deg) {
 
 sol
 Float cv_rad_deg(Float rad) {
-  return rad * ((Float) (180 / M_PI));
+  return rad * ((Float) (180 / sol_pi));
 }
 
 #endif // SOL_CONV_H
