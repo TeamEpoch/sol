@@ -20,8 +20,8 @@ const solPrecision = 20 # Benchmark float accuracy.
 #############
 
 template bench(name: string, code: untyped) =
-    var start: float = 0
-    var average: float = 0
+    var start: float64 = 0
+    var average: float64 = 0
     var i = 0
     while i < solRuns:
         start = epochTime()

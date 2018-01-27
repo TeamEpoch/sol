@@ -8,7 +8,7 @@
 #define SOL_H
 
 #ifdef __cplusplus
-      extern "C" {
+  extern "C" {
 #endif
 
   //////////////////////////////////////////////////////////////////////////////
@@ -42,14 +42,14 @@
 ////////////////
 
 #if !defined(SOL_F_SIZE)
-      #if SOL_F_SIZE_DEFAULT > 64
-            #define SOL_F_SIZE 80
-      #elif SOL_F_SIZE_DEFAULT > 32
-            #define SOL_F_SIZE 64
-      #else
-            #define SOL_F_SIZE 32
-      #endif
-      #define SOL_F_SIZE_AUTO
+  #if SOL_F_SIZE_DEFAULT > 64
+    #define SOL_F_SIZE 80
+  #elif SOL_F_SIZE_DEFAULT > 32
+    #define SOL_F_SIZE 64
+  #else
+    #define SOL_F_SIZE 32
+  #endif
+  #define SOL_F_SIZE_AUTO
 #endif
 
   /////////////
@@ -57,16 +57,16 @@
 /////////////
 
 #if !defined(SOL_FAM) && !defined(SOL_NO_FAM)
-      #if SOL_FAM_DEFAULT == true
-            #define SOL_FAM
-            #define SOL_FAM_AUTO
-      #endif
+  #if SOL_FAM_DEFAULT == true
+    #define SOL_FAM
+    #define SOL_FAM_AUTO
+  #endif
 #else
-      #ifdef SOL_NO_FAM
-            #ifdef SOL_FAM
-                  #undef SOL_FAM
-            #endif
-      #endif
+  #ifdef SOL_NO_FAM
+    #ifdef SOL_FAM
+      #undef SOL_FAM
+    #endif
+  #endif
 #endif
 
   //////////////
@@ -74,14 +74,14 @@
 //////////////
 
 #if !defined(SOL_SIMD) && !defined(SOL_NO_SIMD)
-      #if SOL_SIMD_DEFAULT == true
-            #define SOL_SIMD
-            #define SOL_SIMD_AUTO
-      #endif
+  #if SOL_SIMD_DEFAULT == true
+    #define SOL_SIMD
+    #define SOL_SIMD_AUTO
+  #endif
 #else
-      #ifdef SOL_NO_SIMD
-            #undef SOL_SIMD
-      #endif
+  #ifdef SOL_NO_SIMD
+    #undef SOL_SIMD
+  #endif
 #endif
 
   //////////////////////////////////////////////////////////////////////////////
@@ -93,13 +93,12 @@
 ////////////////////////////
 
 #if defined(SOL_SIMD)
-      #if !defined(__AVX__) && !defined(__ARM_NEON__)
-            #undef SOL_SIMD
-            #if !defined(SOL_SIMD_AUTO)
-                  #pragma message ("[sol] No support for AVX or NEON was \
-                                    detected. SOL_SIMD has been disabled.")
-            #endif
-      #endif
+  #if !defined(__AVX__) && !defined(__ARM_NEON__)
+    #undef SOL_SIMD
+    #if !defined(SOL_SIMD_AUTO)
+      #pragma message ("[sol] No support for AVX or NEON was detected. SOL_SIMD has been disabled.")
+    #endif
+  #endif
 #endif
 
   ///////////////////////////////////////////
@@ -107,11 +106,10 @@
 ///////////////////////////////////////////
 
 #if defined(SOL_SIMD) && (SOL_F_SIZE > 64)
-      #undef SOL_SIMD
-      #if !defined(SOL_SIMD_AUTO) || !defined(SOL_F_SIZE_AUTO)
-            #pragma message ("[sol] SOL_F_SIZE > 64 is not compatible with \
-                              SOL_SIMD. SOL_SIMD has been disabled.")
-      #endif
+  #undef SOL_SIMD
+  #if !defined(SOL_SIMD_AUTO) || !defined(SOL_F_SIZE_AUTO)
+    #pragma message ("[sol] SOL_F_SIZE > 64 is not compatible with SOL_SIMD. SOL_SIMD has been disabled.")
+  #endif
 #endif
 
   //////////////////////////////////////////////////////////////////////////////
@@ -119,41 +117,41 @@
 //////////////////////////////////////////////////////////////////////////////
 
 #if defined(SOL_SIMD)
-      #if defined(__AVX__)
-            #if SOL_F_SIZE > 32
-                  #define SOL_AVX2_64
-                  #define SOL_AVX2 64
-            #else
-                  #define SOL_AVX2_32
-                  #define SOL_AVX2 32
-            #endif
-      #endif
+  #if defined(__AVX__)
+    #if SOL_F_SIZE > 32
+      #define SOL_AVX2_64
+      #define SOL_AVX2 64
+    #else
+      #define SOL_AVX2_32
+      #define SOL_AVX2 32
+    #endif
+  #endif
 
-      #if defined(__AVX2__)
-            #if SOL_F_SIZE > 32
-                  #define SOL_AVX_64
-                  #define SOL_AVX 64
-            #else
-                  #define SOL_AVX_32
-                  #define SOL_AVX 32
-            #endif
-      #endif
+  #if defined(__AVX2__)
+    #if SOL_F_SIZE > 32
+      #define SOL_AVX_64
+      #define SOL_AVX 64
+    #else
+      #define SOL_AVX_32
+      #define SOL_AVX 32
+    #endif
+  #endif
 
-      #if defined(__ARM_NEON__)
-            #if SOL_F_SIZE > 32
-                  #define SOL_NEON_64
-                  #define SOL_NEON 64
-            #else
-                  #define SOL_NEON_32
-                  #define SOL_NEON 32
-            #endif
-      #endif
+  #if defined(__ARM_NEON__)
+    #if SOL_F_SIZE > 32
+      #define SOL_NEON_64
+      #define SOL_NEON 64
+    #else
+      #define SOL_NEON_32
+      #define SOL_NEON 32
+    #endif
+  #endif
 #endif
 
 #if defined(SOL_AVX)
-      #include <x86intrin.h>
+  #include <x86intrin.h>
 #elif defined(SOL_NEON)
-      #include <arm_neon.h>
+  #include <arm_neon.h>
 #endif
 
   //////////////////////////////////////////////////////////////////////////////
@@ -161,79 +159,59 @@
 //////////////////////////////////////////////////////////////////////////////
 
 #ifdef SOL_INLINE
-      #define sol_inline static inline
+  #define sol_inline static inline
 #else
-      #define sol_inline
+  #define sol_inline
 #endif
 
 #define sol sol_inline
-
-#ifdef SOL_DEBUG
-      #define sol_assert(COND_, MSG_) if (!(COND_)) { printf("[sol] Assertion: '%s' failed on line %zu.", MSG_, ((size_t) __LINE__)); exit(EXIT_FAILURE); }
-#else
-      #define sol_assert(COND_, MSG_)
-#endif
-
-#ifdef SOL_DEBUG
-      #define sol_msg(MSG_) printf("[sol] Message: %s.", MSG_);
-#else
-      #define sol_msg(MSG_)
-#endif
 
   //////////////////////////////////////////////////////////////////////////////
  // Core Type Definitions /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
 #if SOL_F_SIZE > 64
-      typedef long double Float;
-      typedef long double FloatCast;
-      #define SOL_F_FMT "%Le"
+  typedef long double Float;
+  typedef long double FloatCast;
+  #define SOL_F_FMT "%Le"
 #elif SOL_F_SIZE > 32
-      typedef double Float;
-      typedef double FloatCast;
-      #define SOL_F_FMT "%e"
+  typedef double Float;
+  typedef double FloatCast;
+  #define SOL_F_FMT "%e"
 #else
-      typedef float Float;
-      typedef double FloatCast;
-      #define SOL_F_FMT "%f"
+  typedef float Float;
+  typedef double FloatCast;
+  #define SOL_F_FMT "%f"
 #endif
 
   //////////////////////////////////////////////////////////////////////////////
- // Math Macros ///////////////////////////////////////////////////////////////
+ // Math Constants ////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-/// M_PI ///
+/// sol_pi ///
 // Description
 //   The constant used to equal the value of Pi for Sol's internal calculations.
 
-#ifndef M_PI
-      #define M_PI (3.14159265358979323846)
-#endif
+const Float sol_pi = ((Float)(3.14159265358979323846))
 
-/// M_TAU ///
+/// sol_tau ///
 // Description
 //   A constant which is equal to two times the value of Pi for Sol's internal
 //   calculations.
 
-#ifndef M_TAU
-      #define M_TAU (6.28318530717958647692)
-#endif
+const Float sol_tau = ((Float)(6.28318530717958647692))
 
-/// M_G ///
+/// sol_g ///
 // Description
 //   A constant which is equal to the acceleration of gravity in m/s/s.
 
-#ifndef M_G
-      #define M_G (9.80665)
-#endif
+const Float sol_g = ((Float)(9.80665))
 
 /// M_C ///
 // Description
 //   A constant which is equal to the speed of light in m/s.
 
-#ifndef M_C
-      #define M_C (299792000)
-#endif
+const Float sol_c = ((Float)(299792000))
 
   //////////////////////////////////////////////////////////////////////////////
  // Struct Type Definitions ///////////////////////////////////////////////////
@@ -254,13 +232,13 @@ typedef struct {
     };
     Float f[2];
     #if defined(SOL_AVX_64)
-          __m128d avx64;
+      __m128d avx64;
     #elif defined(SOL_AVX_32)
-          __m128 avx32;
+      __m128 avx32;
     #elif defined(SOL_NEON_64)
-          f64x2_t neon64;
+      f64x2_t neon64;
     #elif defined(SOL_NEON_32)
-          f32x2_t neon32;
+      f32x2_t neon32;
     #endif
   };
 } Vec2;
@@ -281,17 +259,13 @@ typedef struct type_vec3 {
     };
     Float f[3];
     #if defined(SOL_AVX_64)
-          __m256d avx64;
-          a
+      __m256d avx64;
     #elif defined(SOL_AVX_32)
-          __m128 avx32;
-          b
+      __m128 avx32;
     #elif defined(SOL_NEON_64)
-          f64x4_t neon64;
-          c
+      f64x4_t neon64;
     #elif defined(SOL_NEON_32)
-          f32x4_t neon32;
-          d
+      f32x4_t neon32;
     #endif
   };
 } Vec3;
@@ -314,13 +288,13 @@ typedef struct {
     };
     Float f[4];
     #if defined(SOL_AVX_64)
-          __m256d avx64;
+      __m256d avx64;
     #elif defined(SOL_AVX)
-          __m128 avx32;
+      __m128 avx32;
     #elif defined(SOL_NEON_64)
-          f64x4_t neon64;
+      f64x4_t neon64;
     #elif defined(SOL_NEON)
-          f32x4_t neon32;
+      f32x4_t neon32;
     #endif
   };
 } Vec4;
@@ -849,7 +823,7 @@ sol void mat4_print(Mat4 m);
 #include "src/sol_mat4.h"
 
 #ifdef __cplusplus
-      } // extern "C"
+  } // extern "C"
 #endif
 
 #endif // SOL_H

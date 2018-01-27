@@ -31,13 +31,13 @@ sol
 Vec3 vec3_init(Float x, Float y, Float z) {
   Vec3 out;
   #if defined(SOL_AVX_64)
-        out.avx64 = _mm256_set_pd(x, y, z, 0);
+    out.avx64 = _mm256_set_pd(x, y, z, 0);
   #elif defined(SOL_AVX_32)
-        out.avx32 = _mm_set_ps(x, y, z, 0);
+    out.avx32 = _mm_set_ps(x, y, z, 0);
   #else
-        out.x = x;
-        out.y = y;
-        out.z = z;
+    out.x = x;
+    out.y = y;
+    out.z = z;
   #endif
   return out;
 }
@@ -54,15 +54,15 @@ sol
 Vec3 vec3_initf(Float f) {
   Vec3 out;
   #if defined(SOL_AVX_64)
-        out.avx64 = _mm256_set1_pd(f);
+    out.avx64 = _mm256_set1_pd(f);
   #elif defined(SOL_AVX_32)
-        out.avx32 = _mm_set1_ps(f);
+    out.avx32 = _mm_set1_ps(f);
   #elif defined(SOL_NEON_64)
-        out.neon64 = vdupq_n_f64(f);
+    out.neon64 = vdupq_n_f64(f);
   #elif defined(SOL_NEON_32)
-        out.neon32 = vdupq_n_f32(f);
+    out.neon32 = vdupq_n_f32(f);
   #else
-        out = vec3_init(f, f, f);
+    out = vec3_init(f, f, f);
   #endif
   return out;
 }
@@ -236,15 +236,15 @@ sol
 Vec3 vec3_fma(Vec3 a, Vec3 b, Vec3 c) {
   Vec3 out;
   #if defined(SOL_AVX2_64)
-        out.avx64 = _mm256_fmadd_pd(a.avx64, b.avx64, c.avx64);
+    out.avx64 = _mm256_fmadd_pd(a.avx64, b.avx64, c.avx64);
   #elif defined(SOL_AVX2_32)
-        out.avx32 = _mm_fmadd_ps(a.avx32, b.avx32, c.avx32);
+    out.avx32 = _mm_fmadd_ps(a.avx32, b.avx32, c.avx32);
   #elif defined(SOL_NEON_64)
-        out.neon64 = vfmaq_f64(a.neon64, b.neon64, c.neon64);
+    out.neon64 = vfmaq_f64(a.neon64, b.neon64, c.neon64);
   #elif defined(SOL_NEON_32)
-        out.neon32 = vfmaq_f32(a.neon32, b.neon32, c.neon32);
+    out.neon32 = vfmaq_f32(a.neon32, b.neon32, c.neon32);
   #else
-        out = vec3_add(vec3_mul(a, b), c);
+    out = vec3_add(vec3_mul(a, b), c);
   #endif
   return out;
 }
@@ -262,17 +262,17 @@ sol
 Vec3 vec3_add(Vec3 a, Vec3 b) {
   Vec3 out;
   #if defined(SOL_AVX_64)
-        out.avx64 = _mm256_add_pd(a.avx64, b.avx64);
+    out.avx64 = _mm256_add_pd(a.avx64, b.avx64);
   #elif defined(SOL_AVX_32)
-        out.avx32 = _mm_add_ps(a.avx32, b.avx32);
+    out.avx32 = _mm_add_ps(a.avx32, b.avx32);
   #elif defined(SOL_NEON_64)
-        out.neon64 = vaddq_f64(a.neon64, b.neon64);
+    out.neon64 = vaddq_f64(a.neon64, b.neon64);
   #elif defined(SOL_NEON_32)
-        out.neon32 = vaddq_f32(a.neon32, b.neon32);
+    out.neon32 = vaddq_f32(a.neon32, b.neon32);
   #else
-        out.x = a.x + b.x;
-        out.y = a.y + b.y;
-        out.z = a.z + b.z;
+    out.x = a.x + b.x;
+    out.y = a.y + b.y;
+    out.z = a.z + b.z;
   #endif
   return out;
 }
@@ -304,17 +304,17 @@ sol
 Vec3 vec3_sub(Vec3 a, Vec3 b) {
   Vec3 out;
   #if defined(SOL_AVX_64)
-        out.avx64 = _mm256_add_pd(a.avx64, b.avx64);
+    out.avx64 = _mm256_add_pd(a.avx64, b.avx64);
   #elif defined(SOL_AVX_32)
-        out.avx32 = _mm_add_ps(a.avx32, b.avx32);
+    out.avx32 = _mm_add_ps(a.avx32, b.avx32);
   #elif defined(SOL_NEON_64)
-        out.neon64 = vsubq_f64(a.neon64, b.neon64);
+    out.neon64 = vsubq_f64(a.neon64, b.neon64);
   #elif defined(SOL_NEON_32)
-        out.neon32 = vsubq_f32(a.neon32, b.neon32);
+    out.neon32 = vsubq_f32(a.neon32, b.neon32);
   #else
-        out.x = a.x - b.x;
-        out.y = a.y - b.y;
-        out.z = a.z - b.z;
+    out.x = a.x - b.x;
+    out.y = a.y - b.y;
+    out.z = a.z - b.z;
   #endif
   return out;
 }
@@ -360,17 +360,17 @@ sol
 Vec3 vec3_mul(Vec3 a, Vec3 b) {
   Vec3 out;
   #if defined(SOL_AVX_64)
-        out.avx64 = _mm256_add_pd(a.avx64, b.avx64);
+    out.avx64 = _mm256_add_pd(a.avx64, b.avx64);
   #elif defined(SOL_AVX_32)
-        out.avx32 = _mm_add_ps(a.avx32, b.avx32);
+    out.avx32 = _mm_add_ps(a.avx32, b.avx32);
   #elif defined(SOL_NEON_64)
-        out.neon64 = vmulq_f64(a.neon64, b.neon64);
+    out.neon64 = vmulq_f64(a.neon64, b.neon64);
   #elif defined(SOL_NEON_32)
-        out.neon32 = vmulq_f32(a.neon32, b.neon32);
+    out.neon32 = vmulq_f32(a.neon32, b.neon32);
   #else
-        out.x = a.x * b.x;
-        out.y = a.y * b.y;
-        out.z = a.z * b.z;
+    out.x = a.x * b.x;
+    out.y = a.y * b.y;
+    out.z = a.z * b.z;
   #endif
   return out;
 }

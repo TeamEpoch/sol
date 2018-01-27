@@ -30,12 +30,12 @@ sol
 Vec2 vec2_init(Float x, Float y) {
   Vec2 out;
   #if defined(SOL_AVX_64)
-        out.avx64 = _mm_set_pd(x, y);
+    out.avx64 = _mm_set_pd(x, y);
   #elif defined(SOL_AVX_32)
-        out.avx32 = _mm_set_ps(x, y, 0, 0);
+    out.avx32 = _mm_set_ps(x, y, 0, 0);
   #else
-        out.x = x;
-        out.y = y;
+    out.x = x;
+    out.y = y;
   #endif
   return out;
 }
@@ -52,15 +52,15 @@ sol
 Vec2 vec2_initf(Float f) {
   Vec2 out;
   #if defined(SOL_AVX_64)
-        out.avx64 = _mm_set1_pd(f);
+    out.avx64 = _mm_set1_pd(f);
   #elif defined(SOL_AVX_32)
-        out.avx32 = _mm_set1_ps(f);
+    out.avx32 = _mm_set1_ps(f);
   #elif defined(SOL_NEON_64)
-        out.neon64 = vdup_n_f64(f);
+    out.neon64 = vdup_n_f64(f);
   #elif defined(SOL_NEON)
-        out.neon32 = vdup_n_f32(f);
+    out.neon32 = vdup_n_f32(f);
   #else
-        out = vec2_init(f, f);
+    out = vec2_init(f, f);
   #endif
   return out;
 }
@@ -228,15 +228,15 @@ sol
 Vec2 vec2_fma(Vec2 a, Vec2 b, Vec2 c) {
   Vec2 out;
   #if defined(SOL_AVX_64)
-        out.avx64 = _mm_add_pd(a.avx64, b.avx64, c.avx64);
+    out.avx64 = _mm_add_pd(a.avx64, b.avx64, c.avx64);
   #elif defined(SOL_AVX_32)
-        out.avx32 = _mm_add_ps(a.avx32, b.avx32, c.avx32);
+    out.avx32 = _mm_add_ps(a.avx32, b.avx32, c.avx32);
   #elif defined(SOL_NEON_64)
-        out.neon64 = vfma_f64(a.neon64, b.neon64, c.neon64);
+    out.neon64 = vfma_f64(a.neon64, b.neon64, c.neon64);
   #elif defined(SOL_NEON_32)
-        out.neon32 = vfma_f32(a.neon32, b.neon32, c.neon32);
+    out.neon32 = vfma_f32(a.neon32, b.neon32, c.neon32);
   #else
-        out = vec2_add(vec2_mul(a, b), c);
+    out = vec2_add(vec2_mul(a, b), c);
   #endif
   return out;
 }
@@ -256,16 +256,16 @@ sol
 Vec2 vec2_add(Vec2 a, Vec2 b) {
   Vec2 out;
   #if defined(SOL_AVX_64)
-        out.avx64 = _mm_add_pd(a.avx64, b.avx64);
+    out.avx64 = _mm_add_pd(a.avx64, b.avx64);
   #elif defined(SOL_AVX_32)
-        out.avx32 = _mm_add_ps(a.avx32, b.avx32);
+    out.avx32 = _mm_add_ps(a.avx32, b.avx32);
   #elif defined(SOL_NEON_64)
-        out.neon64 = vadd_f64(a.neon64, b.neon64);
+    out.neon64 = vadd_f64(a.neon64, b.neon64);
   #elif defined(SOL_NEON_32)
-        out.neon32 = vadd_f32(a.neon32, b.neon32);
+    out.neon32 = vadd_f32(a.neon32, b.neon32);
   #else
-        out.x = a.x + b.x;
-        out.y = a.y + b.y;
+    out.x = a.x + b.x;
+    out.y = a.y + b.y;
   #endif
   return out;
 }
@@ -297,16 +297,16 @@ sol
 Vec2 vec2_sub(Vec2 a, Vec2 b) {
   Vec2 out;
   #if defined(SOL_AVX_64)
-        out.avx64 = _mm_sub_pd(a.avx64, b.avx64);
+    out.avx64 = _mm_sub_pd(a.avx64, b.avx64);
   #elif defined(SOL_AVX_32)
-        out.avx32 = _mm_sub_ps(a.avx32, b.avx32);
+    out.avx32 = _mm_sub_ps(a.avx32, b.avx32);
   #elif defined(SOL_NEON_64)
-        out.neon64 = vsub_f64(a.neon64, b.neon64);
+    out.neon64 = vsub_f64(a.neon64, b.neon64);
   #elif defined(SOL_NEON_32)
-        out.neon32 = vsub_f32(a.neon32, b.neon32);
+    out.neon32 = vsub_f32(a.neon32, b.neon32);
   #else
-        out.x = a.x - b.x;
-        out.y = a.y - b.y;
+    out.x = a.x - b.x;
+    out.y = a.y - b.y;
   #endif
   return out;
 }
@@ -352,16 +352,16 @@ sol
 Vec2 vec2_mul(Vec2 a, Vec2 b) {
   Vec2 out;
   #if defined(SOL_AVX_64)
-        out.avx64 = _mm_mul_pd(a.avx64, b.avx64);
+    out.avx64 = _mm_mul_pd(a.avx64, b.avx64);
   #elif defined(SOL_AVX_32)
-        out.avx32 = _mm_mul_ps(a.avx32, b.avx32);
+    out.avx32 = _mm_mul_ps(a.avx32, b.avx32);
   #elif defined(SOL_NEON_64)
-        out.neon64 = vmul_f64(a.neon64, b.neon64);
+    out.neon64 = vmul_f64(a.neon64, b.neon64);
   #elif defined(SOL_NEON_32)
-        out.neon32 = vmul_f32(a.neon32, b.neon32);
+    out.neon32 = vmul_f32(a.neon32, b.neon32);
   #else
-        out.x = a.x * b.x;
-        out.y = a.y * b.y;
+    out.x = a.x * b.x;
+    out.y = a.y * b.y;
   #endif
   return out;
 }
