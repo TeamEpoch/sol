@@ -115,6 +115,9 @@ proc vec2_eq*(a, b: Vec2; ep: Float): bool {.importc: "vec2_eq", header: "sol.h"
 proc vec2_rot*(v: Vec2; deg: Float): Vec2  {.importc: "vec2_rot", header: "sol.h", inline, noSideEffect.}
 proc vec2_rotr*(v: Vec2; rad: Float): Vec2 {.importc: "vec2_rotr", header: "sol.h", inline, noSideEffect.}
 
+proc vec2_proj*(a, b: Vec2): Vec2   {.importc: "vec2_proj", header: "sol.h", inline, noSideEffect.}
+proc vec2_rej*(a, b: Vec2): Vec2    {.importc: "vec2_rej", header: "sol.h", inline, noSideEffect.}
+proc vec2_angle*(a, b: Vec2): Float {.importc: "vec2_angle", header: "sol.h", inline, noSideEffect.}
 proc vec2_cross*(a, b: Vec2): Float {.importc: "vec2_cross", header: "sol.h", inline, noSideEffect.}
 proc vec2_dot*(a, b: Vec2): Float   {.importc: "vec2_dot", header: "sol.h", inline, noSideEffect.}
 
@@ -130,6 +133,9 @@ proc vec2_mulf*(v: Vec2, f: Float): Vec2 {.importc: "vec2_mulf", header: "sol.h"
 proc vec2_div*(a, b: Vec2): Vec2         {.importc: "vec2_div", header: "sol.h", inline, noSideEffect.}
 proc vec2_divf*(v: Vec2, f: Float): Vec2 {.importc: "vec2_divf", header: "sol.h", inline, noSideEffect.}
 proc vec2_fdiv*(f: Float, v: Vec2): Vec2 {.importc: "vec2_fdiv", header: "sol.h", inline, noSideEffect.}
+proc vec2_pow*(a, b: Vec2): Vec2         {.importc: "vec2_pow", header: "sol.h", inline, noSideEffect.}
+proc vec2_powf*(v: Vec2; f: Float): Vec2 {.importc: "vec2_powf", header: "sol.h", inline, noSideEffect.}
+proc vec2_fpow*(f: Float; v: Vec2): Vec2 {.importc: "vec2_fpow", header: "sol.h", inline, noSideEffect.}
 proc vec2_avg*(a, b: Vec2): Vec2         {.importc: "vec2_avg", header: "sol.h", inline, noSideEffect.}
 proc vec2_avgf*(v: Vec2, f: Float): Vec2 {.importc: "vec2_avgf", header: "sol.h", inline, noSideEffect.}
 
@@ -176,8 +182,11 @@ proc vec3_eq*(a, b: Vec3; f: Float): bool {.importc: "vec3_eq", header: "sol.h",
 proc vec3_rot*(v: Vec3, aa: Vec4): Vec3 {.importc: "vec3_rot", header: "sol.h", inline, noSideEffect.}
 proc vec3_rotq*(v: Vec3, q: Vec4): Vec3 {.importc: "vec3_rotq", header: "sol.h", inline, noSideEffect.}
 
-proc vec3_cross*(a, b: Vec3): Vec3 {.importc: "vec3_cross", header: "sol.h", inline, noSideEffect.}
-proc vec3_dot*(a, b: Vec3): Float  {.importc: "vec3_dot", header: "sol.h", inline, noSideEffect.}
+proc vec3_proj*(a, b: Vec3): Vec3   {.importc: "vec3_proj", header: "sol.h", inline, noSideEffect.}
+proc vec3_rej*(a, b: Vec3): Vec3    {.importc: "vec3_rej", header: "sol.h", inline, noSideEffect.}
+proc vec3_angle*(a, b: Vec3): Float {.importc: "vec3_angle", header: "sol.h", inline, noSideEffect.}
+proc vec3_cross*(a, b: Vec3): Vec3  {.importc: "vec3_cross", header: "sol.h", inline, noSideEffect.}
+proc vec3_dot*(a, b: Vec3): Float   {.importc: "vec3_dot", header: "sol.h", inline, noSideEffect.}
 
 proc vec3_sum*(v: Vec3): Float           {.importc: "vec3_sum", header: "sol.h", inline, noSideEffect.}
 proc vec3_fma*(a, b, c: Vec3): Vec3      {.importc: "vec3_fma", header: "sol.h", inline, noSideEffect.}
@@ -191,6 +200,9 @@ proc vec3_mulf*(v: Vec3, f: Float): Vec3 {.importc: "vec3_mulf", header: "sol.h"
 proc vec3_div*(a, b: Vec3): Vec3         {.importc: "vec3_div", header: "sol.h", inline, noSideEffect.}
 proc vec3_divf*(v: Vec3, f: Float): Vec3 {.importc: "vec3_divf", header: "sol.h", inline, noSideEffect.}
 proc vec3_fdiv*(f: Float, v: Vec3): Vec3 {.importc: "vec3_fdiv", header: "sol.h", inline, noSideEffect.}
+proc vec3_pow*(a, b: Vec3): Vec3         {.importc: "vec3_pow", header: "sol.h", inline, noSideEffect.}
+proc vec3_powf*(v: Vec3; f: Float): Vec3 {.importc: "vec3_powf", header: "sol.h", inline, noSideEffect.}
+proc vec3_fpow*(f: Float; v: Vec3): Vec3 {.importc: "vec3_fpow", header: "sol.h", inline, noSideEffect.}
 proc vec3_avg*(a, b: Vec3): Vec3         {.importc: "vec3_avg", header: "sol.h", inline, noSideEffect.}
 proc vec3_avgf*(v: Vec3, f: Float): Vec3 {.importc: "vec3_avgf", header: "sol.h", inline, noSideEffect.}
 

@@ -168,6 +168,49 @@ Vec2 vec2_rotr(Vec2 v, Float rad) {
  // Vec2 Advanced Math ////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
+/// vec2_proj ///
+// Description
+//   Gets the projection of vector a onto b.
+// Arguments
+//   a: Vector (Vec2)
+//   b: Vector (Vec2)
+// Returns
+//   Projection (Vec2)
+
+sol
+Vec2 vec2_proj(Vec2 a, Vec2 b) {
+  const Float f = vec2_mag(a) * flt_cos(vec2_angle(a, b));
+  return vec2_mulf(b, f);
+}
+
+/// vec2_rej ///
+// Description
+//   Gets the rejection of a from b.
+// Arguments
+//   a: Vector (Vec2)
+//   b: Vector (Vec2)
+// Returns
+//   Rejection (Vec2)
+
+sol
+Vec2 vec2_rej(Vec2 a, Vec2 b) {
+  return vec2_sub(a, vec2_proj(a, b));
+}
+
+/// vec2_angle ///
+// Description
+//   Gets the angle between two vectors.
+// Arguments
+//   a: Vector (Vec2)
+//   b: Vector (Vec2)
+// Returns
+//   Angle (Float)
+
+sol
+Float vec2_angle(Vec2 a, Vec2 b) {
+  return flt_atan2(vec2_cross(a, b), vec2_dot(a, b));
+}
+
 /// vec2_cross ///
 // Description
 //   Gets the cross product of two vectors.
@@ -423,6 +466,51 @@ Vec2 vec2_divf(Vec2 v, Float f) {
 sol
 Vec2 vec2_fdiv(Float f, Vec2 v) {
   return vec2_div(vec2_initf(f), v);
+}
+
+/// vec2_pow ///
+// Description
+//   Find a vector to the power of another.
+// Arguments
+//   a: Vector (Vec2)
+//   b: Vector (Vec2)
+// Returns
+//   Vector (Vec2) = {a.xyz ^ b.xyz}
+
+sol
+Vec2 vec2_pow(Vec2 a, Vec2 b) {
+  Vec2 out;
+  out.x = flt_pow(a.x, b.x);
+  out.y = flt_pow(a.y, b.y);
+  return out;
+}
+
+/// vec2_powf ///
+// Description
+//   Find a vector to the power of a scalar.
+// Arguments
+//   v: Vector (Vec2)
+//   f: Scalar (Float)
+// Returns
+//   Vector (Vec2) = {v.xyz ^ f}
+
+sol
+Vec2 vec2_powf(Vec2 v, Float f) {
+  return vec2_pow(v, vec2_initf(f));
+}
+
+/// vec2_fpow ///
+// Description
+//   Find a scalar to the power of a vector.
+// Arguments
+//   f: Scalar (Float)
+//   v: Vector (Vec2)
+// Returns
+//   Vector (Vec2) = {f ^ v.xyz}
+
+sol
+Vec2 vec2_fpow(Float f, Vec2 v) {
+  return vec2_pow(vec2_initf(f), v);
 }
 
 /// vec2_avg ///

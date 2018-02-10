@@ -442,7 +442,11 @@ sol Float flt_abs(Float f);
 sol Float flt_pow(Float a, Float b);
 sol Float flt_sqrt(Float f);
 
+sol Float flt_tan(Float f);
+sol Float flt_atan(Float f);
+sol Float flt_atan2(Float y, Float x);
 sol Float flt_sin(Float f);
+sol Float flt_asin(Float f);
 sol Float flt_cos(Float f);
 sol Float flt_acos(Float f);
 
@@ -478,6 +482,9 @@ sol bool vec2_eq(Vec2 a, Vec2 b, Float ep);
 sol Vec2 vec2_rot(Vec2 v, Float deg);
 sol Vec2 vec2_rotr(Vec2 v, Float rad);
 
+sol Vec2 vec2_proj(Vec2 a, Vec2 b);
+sol Vec2 vec2_rej(Vec2 a, Vec2 b);
+sol Float vec2_angle(Vec2 a, Vec2 b);
 sol Float vec2_cross(Vec2 a, Vec2 b);
 sol Float vec2_dot(Vec2 a, Vec2 b);
 
@@ -493,6 +500,9 @@ sol Vec2 vec2_mulf(Vec2 v, Float f);
 sol Vec2 vec2_div(Vec2 a, Vec2 b);
 sol Vec2 vec2_divf(Vec2 v, Float f);
 sol Vec2 vec2_fdiv(Float f, Vec2 v);
+sol Vec2 vec2_pow(Vec2 a, Vec2 b);
+sol Vec2 vec2_powf(Vec2 v, Float f);
+sol Vec2 vec2_fpow(Float f, Vec2 v);
 sol Vec2 vec2_avg(Vec2 a, Vec2 b);
 sol Vec2 vec2_avgf(Vec2 v, Float f);
 
@@ -513,6 +523,9 @@ sol bool vec3_eq(Vec3 a, Vec3 b, Float ep);
 sol Vec3 vec3_rot(Vec3 v, Vec4 aa);
 sol Vec3 vec3_rotq(Vec3 v, Vec4 q);
 
+sol Vec3 vec3_proj(Vec3 a, Vec3 b);
+sol Vec3 vec3_rej(Vec3 a, Vec3 b);
+sol Float vec3_angle(Vec3 a, Vec3 b);
 sol Vec3 vec3_cross(Vec3 a, Vec3 b);
 sol Float vec3_dot(Vec3 a, Vec3 b);
 
@@ -528,6 +541,9 @@ sol Vec3 vec3_mulf(Vec3 v, Float f);
 sol Vec3 vec3_div(Vec3 a, Vec3 b);
 sol Vec3 vec3_divf(Vec3 v, Float f);
 sol Vec3 vec3_fdiv(Float f, Vec3 v);
+sol Vec3 vec3_pow(Vec3 a, Vec3 b);
+sol Vec3 vec3_powf(Vec3 v, Float f);
+sol Vec3 vec3_fpow(Float f, Vec3 v);
 sol Vec3 vec3_avg(Vec3 a, Vec3 b);
 sol Vec3 vec3_avgf(Vec3 v, Float f);
 sol void vec3_print(Vec3 v);

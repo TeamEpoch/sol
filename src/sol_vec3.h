@@ -171,6 +171,52 @@ Vec3 vec3_rotq(Vec3 v, Vec4 q) {
  // Vec3 Advanced Math ////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
+/// vec3_proj ///
+// Description
+//   Gets the projection of vector a onto b.
+// Arguments
+//   a: Vector (Vec3)
+//   b: Vector (Vec3)
+// Returns
+//   Projection (Vec3)
+
+sol
+Vec3 vec3_proj(Vec3 a, Vec3 b) {
+  const Float ma = vec3_mag(a);
+  const Float d = ma * ma;
+  const Float f = vec3_dot(a, b) / d;
+  return vec3_mulf(a, f);
+}
+
+
+/// vec3_rej ///
+// Description
+//   Gets the rejection of vector a from b.
+// Arguments
+//   a: Vector (Vec3)
+//   b: Vector (Vec3)
+// Returns
+//   Rejection (Vec3)
+
+sol
+Vec3 vec3_rej(Vec3 a, Vec3 b) {
+  return vec3_sub(a, vec3_proj(a, b));
+}
+
+/// vec3_angle ///
+// Description
+//   Gets the angle between two vectors.
+// Arguments
+//   a: Vector (Vec3)
+//   b: Vector (Vec3)
+// Returns
+//   Angle (Float)
+
+sol
+Float vec3_angle(Vec3 a, Vec3 b) {
+  return flt_acos(vec3_dot(a, b) / (vec3_mag(a) / vec3_mag(b)));
+}
+
 /// vec3_cross ///
 // Description
 //   Gets the cross product of two vectors.
@@ -433,6 +479,52 @@ Vec3 vec3_divf(Vec3 v, Float f) {
 sol
 Vec3 vec3_fdiv(Float f, Vec3 v) {
   return vec3_div(vec3_initf(f), v);
+}
+
+/// vec3_pow ///
+// Description
+//   Find a vector to the power of another.
+// Arguments
+//   a: Vector (Vec3)
+//   b: Vector (Vec3)
+// Returns
+//   Vector (Vec3) = {a.xyz ^ b.xyz}
+
+sol
+Vec3 vec3_pow(Vec3 a, Vec3 b) {
+  Vec3 out;
+  out.x = flt_pow(a.x, b.x);
+  out.y = flt_pow(a.y, b.y);
+  out.z = flt_pow(a.z, b.z);
+  return out;
+}
+
+/// vec3_powf ///
+// Description
+//   Find a vector to the power of a scalar.
+// Arguments
+//   v: Vector (Vec3)
+//   f: Scalar (Float)
+// Returns
+//   Vector (Vec3) = {v.xyz ^ f}
+
+sol
+Vec3 vec3_powf(Vec3 v, Float f) {
+  return vec3_pow(v, vec3_initf(f));
+}
+
+/// vec3_fpow ///
+// Description
+//   Find a scalar to the power of a vector.
+// Arguments
+//   f: Scalar (Float)
+//   v: Vector (Vec3)
+// Returns
+//   Vector (Vec3) = {f ^ v.xyz}
+
+sol
+Vec3 vec3_fpow(Float f, Vec3 v) {
+  return vec3_pow(vec3_initf(f), v);
 }
 
 /// vec3_avg ///

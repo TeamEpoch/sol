@@ -6,6 +6,7 @@
 
 #ifndef SOL_FLT_H
 #define SOL_FLT_H
+#pragma once
 
   //////////////////////////////////////////////////////////////////////////////
  // Local Headers /////////////////////////////////////////////////////////////
@@ -93,6 +94,71 @@ Float flt_sqrt(Float f) {
   #endif
 }
 
+  /////////////////////////////
+ // Trigonometric Functions //
+/////////////////////////////
+
+/// flt_tan ///
+// Description
+//   A wrapper for tanf/tan/tanl which respects
+//   the accuracy of Sol's Float type.
+// Arguments
+//   f: Angle (Float)
+// Returns
+//   Tangent (Float)
+
+sol
+Float flt_tan(Float f) {
+  #if SOL_F_SIZE > 64
+    return tanl(f);
+  #elif SOL_F_SIZE > 32
+    return tan(f);
+  #else
+    return tanf(f);
+  #endif
+}
+
+/// flt_atan ///
+// Description
+//   A wrapper for atanf/atan/atanl which respects
+//   the accuracy of Sol's Float type.
+// Arguments
+//   f: Angle (Float)
+// Returns
+//   Arctangent (Float)
+
+sol
+Float flt_atan(Float f) {
+  #if SOL_F_SIZE > 64
+    return atanl(f);
+  #elif SOL_F_SIZE > 32
+    return atan(f);
+  #else
+    return atanf(f);
+  #endif
+}
+
+/// flt_atan2 ///
+// Description
+//   A wrapper for atan2f/atan2/atan2l which respects
+//   the accuracy of Sol's Float type.
+// Arguments
+//   y: Dimension (Float)
+//   x: Dimension (Float)
+// Returns
+//   Arctangent (Float)
+
+sol
+Float flt_atan2(Float y, Float x) {
+  #if SOL_F_SIZE > 64
+    return atan2l(y, x);
+  #elif SOL_F_SIZE > 32
+    return atan2(y, x);
+  #else
+    return atan2f(y, x);
+  #endif
+}
+
 /// flt_sin ///
 // Description
 //   A wrapper for sinf/sin/sinl which respects
@@ -110,6 +176,26 @@ Float flt_sin(Float f) {
     return sin(f);
   #else
     return sinf(f);
+  #endif
+}
+
+/// flt_asin ///
+// Description
+//   A wrapper for asinf/asin/asinl which respects
+//   the accuracy of Sol's Float type.
+// Arguments
+//   f: Angle (Float)
+// Returns
+//   Arcsine (Float)
+
+sol
+Float flt_asin(Float f) {
+  #if SOL_F_SIZE > 64
+    return asinl(f);
+  #elif SOL_F_SIZE > 32
+    return asin(f);
+  #else
+    return asinf(f);
   #endif
 }
 
