@@ -12,7 +12,7 @@ import ../sol
 # Settings #
 ############
 
-const solRuns = 100_000_000 # How many runs to average.
+const solRuns = 10_000_000 # How many runs to average.
 const solPrecision = 20 # Benchmark float accuracy.
 
 #############
