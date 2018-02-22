@@ -212,7 +212,7 @@ static const Float sol_tau = ((Float)(6.28318530717958647692));
 
 static const Float sol_g = ((Float)(9.80665));
 
-/// M_C ///
+/// sol_c ///
 // Description
 //   A constant which is equal to the speed of light in m/s.
 
@@ -257,7 +257,7 @@ typedef struct {
 //   z: Dimension (sol_F)
 //   f: Dimensions (Float[3])
 
-typedef struct type_vec3 {
+typedef struct {
   union {
     struct {
       Float x, y, z;
