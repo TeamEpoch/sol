@@ -1,11 +1,8 @@
     /////////////////////////////////////////////////////////////////
-   // sol_vec2.h ///////////////////////////////////////////////////
+   // sol_vec2.c ///////////////////////////////////////////////////
   // Description: Adds 2D vector/position functionality to Sol. ///
  // Author: David Garland (https://github.com/davidgarland/sol) //
 /////////////////////////////////////////////////////////////////
-
-#ifndef SOL_VEC2_H
-#define SOL_VEC2_H
 
   //////////////////////////////////////////////////////////////////////////////
  // Local Headers /////////////////////////////////////////////////////////////
@@ -271,9 +268,9 @@ sol
 Vec2 vec2_fma(Vec2 a, Vec2 b, Vec2 c) {
   Vec2 out;
   #if defined(SOL_AVX_64)
-    out.avx64 = _mm_add_pd(a.avx64, b.avx64, c.avx64);
+    out.avx64 = _mm_fmadd_pd(a.avx64, b.avx64, c.avx64);
   #elif defined(SOL_AVX_32)
-    out.avx32 = _mm_add_ps(a.avx32, b.avx32, c.avx32);
+    out.avx32 = _mm_fmadd_ps(a.avx32, b.avx32, c.avx32);
   #elif defined(SOL_NEON_64)
     out.neon64 = vfma_f64(a.neon64, b.neon64, c.neon64);
   #elif defined(SOL_NEON_32)
@@ -350,7 +347,8 @@ Vec2 vec2_sub(Vec2 a, Vec2 b) {
   #else
     out.x = a.x - b.x;
     out.y = a.y - b.y;
-  #endif
+  
+#endif
   return out;
 }
 
@@ -558,5 +556,3 @@ void vec2_print(Vec2 v) {
   printf("(" SOL_F_FMT ", " SOL_F_FMT ")\n", (FloatCast) v.x,
                                              (FloatCast) v.y);
 }
-
-#endif // SOL_VEC2_H
