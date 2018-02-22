@@ -16,7 +16,7 @@ NIMFLAGS=--cc:$(CC)
 SOLSRC=*.h src/*.c
 SOLOUT=out/*.o out/*.out out/*.exe *.o *.out *.exe bench test
 SOLLIB=out/*.a out/*.so out/*.dll out/*.dylib *.a *.so *.dll *.dylib
-SOLCACHE=*.gch *~ src/*~ nimcache tests/nimcache
+SOLCACHE=*.gch *~ src/*~ nimcache tests/*~ tests/nimcache
 
 # Build Options #
 
@@ -32,7 +32,7 @@ test:
 	-@mv tests/test .
 
 bench:
-	-@$(NIMC) $(NIMLANG) $(NIMFLAGS) -d:release --opt:speed tests/bench.nim
+	-@$(NIMC) $(NIMLANG) $(NIMFLAGS) -d:release -d:none --opt:speed tests/bench.nim
 	-@mv tests/bench .
 
 avx:

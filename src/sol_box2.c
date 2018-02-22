@@ -303,26 +303,74 @@ Box2 box2_mulf(Box2 b, Float f) {
   return box2_mulv(b, vec2_initf(f));
 }
 
+/// box2_div ///
+// Description
+//   Divides the lower and upper bounds
+//   of a bounding box by another.
+// Arguments
+//   a: Bounding Box (Box2)
+//   b: Bounding Box (Box2)
+// Returns
+//   Bounding Box (Box2)
+
 sol
 Box2 box2_div(Box2 a, Box2 b) {
   return box2_init(vec2_div(a.lower, b.lower),
                    vec2_div(a.upper, b.upper));
 }
 
+/// box2_divv ///
+// Description
+//   Divides the lower and upper bounds
+//   of a bounding box by a vector.
+// Arguments
+//   b: Bounding Box (Box2)
+//   v: Vector (Vec2)
+// Returns
+//   Bounding Box (Box2)
+
 sol
 Box2 box2_divv(Box2 b, Vec2 v) {
   return box2_div(b, box2_initv(v));
 }
+
+/// box2_vdiv ///
+// Description
+//   Divides a vector by the lower and
+//   upper bounds of a bounding box.
+// Arguments
+//   v: Vector (Vec2)
+//   b: Bounding Box (Box2)
+// Returns
+//   Bounding Box (Box2)
 
 sol
 Box2 box2_vdiv(Vec2 v, Box2 b) {
   return box2_div(box2_initv(v), b);
 }
 
+/// box2_divf ///
+// Description
+//   Divides the lower and upper bounds
+//   of a bounding box by a scalar.
+// Arguments
+//   b: Bounding Box (Box2)
+//   f: Scalar (Float)
+// Returns
+//   Bounding Box (Box2)
+
 sol
 Box2 box2_divf(Box2 b, Float f) {
   return box2_divv(b, vec2_initf(f));
 }
+
+/// box2_fdiv ///
+// Description
+//   Divides a scalar by the lower and
+//   upper bounds of a bounding box.
+// Arguments
+//   f: Scalar (Float)
+//   b: Bounding Box (Box2)
 
 sol
 Box2 box2_fdiv(Float f, Box2 b) {

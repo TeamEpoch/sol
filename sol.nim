@@ -63,18 +63,13 @@ type Seg3* {.importc: "Seg3", header: "sol.h".} = object
     orig*, dest*: Vec3
 
 type Mat2* {.importc: "Mat2", header: "sol.h".} = object
-    f*: array[2, array[2, Float]]
 
 type Mat3* {.importc: "Mat3", header: "sol.h".} = object
-    #f*: array[3, array[3, Float]]
-    # TODO: Figure out why this won't work.
 
 type Mat4* {.importc: "Mat4", header: "sol.h".} = object
-    #f*: array[4, array[4, Float]]
-    # TODO: Figure out why this won't work.
 
 type Box2* {.importc: "Box2", header: "sol.h".} = object
-    lower*, upper*: Vec2
+  lower*, upper*: Vec2
 
 type Box3* {.importc: "Box3", header: "sol.h".} = object
     lower*, upper*: Vec3

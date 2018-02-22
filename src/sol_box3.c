@@ -164,17 +164,43 @@ Box3 box3_add(Box3 a, Box3 b) {
 
 /// box3_addv ///
 // Description
-//   Adds a 
+//   Adds a vector to the lower and
+//   upper bounds of a bounding box.
+// Arguments
+//   b: Bounding Box (Box3)
+//   v: Vector (Vec3)
+// Returns
+//   Bounding Box (Box3) 
 
 sol
 Box3 box3_addv(Box3 b, Vec3 v) {
   return box3_add(b, box3_initv(v));
 }
 
+/// box3_addf ///
+// Description
+//   Adds a scalar to the lower and
+//   upper bounds of a bounding box.
+// Arguments
+//   b: Bounding Box (Box3)
+//   f: Scalar (Float)
+// Returns
+//   Scalar (Float)
+
 sol
 Box3 box3_addf(Box3 b, Float f) {
   return box3_add(b, box3_initf(f));
 }
+
+/// box3_sub ///
+// Description
+//   Subtracts the lower and upper bounds
+//   of one bounding box from another.
+// Arguments
+//   a: Bounding Box (Box3)
+//   b: Bounding Box (Box3)
+// Returns
+//   Bounding Box (Box3)
 
 sol
 Box3 box3_sub(Box3 a, Box3 b) {
@@ -182,25 +208,75 @@ Box3 box3_sub(Box3 a, Box3 b) {
                    vec3_sub(a.upper, b.upper));
 }
 
+/// box3_subv ///
+// Description
+//   Subtracts a vector from the lower
+//   and upper bounds of a bounding box.
+// Arguments
+//   b: Bounding Box (Box3)
+//   v: Vector (Vec3)
+// Returns
+//   Bounding Box (Box3)
+
 sol
 Box3 box3_subv(Box3 b, Vec3 v) {
   return box3_sub(b, box3_initv(v));
 }
+
+/// box3_vsub ///
+// Description
+//   Subtracts the lower and upper bounds
+//   of a bounding box from a vector.
+// Arguments
+//   v: Vector (Vec3)
+//   b: Bounding Box (Box3)
+// Returns
+//   Bounding Box (Box3)
 
 sol
 Box3 box3_vsub(Vec3 v, Box3 b) {
   return box3_sub(box3_initv(v), b);
 }
 
+/// box3_subf ///
+// Description
+//   Subtracts a scalar from the lower and
+//   upper bounds of a bounding box.
+// Arguments
+//   b: Bounding Box (Box3)
+//   f: Scalar (Float)
+// Returns
+//   Bounding Box (Box3)
+
 sol
 Box3 box3_subf(Box3 b, Float f) {
   return box3_sub(b, box3_initf(f));
 }
 
+/// box3_fsub ///
+// Description
+//   Subtracts the lower and upper bounds of
+//   a bounding box from a scalar.
+// Arguments
+//   f: Scalar (Float)
+//   b: Bounding Box (Box3)
+// Returns
+//   Bounding Box (Box3)
+
 sol
 Box3 box3_fsub(Float f, Box3 b) {
   return box3_sub(box3_initf(f), b);
 }
+
+/// box3_mul ///
+// Description
+//   Multiplies the lower and upper bounds
+//   of one bounding box by another.
+// Arguments
+//   a: Bounding Box (Box3)
+//   b: Bounding Box (Box3)
+// Returns
+//   Bounding Box (Box3)
 
 sol
 Box3 box3_mul(Box3 a, Box3 b) {
@@ -208,15 +284,45 @@ Box3 box3_mul(Box3 a, Box3 b) {
                    vec3_mul(a.upper, b.upper));
 }
 
+/// box3_mulv ///
+// Description
+//   Multiplies the lower and upper bounds
+//   of a bounding box by a vector.
+// Arguments
+//   b: Bounding Box (Box3)
+//   v: Vector (Vec3)
+// Returns
+//   Bounding Box (Box3)
+
 sol
 Box3 box3_mulv(Box3 b, Vec3 v) {
   return box3_mul(b, box3_initv(v));
 }
 
+/// box3_mulf ///
+// Description
+//   Multiplies the lower and upper bounds
+//   of a bounding box by a scalar.
+// Arguments
+//   b: Bounding Box (Box3)
+//   f: Scalar (Float)
+// Returns
+//   Bounding Box (Box3)
+
 sol
 Box3 box3_mulf(Box3 b, Float f) {
   return box3_mul(b, box3_initf(f));
 }
+
+/// box3_div ///
+// Description
+//   Divides the lower and upper bounds
+//   of a bounding box by another.
+// Arguments
+//   a: Bounding Box (Box3)
+//   b: Bounding Box (Box3)
+// Returns
+//   Bounding Box (Box3)
 
 sol
 Box3 box3_div(Box3 a, Box3 b) {
@@ -224,20 +330,60 @@ Box3 box3_div(Box3 a, Box3 b) {
                    vec3_mul(a.upper, b.upper));
 }
 
+/// box3_divv ///
+// Description
+//   Divides the lower and upper bounds
+//   of a bounding box by a vector.
+// Arguments
+//   b: Bounding Box (Box3)
+//   v: Vector (Vec3)
+// Returns
+//   Bounding Box (Box3)
+
 sol
 Box3 box3_divv(Box3 b, Vec3 v) {
   return box3_div(b, box3_initv(v));
 }
+
+/// box3_vdiv ///
+// Description
+//   Divides a vector by the lower and
+//   upper bounds of a bounding box.
+// Arguments
+//   v: Vector (Vec3)
+//   b: Bounding Box (Box3)
+// Returns
+//   Bounding Box (Box3)
 
 sol
 Box3 box3_vdiv(Vec3 v, Box3 b) {
   return box3_div(box3_initv(v), b);
 }
 
+/// box3_divf ///
+// Description
+//   Divides the lower and upper bounds
+//   of a bounding box by a scalar.
+// Arguments
+//   b: Bounding Box (Box3)
+//   f: Scalar (Float)
+// Returns
+//   Bounding Box (Box3)
+
 sol
 Box3 box3_divf(Box3 b, Float f) {
   return box3_div(b, box3_initf(f));
 }
+
+/// box3_fdiv ///
+// Description
+//   Divides a scalar by the lower and
+//   upper bounds of a bounding box.
+// Arguments
+//   f: Scalar (Float)
+//   b: Bounding Box (Box3)
+// Returns
+//   Bounding Box (Box3)
 
 sol
 Box3 box3_fdiv(Float f, Box3 b) {
