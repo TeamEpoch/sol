@@ -12,27 +12,35 @@ import ../sol
 # Settings #
 ############
 
-const solRuns = 10_000_000 # How many runs to average.
-const solPrecision = 20 # Benchmark float accuracy.
+const solRuns = 1_000_000 # How many runs to average.
+const solPrecision = 10 # Benchmark float accuracy.
+const solSpaces = 15
 
 #############
 # Templates #
 #############
 
-template bench(name: string, code: untyped) =
-    var start: float64 = 0
-    var average: float64 = 0
-    var i = 0
-    while i < solRuns:
-        start = epochTime()
-        code
-        average += (epochTime() - start)
-        i += 1
-    echo ""
-    echo "[sol] Benchmark for: " & name
-    average = 1 / (average / solRuns)
-    var output = average.formatFloat(format = ffDecimal, precision = solPrecision)
-    echo "-> Runs Per Second: " & output
+var start: float64 = 0
+var benches: array[solRuns + 1, float64]
+var average: float64 = 0
+
+proc bfmt(flt: float64): string =
+  var str = flt.formatFloat(format = ffDecimal, precision = solPrecision)
+  return spaces(max(0, solSpaces - str.len - 3)) & str
+
+template bench(name: string; code: untyped) =
+  for i in 0..solRuns:
+    start = cpuTime()
+    code
+    benches[i] = cpuTime() - start
+  average = 0
+  for i  in 0..solRuns:
+    average += benches[i]
+  average /= solRuns
+  echo ""
+  echo "[sol] Benchmark for: " & name
+  echo "-> Speed:           " & average.bfmt
+  echo "-> Runs Per Second: " & (1 / average).bfmt
 
 ###################
 # Main Benchmarks #
@@ -71,6 +79,12 @@ var m3c: Mat3 = mat3_zero()
 var m4a: Mat4 = mat4_initf(16)
 var m4b: Mat4 = mat4_initf(8)
 var m4c: Mat4 = mat4_zero()
+
+echo ""
+echo "[sol] Blank Benchmark"
+
+bench "Blank":
+  discard
 
 echo ""
 echo "[sol] Float Benchmarks"
