@@ -130,6 +130,27 @@ bool vec3_eq(Vec3 a, Vec3 b, Float ep) {
   return false;
 }
 
+/// vec3_yzx ///
+// Description
+//   Shuffles a vector into YZX order.
+// Arguments
+//   v: Vector (Vec3)
+// Returns
+//   Vector (Vec3)
+
+sol
+Vec3 vec3_yzx(Vec3 v) {
+  Vec3 out;
+  #if defined(SOL_AVX_64)
+    out.avx64 = _mm256_shuffle_pd(v.avx64, v.avx64, _MM_SHUFFLE(3, 0, 2, 1));
+  #elif defined(SOL_AVX_32)
+    out.avx32 = _mm_shuffle_ps(v.avx32, v.avx32, _MM_SHUFFLE(3, 0, 2, 1));
+  #else
+    out = vec3_init(v.y, v.z, v.x);
+  #endif
+  return out;
+}
+
   //////////////////////////////////////////////////////////////////////////////
  // Vec3 Advanced Operations //////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -185,7 +206,6 @@ Vec3 vec3_proj(Vec3 a, Vec3 b) {
   return vec3_mulf(a, f);
 }
 
-
 /// vec3_rej ///
 // Description
 //   Gets the rejection of vector a from b.
@@ -225,13 +245,10 @@ Float vec3_angle(Vec3 a, Vec3 b) {
 
 sol
 Vec3 vec3_cross(Vec3 a, Vec3 b) {
-  const Vec3 va = vec3_init(a.y * b.z,
-                            a.z * b.x,
-                            a.x * b.y);
-  const Vec3 vb = vec3_init(a.z * b.y,
-                            a.x * b.z,
-                            a.y * b.x);
-  return vec3_sub(va, vb);
+  const Vec3 va = vec3_yzx(a);
+  const Vec3 vb = vec3_yzx(b);
+  const Vec3 c = vec3_sub(vec3_mul(a, vb), vec3_mul(b, va));
+  return vec3_yzx(c);
 }
 
 /// vec3_dot ///

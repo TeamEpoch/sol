@@ -218,6 +218,7 @@ proc vec3_zero*(): Vec3               {.importc: "vec3_zero",  header: "sol.h".}
 proc vec3_norm*(v: Vec3): Vec3            {.importc: "vec3_norm", header: "sol.h".}
 proc vec3_mag*(v: Vec3): Float            {.importc: "vec3_mag",  header: "sol.h".}
 proc vec3_eq*(a, b: Vec3; f: Float): bool {.importc: "vec3_eq",   header: "sol.h".}
+proc vec3_yzx*(v: Vec3): Vec3             {.importc: "vec3_yzx",  header: "sol.h".}
 
 proc vec3_rot*(v: Vec3, aa: Vec4): Vec3 {.importc: "vec3_rot",  header: "sol.h".}
 proc vec3_rotq*(v: Vec3, q: Vec4): Vec3 {.importc: "vec3_rotq", header: "sol.h".}

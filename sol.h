@@ -545,6 +545,7 @@ Vec3 vec3_zero(void);
 Vec3 vec3_norm(Vec3 v);
 Float vec3_mag(Vec3 v);
 bool vec3_eq(Vec3 a, Vec3 b, Float ep);
+Vec3 vec3_yzx(Vec3 v);
 
 Vec3 vec3_rot(Vec3 v, Vec4 aa);
 Vec3 vec3_rotq(Vec3 v, Vec4 q);
