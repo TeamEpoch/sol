@@ -86,7 +86,7 @@ type Sph3* {.importc: "Sph3", header: "sol.h".} = object
 # Module Functions #############################################################
 ################################################################################
 
-proc sol_prefetch*[T](p: ptr[T]; rw, locality: int{lit}) {.importc: "sol_prefetch", header: "sol.h".}
+proc sol_prefetch*[T](p: ptr[T]; rw, locality: cint) {.importc: "sol_prefetch", header: "sol.h".}
 
 ################################################################################
 # Float Functions ##############################################################
