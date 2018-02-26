@@ -120,14 +120,9 @@ Float vec3_mag(Vec3 v) {
 sol
 bool vec3_eq(Vec3 a, Vec3 b, Float ep) {
   const Vec3 c = vec3_sub(a, b);
-  if (c.x < ep) {
-    if (c.y < ep) {
-      if (c.z < ep) {
-        return true;
-      }
-    }
-  }
-  return false;
+  return (flt_abs(c.x) < ep)
+      && (flt_abs(c.y) < ep)
+      && (flt_abs(c.z) < ep);
 }
 
 /// vec3_yzx ///

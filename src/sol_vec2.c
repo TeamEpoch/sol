@@ -118,12 +118,8 @@ Float vec2_mag(Vec2 v) {
 sol
 bool vec2_eq(Vec2 a, Vec2 b, Float ep) {
   const Vec2 c = vec2_sub(a, b);
-  if (flt_abs(c.x) < ep) {
-    if (flt_abs(c.y) < ep) {
-      return true;
-    }
-  }
-  return false;
+  return (flt_abs(c.x) < ep)
+      && (flt_abs(c.y) < ep);
 }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -280,8 +276,6 @@ Vec2 vec2_fma(Vec2 a, Vec2 b, Vec2 c) {
   #endif
   return out;
 }
-
-
 
 /// vec2_add ///
 // Description

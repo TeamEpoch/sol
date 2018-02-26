@@ -230,22 +230,20 @@ static const Float sol_c = ((Float)(299792000));
 //   y: Dimension (Float)
 //   f: Dimensions (Float[2])
 
-typedef struct {
-  union {
-    struct {
-      Float x, y;
-    };
-    Float f[2];
-    #if defined(SOL_AVX_64)
-      __m128d avx64;
-    #elif defined(SOL_AVX_32)
-      __m128 avx32;
-    #elif defined(SOL_NEON_64)
-      f64x2_t neon64;
-    #elif defined(SOL_NEON_32)
-      f32x2_t neon32;
-    #endif
+typedef union {
+  struct {
+    Float x, y;
   };
+  Float f[2];
+  #if defined(SOL_AVX_64)
+    __m128d avx64;
+  #elif defined(SOL_AVX_32)
+    __m128 avx32;
+  #elif defined(SOL_NEON_64)
+    f64x2_t neon64;
+  #elif defined(SOL_NEON_32)
+    f32x2_t neon32;
+  #endif
 } Vec2;
 
 /// Vec3 ///
@@ -257,22 +255,20 @@ typedef struct {
 //   z: Dimension (sol_F)
 //   f: Dimensions (Float[3])
 
-typedef struct {
-  union {
-    struct {
-      Float x, y, z;
-    };
-    Float f[3];
-    #if defined(SOL_AVX_64)
-      __m256d avx64;
-    #elif defined(SOL_AVX_32)
-      __m128 avx32;
-    #elif defined(SOL_NEON_64)
-      f64x4_t neon64;
-    #elif defined(SOL_NEON_32)
-      f32x4_t neon32;
-    #endif
+typedef union {
+  struct {
+    Float x, y, z;
   };
+  Float f[3];
+  #if defined(SOL_AVX_64)
+    __m256d avx64;
+  #elif defined(SOL_AVX_32)
+    __m128 avx32;
+  #elif defined(SOL_NEON_64)
+    f64x4_t neon64;
+  #elif defined(SOL_NEON_32)
+    f32x4_t neon32;
+  #endif
 } Vec3;
 
 /// Vec4 ///
@@ -286,22 +282,20 @@ typedef struct {
 //   w: Dimension (Float)
 //   f: Dimensions (Float[4])
 
-typedef struct {
-  union {
-    struct {
-      Float x, y, z, w;
-    };
-    Float f[4];
-    #if defined(SOL_AVX_64)
-      __m256d avx64;
-    #elif defined(SOL_AVX)
-      __m128 avx32;
-    #elif defined(SOL_NEON_64)
-      f64x4_t neon64;
-    #elif defined(SOL_NEON)
-      f32x4_t neon32;
-    #endif
+typedef union {
+  struct {
+    Float x, y, z, w;
   };
+  Float f[4];
+  #if defined(SOL_AVX_64)
+    __m256d avx64;
+  #elif defined(SOL_AVX)
+    __m128 avx32;
+  #elif defined(SOL_NEON_64)
+    f64x4_t neon64;
+  #elif defined(SOL_NEON)
+    f32x4_t neon32;
+  #endif
 } Vec4;
 
 /// Ray2 ///

@@ -121,16 +121,10 @@ Float vec4_mag(Vec4 v) {
 sol
 bool vec4_eq(Vec4 a, Vec4 b, Float ep) {
   const Vec4 c = vec4_sub(a, b);
-  if (c.x < ep) {
-    if (c.y < ep) {
-      if (c.z < ep) {
-        if (c.w < ep) {
-          return true;
-        }
-      }
-    }
-  }
-  return false;
+  return (flt_abs(c.x) < ep)
+      && (flt_abs(c.y) < ep)
+      && (flt_abs(c.z) < ep)
+      && (flt_abs(c.w) < ep);
 }
 
   //////////////////////////////////////////////////////////////////////////////
