@@ -86,10 +86,10 @@ type Sph3* {.importc: "Sph3", header: "sol.h".} = object
 # Constants ####################################################################
 ################################################################################
 
-const sol_pi:  Float = 3.14159265358979323846
-const sol_tau: Float = 6.28318530717958647692
-const sol_g:   Float = 9.80665
-const sol_c:   Float = 299792000
+const sol_pi*:  Float = 3.14159265358979323846
+const sol_tau*: Float = 6.28318530717958647692
+const sol_g*:   Float = 9.80665
+const sol_c*:   Float = 299792000
 
 ################################################################################
 # Module Functions #############################################################
@@ -182,17 +182,19 @@ proc vec2_print*(v: Vec2): void {.importc: "vec2_print", header: "sol.h".}
 
 template vec*(x, y: Float): Vec3 = vec2_init(x, y)
 
-template norm*(v: Vec2): Vec2    = vec2_norm(v)
-template mag*(v: Vec2): Float    = vec2_mag(v)
-template `==`*(a, b: Vec2): bool = vec2_eq(a, b)
+template norm*(v: Vec2): Vec2             = vec2_norm(v)
+template mag*(v: Vec2): Float             = vec2_mag(v)
+template eq*(a, b: Vec2; ep: Float): bool = vec2_eq(a, b, ep)
 
-template `rot`*(v: Vec2; deg: Float): Vec2 = vec2_rot(v, deg)
-template `rotr`*(v: Vec2; rad: Float): Vec2 = vec2_rotr(v, rad)
+template rot*(v: Vec2; deg: Float): Vec2  = vec2_rot(v, deg)
+template rotr*(v: Vec2; rad: Float): Vec2 = vec2_rotr(v, rad)
 
-template `proj`*(a, b: Vec2): Vec2   = vec2_proj(a, b)
-template `rej`*(a, b: Vec2): Vec2    = vec2_rej(a, b)
-template `cross`*(a, b: Vec2): Float = vec2_cross(a, b)
-template `dot`*(a, b: Vec2): Float   = vec2_dot(a, b)
+template proj*(a, b: Vec2): Vec2   = vec2_proj(a, b)
+template rej*(a, b: Vec2): Vec2    = vec2_rej(a, b)
+template cross*(a, b: Vec2): Float = vec2_cross(a, b)
+template dot*(a, b: Vec2): Float   = vec2_dot(a, b)
+
+template sum*(v: Vec2): Float = vec2_sum(v)
 
 template `+`*(a, b: Vec2): Vec2        = vec2_add(a, b)
 template `+`*(v: Vec2; f: Float): Vec2 = vec2_addf(v, f)
@@ -215,6 +217,13 @@ template `*=`*(a: var Vec2; b: Vec2)  = a = vec2_mul(a, b)
 template `*=`*(v: var Vec2; f: Float) = v = vec2_mulf(v, f)
 template `/=`*(a: var Vec2; b: Vec2)  = a = vec2_div(a, b)
 template `/=`*(v: var Vec2; f: Float) = v = vec2_divf(v, f)
+
+################################################################################
+# Vec2 Optimization ############################################################
+################################################################################
+
+template vec2_opt_fma*{vec2_add(vec2_mul(a, b), c)}(a, b, c: Vec2): Vec2 =
+  vec2_fma(a, b, c)
 
 ################################################################################
 # Vec3 Functions ###############################################################
@@ -264,17 +273,22 @@ proc vec3_print*(v: Vec3): void {.importc: "vec3_print", header: "sol.h".}
 
 template vec*(x, y, z: Float): Vec3 = vec3_init(x, y, z)
 
-template norm*(v: Vec3): Vec3    = vec3_norm(v)
-template mag*(v: Vec3): Float    = vec3_mag(v)
-template `==`*(a, b: Vec3): bool = vec3_eq(a, b)
+template norm*(v: Vec3): Vec3             = vec3_norm(v)
+template mag*(v: Vec3): Float             = vec3_mag(v)
+template eq*(a, b: Vec3; ep: Float): bool = vec3_eq(a, b, ep)
 
-template `rot`*(v: Vec3; aa: Vec4): Vec3 = vec3_rot(v, aa)
-template `rotq`*(v: Vec3; q: Vec4): Vec3 = vec3_rotq(v, q)
+template rot*(v: Vec3; aa: Vec4): Vec3 = vec3_rot(v, aa)
+template rotq*(v: Vec3; q: Vec4): Vec3 = vec3_rotq(v, q)
 
-template `proj`*(a, b: Vec3): Vec3  = vec3_proj(a, b)
-template `rej`*(a, b: Vec3): Vec3   = vec3_rej(a, b)
-template `cross`*(a, b: Vec3): Vec3 = vec3_cross(a, b)
-template `dot`*(a, b: Vec3): Float  = vec3_dot(a, b)
+template proj*(a, b: Vec3): Vec3  = vec3_proj(a, b)
+template rej*(a, b: Vec3): Vec3   = vec3_rej(a, b)
+template angle*(a, b: Vec3): Vec3 = vec3_angle(a, b)
+template cross*(a, b: Vec3): Vec3 = vec3_cross(a, b)
+template dot*(a, b: Vec3): Float  = vec3_dot(a, b)
+
+template sum*(v: Vec3): Float = vec3_sum(v)
+
+template print*(v: Vec3)                = vec3_print(v)
 
 template `+`*(a, b: Vec3): Vec3        = vec3_add(a, b)
 template `+`*(v: Vec3; f: Float): Vec3 = vec3_addf(v, f)
@@ -297,6 +311,13 @@ template `*=`*(a: var Vec3; b: Vec3)  = a = vec3_mul(a, b)
 template `*=`*(v: var Vec3; f: Float) = v = vec3_mulf(v, f)
 template `/=`*(a: var Vec3; b: Vec3)  = a = vec3_div(a, b)
 template `/=`*(v: var Vec3; f: Float) = v = vec3_divf(v, f)
+
+################################################################################
+# Vec3 Optimization ############################################################
+################################################################################
+
+template vec3_opt_fma*{vec3_add(vec3_mul(a, b), c)}(a, b, c: Vec3): Vec3 =
+  vec3_fma(a, b, c)
 
 ################################################################################
 # Vec4 Functions ###############################################################
@@ -331,6 +352,16 @@ proc vec4_print*(v: Vec4): void {.importc: "vec4_print", header: "sol.h".}
 # Vec4 Operators ###############################################################
 ################################################################################
 
+template vec*(x, y, z, w: Float): Vec4 = vec4_init(x, y, z, w)
+
+template norm*(v: Vec4): Vec4             = vec4_norm(v)
+template mag*(v: Vec4): Float             = vec4_mag(v)
+template eq*(a, b: Vec4; ep: Float): bool = vec4_eq(a, b, ep)
+
+template sum*(v: Vec4): Float = vec4_sum(v)
+
+template print*(v: Vec4)                = vec4_print(v)
+
 template `+`*(a, b: Vec4): Vec4        = vec4_add(a, b)
 template `+`*(v: Vec4; f: Float): Vec4 = vec4_addf(v, f)
 template `+`*(f: Float; v: Vec4): Vec4 = vec4_addf(v, f)
@@ -352,6 +383,13 @@ template `*=`*(a: var Vec4; b: Vec4)  = a = vec4_mul(a, b)
 template `*=`*(v: var Vec4; f: Float) = v = vec4_mulf(v, f)
 template `/=`*(a: var Vec4; b: Vec4)  = a = vec4_div(a, b)
 template `/=`*(v: var Vec4; f: Float) = v = vec4_divf(v, f)
+
+################################################################################
+# Vec4 Optimization ############################################################
+################################################################################
+
+template vec4_opt_fma*{vec4_add(vec4_mul(a, b), c)}(a, b, c: Vec4): Vec4 =
+  vec4_fma(a, b, c)
 
 ################################################################################
 # Ray2 Functions ###############################################################

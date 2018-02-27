@@ -25,26 +25,27 @@ var benches: array[solRuns + 1, float64]
 var average: float64 = 0
 
 proc bfmt(flt: float64): string =
-  var str = flt.formatFloat(format = ffDecimal, precision = solPrecision)
-  return spaces(max(0, solSpaces - str.len - 3)) & str
+    var str = flt.formatFloat(format = ffDecimal, precision = solPrecision)
+    return spaces(max(0, solSpaces - str.len - 3)) & str
 
 template bench(name: string; code: untyped) =
-  for i in 0..solRuns:
-    start = cpuTime()
-    code
-    benches[i] = cpuTime() - start
-  average = 0
-  for i  in 0..solRuns:
-    average += benches[i]
-  average /= solRuns
-  echo ""
-  echo "[sol] Benchmark for: " & name
-  echo "-> Speed:           " & average.bfmt
-  echo "-> Runs Per Second: " & (1 / average).bfmt
+    for i in 0..solRuns:
+        start = cpuTime()
+        code
+        benches[i] = cpuTime() - start
+    average = 0
+    for i  in 0..solRuns:
+        average += benches[i]
+    average /= solRuns
+    echo ""
+    echo "[sol] Benchmark for: " & name
+    echo "-> Speed:           " & average.bfmt
+    echo "-> Runs Per Second: " & (1 / average).bfmt
 
 ###################
 # Main Benchmarks #
 ###################
+
 echo "[sol] Starting benchmark @" & $solRuns & " runs per test."
 
 echo "[sol] Initializing test values..."
@@ -57,12 +58,13 @@ var fc: Float = 0.0
 var v2a: Vec2 = vec2_initf(16)
 var v2b: Vec2 = vec2_initf(8)
 var v2c: Vec2 = vec2_zero()
-var rad: Float = cv_deg_rad(90)
+var deg: Float = 90
 
 var v3a: Vec3 = vec3_initf(16)
 var v3b: Vec3 = vec3_initf(8)
 var v3c: Vec3 = vec3_zero()
-var quat: Vec4 = cv_axis_quat(vec4_init(0, 1, 0, cv_deg_rad(90)))
+var axis: Vec4 = vec4_init(0, 1, 0, 90)
+var quat: Vec4 = cv_axis_quat(axis)
 
 var v4a: Vec4 = vec4_initf(16)
 var v4b: Vec4 = vec4_initf(8)
@@ -120,25 +122,28 @@ echo ""
 echo "[sol] Vec2 Benchmarks"
 
 bench "vec2_norm":
-    v2c = vec2_norm(v2c)
+    v2c = norm(v2c)
 
 bench "vec2_mag":
-    fc = vec2_mag(v2c)
+    fc = mag(v2c)
 
 bench "vec2_eq":
-    b = vec2_eq(v2a, v2b, 0.1)
+    b = eq(v2a, v2b, 0.1)
 
 bench "vec2_rot":
-    v2c = vec2_rot(v2c, rad)
+    v2c = rot(v2a, deg)
 
 bench "vec2_cross":
-    fc = vec2_cross(v2a, v2b)
+    fc = cross(v2a, v2b)
 
 bench "vec2_dot":
-    fc = vec2_dot(v2a, v2b)
+    fc = dot(v2a, v2b)
 
 bench "vec2_sum":
-    fc = vec2_sum(v2c)
+    fc = sum(v2c)
+
+bench "vec2_fma":
+    v2c = (v2a * v2b) + v2c
 
 bench "vec2_add":
     v2c = v2a + v2b
@@ -159,25 +164,31 @@ echo ""
 echo "[sol] Vec3 Benchmarks"
 
 bench "vec3_norm":
-    v3c = vec3_norm(v3c)
+    v3c = norm(v3c)
 
 bench "vec3_mag":
-    fc = vec3_mag(v3c)
+    fc = mag(v3c)
 
 bench "vec3_eq":
-    b = vec3_eq(v3a, v3b, 0.1)
+    b = eq(v3a, v3b, 0.1)
 
 bench "vec3_rot":
-    v3c = vec3_rot(v3a, quat)
+    v3c = rot(v3a, axis)
+
+bench "vec3_rotq":
+    v3c = rotq(v3a, quat)
 
 bench "vec3_cross":
-    v3c = vec3_cross(v3a, v3b)
+    v3c = cross(v3a, v3b)
 
 bench "vec3_dot":
-    fc = vec3_dot(v3a, v3b)
+    fc = dot(v3a, v3b)
 
 bench "vec3_sum":
-    fc = vec3_sum(v3c)
+    fc = sum(v3c)
+
+bench "vec3_fma":
+    v3c = v3a * v3b + v3c
 
 bench "vec3_add":
     v3c = v3a + v3b
@@ -198,16 +209,19 @@ echo ""
 echo "[sol] Vec4 Benchmarks"
 
 bench "vec4_norm":
-    v4c = vec4_norm(v4c)
+    v4c = norm(v4c)
 
 bench "vec4_mag":
-    fc = vec4_mag(v4c)
+    fc = mag(v4c)
 
 bench "vec4_eq":
-    b = vec4_eq(v4a, v4b, 0.1)
+    b = eq(v4a, v4b, 0.1)
 
 bench "vec4_sum":
-    fc = vec4_sum(v4c)
+    fc = sum(v4c)
+
+bench "vec4_fma":
+    v4c = v4a * v4b + v4c
 
 bench "vec4_add":
     v4c = v4a + v4b
