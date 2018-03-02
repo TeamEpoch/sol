@@ -54,10 +54,9 @@ Additionally, the use of C means zero overhead bindings can be provided for Nim 
 # Features
 
 ## Types
-The following types are supported so far. No hitboxes or raycasting are implemented yet, but are planned for the future. For now it's just the basics.
+The following types are supported so far.
 ```
-Float: Size-adjustable scalar.
-
+Float: Compile-Time Size-Adjustable Scalar
 Vec2: 2D Vector
 Vec3: 3D Vector
 Vec4: 4D Vector
@@ -71,4 +70,7 @@ Seg3: 3D Line Segment
 Mat2: 2x2 Matrix
 Mat3: 3x3 Matrix
 Mat4: 4x4 Matrix
+
+Box2: 2D Bounding Box
+Box3: 3D Bounding Box
 ```
