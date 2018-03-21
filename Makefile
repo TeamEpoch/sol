@@ -2,7 +2,7 @@
 
 # C Compiler Settings #
 
-CC=gcc
+CC=clang
 CFLAGS=-O3 -ffast-math
 LDFLAGS=-lm
 
@@ -14,7 +14,7 @@ NIMFLAGS=--cc:$(CC)
 
 # Files #
 SOLSRC=*.h src/*.c
-SOLOUT=out/*.o out/*.out out/*.exe *.o *.out *.exe bench test
+SOLOUT=out/*.o out/*.out out/*.exe *.o *.s *.out *.exe bench test
 SOLLIB=out/*.a out/*.so out/*.dll out/*.dylib *.a *.so *.dll *.dylib
 SOLCACHE=*.gch *~ src/*~ nimcache tests/*~ tests/nimcache
 
@@ -22,6 +22,10 @@ SOLCACHE=*.gch *~ src/*~ nimcache tests/*~ tests/nimcache
 
 default:
 	-@make -B build >/dev/null || true
+
+disas:
+	-@$(CC) $(CFLAGS) $(SOLSRC) $(LDFLAGS) -S -masm=intel
+	-@mv *.s out >/dev/null 2>/dev/null || true
 
 build:
 	-@$(CC) -c $(CFLAGS) $(SOLSRC) $(LDFLAGS)
@@ -51,4 +55,4 @@ clean:
 	-@rm -rf $(SOLCACHE) >/dev/null || true
 
 reset: clean
-	-@rm -rf $(SOLOUT) $(SOLLIB) >/dev/null || true
+	-@rm -rf $(SOLOUT) $(SOLLIB) out/*.s >/dev/null || true
