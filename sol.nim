@@ -680,8 +680,9 @@ proc mat2_initf*(f: Float): Mat2                 {.importc: "mat2_initf", header
 proc mat2_iden*(): Mat2                          {.importc: "mat2_iden",  header: "sol.h".}
 proc mat2_zero*(): Mat2                          {.importc: "mat2_zero",  header: "sol.h".}
 
-proc mat2_row*(m: Mat2; row: csize): Vec2 {.importc: "mat2_row", header: "sol.h".}
-proc mat2_col*(m: Mat2; col: csize): Vec2 {.importc: "mat2_col", header: "sol.h".}
+proc mat2_row*(m: Mat2; row: csize): Vec2     {.importc: "mat2_row", header: "sol.h".}
+proc mat2_col*(m: Mat2; col: csize): Vec2     {.importc: "mat2_col", header: "sol.h".}
+proc mat2_f*(m: Mat2; row, col: csize): Float {.importc: "mat2_f",   header: "sol.h".}
 
 proc mat2_dot*(a, b: Mat2): Mat2 {.importc: "mat2_dot", header: "sol.h".}
 
@@ -707,8 +708,9 @@ proc mat2_print*(m: Mat2): void {.importc: "mat2_print", header: "sol.h".}
 template mat*(f11, f12, f21, f22: Float): Mat2 =
   mat2_init(f11, f12, f21, f22)
 
-template row*(m: Mat2; row: csize): Vec2 = mat2_row(m, row)
-template col*(m: Mat2; col: csize): Vec2 = mat2_col(m, col)
+template row*(m: Mat2; row: csize): Vec2     = mat2_row(m, row)
+template col*(m: Mat2; col: csize): Vec2     = mat2_col(m, col)
+template f*(m: Mat2; row, col: csize): Float = mat2_f(m, row, col)
 
 template dot*(a, b: Mat2): Mat2 = mat2_dot(a, b)
 
@@ -744,8 +746,9 @@ proc mat3_initf*(f: Float): Mat3                                          {.impo
 proc mat3_iden*(): Mat3                                                   {.importc: "mat3_iden",  header: "sol.h".}
 proc mat3_zero*(): Mat3                                                   {.importc: "mat3_zero",  header: "sol.h".}
 
-proc mat3_row*(m: Mat3; row: csize): Vec3 {.importc: "mat3_row", header: "sol.h".}
-proc mat3_col*(m: Mat3; col: csize): Vec3 {.importc: "mat3_col", header: "sol.h".}
+proc mat3_row*(m: Mat3; row: csize): Vec3     {.importc: "mat3_row", header: "sol.h".}
+proc mat3_col*(m: Mat3; col: csize): Vec3     {.importc: "mat3_col", header: "sol.h".}
+proc mat3_f*(m: Mat3; row, col: csize): Float {.importc: "mat3_f",   header: "sol.h".}
 
 proc mat3_dot*(a, b: Mat3): Mat3 {.importc: "mat3_dot", header: "sol.h".}
 
@@ -771,8 +774,9 @@ proc mat3_print*(m: Mat3): void {.importc: "mat3_print", header: "sol.h".}
 template mat*(f11, f12, f13, f21, f22, f23, f31, f32, f33: Float): Mat3 =
   mat3_init(f11, f12, f13, f21, f22, f23, f31, f32, f33)
 
-template row*(m: Mat3; row: csize): Vec3 = mat3_row(m, row)
-template col*(m: Mat3; col: csize): Vec3 = mat3_col(m, col)
+template row*(m: Mat3; row: csize): Vec3     = mat3_row(m, row)
+template col*(m: Mat3; col: csize): Vec3     = mat3_col(m, col)
+template f*(m: Mat3; row, col: csize): Float = mat3_f(m, row, col)
 
 template dot*(a, b: Mat3): Mat3 = mat3_dot(a, b)
 
@@ -808,8 +812,9 @@ proc mat4_initf*(f: Float): Mat4                                                
 proc mat4_iden*(): Mat4                                                                                      {.importc: "mat4_iden",  header: "sol.h".}
 proc mat4_zero*(): Mat4                                                                                      {.importc: "mat4_zero",  header: "sol.h".}
 
-proc mat4_row*(m: Mat4; row: csize): Vec4 {.importc: "mat4_row", header: "sol.h".}
-proc mat4_col*(m: Mat4; col: csize): Vec4 {.importc: "mat4_col", header: "sol.h".}
+proc mat4_row*(m: Mat4; row: csize): Vec4     {.importc: "mat4_row", header: "sol.h".}
+proc mat4_col*(m: Mat4; col: csize): Vec4     {.importc: "mat4_col", header: "sol.h".}
+proc mat4_f*(m: Mat4; row, col: csize): Float {.importc: "mat4_f", header: "sol.h".}
 
 proc mat4_dot*(a, b: Mat4): Mat4 {.importc: "mat4_dot", header: "sol.h".}
 
@@ -835,8 +840,9 @@ proc mat4_print*(m: Mat4): Mat4 {.importc: "mat4_print", header: "sol.h".}
 template mat*(f11, f12, f13, f14, f21, f22, f23, f24, f31, f32, f33, f34, f41, f42, f43, f44: Float): Mat4 =
   mat4_init(f11, f12, f13, f14, f21, f22, f23, f24, f31, f32, f33, f34, f41, f42, f43, f44)
 
-template row*(m: Mat4; row; csize): Vec4 = mat4_row(m, row)
-template col*(m: Mat4; col: csize): Vec4 = mat4_col(m, col)
+template row*(m: Mat4; row; csize): Vec4     = mat4_row(m, row)
+template col*(m: Mat4; col: csize): Vec4     = mat4_col(m, col)
+template f*(m: Mat4; row, col: csize): Float = mat4_f(m, row, col)
 
 template dot*(a, b: Mat4): Mat4 = mat4_dot(a, b)
 

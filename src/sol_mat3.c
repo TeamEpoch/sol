@@ -133,6 +133,20 @@ Vec3 mat3_col(Mat3 m, size_t col) {
                    m.f[2][col]);
 }
 
+/// mat3_f ///
+// Description
+//   Gets the scalar at the given co-ordinates in
+//   the 3x3 matrix.
+// Arguments
+//   m: Matrix (Mat3)
+//   row: Row Number (size_t)
+//   col: Column Number (size_t)
+
+sol
+Float mat3_f(Mat3 m, size_t row, size_t col) {
+  return m.f[row][col];
+}
+
   //////////////////////////////////////////////////////////////////////////////
  // Mat3 Advanced Math ////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////

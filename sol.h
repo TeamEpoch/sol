@@ -750,6 +750,7 @@ Mat2 mat2_zero(void);
 
 Vec2 mat2_row(Mat2 m, size_t row);
 Vec2 mat2_col(Mat2 m, size_t col);
+Float mat2_f(Mat2 m, size_t row, size_t col);
 
 Mat2 mat2_dot(Mat2 a, Mat2 b);
 
@@ -781,6 +782,7 @@ Mat3 mat3_zero(void);
 
 Vec3 mat3_row(Mat3 m, size_t row);
 Vec3 mat3_col(Mat3 m, size_t col);
+Float mat3_f(Mat3 m, size_t row, size_t col);
 
 Mat3 mat3_dot(Mat3 a, Mat3 b);
 
@@ -812,6 +814,7 @@ Mat4 mat4_zero(void);
 
 Vec4 mat4_row(Mat4 m, size_t row);
 Vec4 mat4_col(Mat4 m, size_t col);
+Float mat4_f(Mat4 m, size_t col, size_t row);
 
 Mat4 mat4_dot(Mat4 a, Mat4 b);
 

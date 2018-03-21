@@ -104,7 +104,7 @@ Mat2 mat2_zero(void) {
 //   m: Matrix (Mat2)
 //   row: Row Number (size_t)
 // Returns
-//   Matrix (Mat2)
+//   Vector (Vec2)
 
 sol
 Vec2 mat2_row(Mat2 m, size_t row) {
@@ -119,12 +119,28 @@ Vec2 mat2_row(Mat2 m, size_t row) {
 //   m: Matrix (Mat2)
 //   col: Column Number (size_t)
 // Returns
-//   Matrix (Mat2)
+//   Vector (Vec2)
 
 sol
 Vec2 mat2_col(Mat2 m, size_t col) {
   return vec2_init(m.f[0][col], 
                    m.f[1][col]);
+}
+
+/// mat2_f ///
+// Description
+//   Returns the scalar at the given
+//   co-ordinates in the 2x2 matrix.
+// Arguments
+//   m: Matrix (Mat2)
+//   row: Row Number (size_t)
+//   col: Column Number (size_t)
+// Returns
+//   Scalar (Float)
+
+sol
+Float mat2_f(Mat2 m, size_t row, size_t col) {
+  return m.f[row][col];
 }
 
   //////////////////////////////////////////////////////////////////////////////
