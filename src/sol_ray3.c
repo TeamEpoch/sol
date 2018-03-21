@@ -140,433 +140,259 @@ Ray3 ray3_rotq(Ray3 r, Vec4 q) {
  // Ray3 Basic Math ///////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-/// ray3_sump ///
+/// ray3_add ///
 // Description
-//   Finds the sum of all of the elements of the position element of a ray.
+//   Adds the vector element of one ray to
+//   that of another.
 // Arguments
-//   r: Ray (Ray3)
+//   a: Ray (Ray3)
+//   b: Ray (Ray3)
 // Returns
-//   Sum (Float)
+//   Ray (Ray3) = {a.pos, a.vec.xyz + b.vec.xyz}
 
 sol
-Float ray3_sump(Ray3 r) {
-  return vec3_sum(r.pos);
-}
-
-/// ray3_sumv ///
-// Description
-//   Finds the sum of all of the elements of the vector element of a ray.
-// Arguments
-//   r: Ray (Ray3)
-// Returns
-//   Sum (Float)
-
-sol
-Float ray3_sumv(Ray3 r) {
-  return vec3_sum(r.vec);
-}
-
-/// ray3_addp ///
-// Description
-//   Adds a position to the position element of a ray.
-// Arguments
-//   r: Ray (Ray3)
-//   p: Position (Vec3)
-// Returns
-//   Ray (Ray3)
-
-sol
-Ray3 ray3_addp(Ray3 r, Vec3 p) {
-  return ray3_init(vec3_add(r.pos, p), r.vec);
-}
-
-/// ray3_addpf ///
-// Description
-//   Adds a scalar to both elements of the position element of a ray.
-// Arguments
-//   r: Ray (Ray3)
-//   f: Scalar (Float)
-// Returns
-//   Ray (Ray3)
-
-sol
-Ray3 ray3_addpf(Ray3 r, Float f) {
-  return ray3_addp(r, vec3_initf(f));
+Ray3 ray3_add(Ray3 a, Ray3 b) {
+  return ray3_init(a.pos, vec3_add(a.vec, b.vec));
 }
 
 /// ray3_addv ///
 // Description
-//   Adds a vector to the vector element of a ray.
+//   Adds a vector to the vector element
+//   of a ray.
 // Arguments
 //   r: Ray (Ray3)
 //   v: Vector (Vec3)
 // Returns
-//   Ray (Ray3)
+//   Ray (Ray3) = {r.pos, r.vec.xyz + v.xyz}
 
 sol
 Ray3 ray3_addv(Ray3 r, Vec3 v) {
   return ray3_init(r.pos, vec3_add(r.vec, v));
 }
 
-/// ray3_addvf ///
+/// ray3_addf ///
 // Description
-//   Adds a scalar to both elements of the vector element of a ray.
+//   Adds a scalar to the vector element
+//   of a ray.
 // Arguments
 //   r: Ray (Ray3)
 //   f: Scalar (Float)
 // Returns
-//   Ray (Ray3)
+//   Ray (Ray3) = {r.pos, r.vec.xyz + f}
 
 sol
-Ray3 ray3_addvf(Ray3 r, Float f) {
-  return ray3_addv(r, vec3_initf(f));
+Ray3 ray3_addf(Ray3 r, Float f) {
+  return ray3_init(r.pos, vec3_addf(r.vec, f));
 }
 
-/// ray3_subp ///
+/// ray3_sub ///
 // Description
-//   Subtracts a vector from the position element of a ray.
+//   Subtracts the vector element of one ray
+//   from that of another.
 // Arguments
-//   r: Ray (Ray3)
-//   p: Position (Vec3)
+//   a: Ray (Ray3)
+//   b: Ray (Ray3)
 // Returns
-//   Ray (Ray3)
+//   Ray (Ray3) = {r.pos, a.vec.xyz + b.vec.xyz}
 
 sol
-Ray3 ray3_subp(Ray3 r, Vec3 p) {
-  return ray3_init(vec3_sub(r.pos, p), r.vec);
-}
-
-/// ray3_subpf ///
-// Description
-//   Subtracts a scalar from both elements of the position element of a ray.
-// Arguments
-//   r: Ray (Ray3)
-//   f: Scalar (Float)
-// Returns
-//   Ray (Ray3)
-
-sol
-Ray3 ray3_subpf(Ray3 r, Float f) {
-  return ray3_subp(r, vec3_initf(f));
-}
-
-/// ray3_psub ///
-// Description
-//   Subtracts a ray's position element from a position.
-// Arguments
-//   p: Position (Vec3)
-//   r: Ray (Ray3)
-// Returns
-//   Ray (Ray3)
-
-sol
-Ray3 ray3_psub(Vec3 p, Ray3 r) {
-  return ray3_init(vec3_sub(p, r.pos), r.vec);
-}
-
-/// ray3_pfsub ///
-// Description
-//   Subtracts a ray's position element from a position comprised of a single
-//   scalar.
-// Arguments
-//   f: Scalar (Float)
-//   r: Ray (Ray3)
-// Returns
-//   Ray (Ray3)
-
-sol
-Ray3 ray3_pfsub(Float f, Ray3 r) {
-  return ray3_psub(vec3_initf(f), r);
+Ray3 ray3_sub(Ray3 a, Ray3 b) {
+  return ray3_init(a.pos, vec3_sub(a.vec, b.vec));
 }
 
 /// ray3_subv ///
 // Description
-//   Subtracts a vector from the vector element of a ray.
+//   Subtracts a vector from the vector
+//   element of a ray.
 // Arguments
 //   r: Ray (Ray3)
 //   v: Vector (Vec3)
 // Returns
-//   Ray (Ray3)
+//   Ray (Ray3) = {r.pos, r.vec.xyz - v.xyz}
 
 sol
 Ray3 ray3_subv(Ray3 r, Vec3 v) {
   return ray3_init(r.pos, vec3_sub(r.vec, v));
 }
 
-/// ray3_subvf ///
-// Description
-//   Subtracts a vector comprised of a single scalar from the vector element of
-//   a ray.
-// Arguments
-//   r: Ray (Ray3)
-//   f: Scalar (Float)
-// Returns
-//   Ray (Ray3)
-
-sol
-Ray3 ray3_subvf(Ray3 r, Float f) {
-  return ray3_subv(r, vec3_initf(f));
-}
-
 /// ray3_vsub ///
 // Description
-//   Subtracts the vector element of a ray from a vector.
+//   Subtracts the vector element of a ray
+//   from a vector.
 // Arguments
 //   v: Vector (Vec3)
 //   r: Ray (Ray3)
 // Returns
-//   Ray (Ray3)
+//   Ray (Ray3) = {r.pos, v.xyz - r.vec.xyz}
 
 sol
 Ray3 ray3_vsub(Vec3 v, Ray3 r) {
   return ray3_init(r.pos, vec3_sub(v, r.vec));
 }
 
-/// ray3_vfsub ///
+/// ray3_subf ///
 // Description
-//   Subtracts the vector element of a ray from a vector comprised of a single
-//   scalar value.
-// Arguments
-//   f: Scalar (Float)
-//   r: Ray (Ray3)
-// Returns
-//   Ray (Ray3)
-
-sol
-Ray3 ray3_vfsub(Float f, Ray3 r) {
-  return ray3_vsub(vec3_initf(f), r);
-}
-
-/// ray3_mulp ///
-// Description
-//   Multiplies the position element of a vector by a position.
-// Arguments
-//   r: Ray (Ray3)
-//   p: Position (Vec3)
-// Returns
-//   Ray (Ray3)
-
-sol
-Ray3 ray3_mulp(Ray3 r, Vec3 p) {
-  return ray3_init(vec3_mul(r.pos, p), r.vec);
-}
-
-/// ray3_mulpf ///
-// Description
-//   Multiplies the position element of a ray by a position comprised of
-//   a single scalar value.
+//   Subtracts a scalar from the vector
+//   element of a ray.
 // Arguments
 //   r: Ray (Ray3)
 //   f: Scalar (Float)
 // Returns
-//   Ray (Ray3)
+//   Ray (Ray3) = {r.pos, r.vec.xyz - f}
 
 sol
-Ray3 ray3_mulpf(Ray3 r, Float f) {
-  return ray3_mulp(r, vec3_initf(f));
+Ray3 ray3_subf(Ray3 r, Float f) {
+  return ray3_init(r.pos, vec3_subf(r.vec, f));
+}
+
+/// ray3_fsub ///
+// Description
+//   Subtracts the vector element of a ray
+//   from a scalar.
+// Arguments
+//   f: Scalar (Float)
+//   r: Ray (Ray3)
+// Returns
+//   Ray (Ray3) = {r.pos, f - r.vec.xyz}
+
+sol
+Ray3 ray3_fsub(Float f, Ray3 r) {
+  return ray3_init(r.pos, vec3_fsub(f, r.vec));
+}
+
+/// ray3_mul ///
+// Description
+//   Multiplies the vector element of one ray
+//   by that of another.
+// Arguments
+//   a: Ray (Ray3)
+//   b: Ray (Ray3)
+// Returns
+//   Ray (Ray3) = {a.pos, a.vec.xyz * b.vec.xyz}
+
+sol
+Ray3 ray3_mul(Ray3 a, Ray3 b) {
+  return ray3_init(a.pos, vec3_mul(a.vec, b.vec));
 }
 
 /// ray3_mulv ///
 // Description
-//   Multiplies the vector element of a ray by a vector.
+//   Multiplies the vector element of a ray by
+//   a vector.
 // Arguments
 //   r: Ray (Ray3)
 //   v: Vector (Vec3)
 // Returns
-//   Ray (Ray3)
+//   Ray (Ray3) = {r.pos, v.vec.xyz * v.xyz}
 
 sol
 Ray3 ray3_mulv(Ray3 r, Vec3 v) {
   return ray3_init(r.pos, vec3_mul(r.vec, v));
 }
 
-/// ray3_mulvf ///
+/// ray3_mulf ///
 // Description
-//   Multiplies the vector element of a ray by a vector comprised of a single
-//   scalar value.
+//   Multiplies the vector element of a ray by
+//   a scalar.
 // Arguments
 //   r: Ray (Ray3)
 //   f: Scalar (Float)
 // Returns
-//   Ray (Ray3)
+//   Ray (Ray3) = {r.pos, r.vec.xyz * f}
 
 sol
-Ray3 ray3_mulvf(Ray3 r, Float f) {
-  return ray3_mulv(r, vec3_initf(f));
+Ray3 ray3_mulf(Ray3 r, Float f) {
+  return ray3_init(r.pos, vec3_mulf(r.vec, f));
 }
 
-/// ray3_divp ///
+/// ray3_div ///
 // Description
-//   Divides the position element of a ray by a position.
+//   Divides the vector element of one ray by
+//   that of another.
 // Arguments
-//   r: Ray (Ray3)
-//   p: Position (Vec3)
+//   a: Ray (Ray3)
+//   b: Ray (Ray3)
 // Returns
-//   Ray (Ray3)
+//   Ray (Ray3) = {a.pos, a.vec.xyz / b.vec.xyz}
 
 sol
-Ray3 ray3_divp(Ray3 r, Vec3 p) {
-  return ray3_init(vec3_div(r.pos, p), r.vec);
-}
-
-/// ray3_divpf ///
-// Description
-//   Divides the position element of a ray by a position comprised of a single
-//   scalar value.
-// Arguments
-//   r: Ray (Ray3)
-//   f: Scalar (Float)
-// Returns
-//   Ray (Ray3)
-
-sol
-Ray3 ray3_divpf(Ray3 r, Float f) {
-  return ray3_divp(r, vec3_initf(f));
-}
-
-/// ray3_pdiv ///
-// Description
-//   Divides a position by the position element of a ray.
-// Arguments
-//   p: Position (Vec3)
-//   r: Ray (Ray3)
-// Returns
-//   Ray (Ray3)
-
-sol
-Ray3 ray3_pdiv(Vec3 p, Ray3 r) {
-  return ray3_init(vec3_div(p, r.pos), r.vec);
-}
-
-/// ray3_pfdiv ///
-// Description
-//   Divides a position comprised of a single scalar by the position element of
-//   a ray.
-// Arguments
-//   f: Scalar (Float)
-//   r: Ray (Ray3)
-// Returns
-//   Ray (Ray3)
-
-sol
-Ray3 ray3_pfdiv(Float f, Ray3 r) {
-  return ray3_pdiv(vec3_initf(f), r);
+Ray3 ray3_div(Ray3 a, Ray3 b) {
+  return ray3_init(a.pos, vec3_div(a.vec, b.vec));
 }
 
 /// ray3_divv ///
 // Description
-//   Divides the vector element of a ray by a vector.
+//   Divides the vector element of a ray by
+//   a vector.
 // Arguments
 //   r: Ray (Ray3)
 //   v: Vector (Vec3)
 // Returns
-//   Ray (Ray3)
+//   Ray (Ray3) = {r.pos, r.vec.xyz / v.xyz}
 
 sol
 Ray3 ray3_divv(Ray3 r, Vec3 v) {
   return ray3_init(r.pos, vec3_div(r.vec, v));
 }
 
-/// ray3_divvf ///
-// Description
-//   Divides the vector element of a ray by a vector comprised of a single
-//   scalar value.
-// Arguments
-//   r: Ray (Ray3)
-//   f: Scalar (Float)
-// Returns
-//   Ray (Ray3)
-
-sol
-Ray3 ray3_divvf(Ray3 r, Float f) {
-  return ray3_divv(r, vec3_initf(f));
-}
-
 /// ray3_vdiv ///
 // Description
-//   Divides a vector by the vector element of a ray.
+//   Divides a vector by the vector element
+//   of a ray.
 // Arguments
 //   v: Vector (Vec3)
 //   r: Ray (Ray3)
 // Returns
-//   Ray (Ray3)
+//   Ray (Ray3) = {r.pos, v.xyz / r.vec.xyz}
 
 sol
 Ray3 ray3_vdiv(Vec3 v, Ray3 r) {
   return ray3_init(r.pos, vec3_div(v, r.vec));
 }
 
-/// ray3_vfdiv ///
+/// ray3_avg ///
 // Description
-//   Divides a vector comprised of a single scalar value by the vector element
-//   of a ray.
+//   Averages the vector element of one ray
+//   by that of another.
 // Arguments
-//   f: Scalar (Float)
-//   r: Ray (Ray3)
+//   a: Ray (Ray3)
+//   b: Ray (Ray3)
 // Returns
-//   Ray (Ray3)
+//   Ray (Ray3) = {a.pos, (a.vec.xyz + b.vec.xyz) / 2}
 
 sol
-Ray3 ray3_vfdiv(Float f, Ray3 r) {
-  return ray3_vdiv(vec3_initf(f), r);
-}
-
-/// ray3_avgp ///
-// Description
-//   Averages a ray's position element with a position.
-// Arguments
-//   r: Ray (Ray3)
-//   p: Position (Vec3)
-// Returns
-//   Ray (Ray3)
-
-sol
-Ray3 ray3_avgp(Ray3 r, Vec3 p) {
-  return ray3_init(vec3_avg(r.pos, p), r.vec);
-}
-
-/// ray3_avgpf ///
-// Description
-//   Averages a ray's position element with a position comprised of a single
-//   scalar value.
-// Arguments
-//   r: Ray (Ray3)
-//   f: Scalar (Float)
-// Returns
-//   Ray (Ray3)
-
-sol
-Ray3 ray3_avgpf(Ray3 r, Float f) {
-  return ray3_avgp(r, vec3_initf(f));
+Ray3 ray3_avg(Ray3 a, Ray3 b) {
+  return ray3_init(a.pos, vec3_avg(a.vec, b.vec));
 }
 
 /// ray3_avgv ///
 // Description
-//   Averages a ray's vector element with a vector.
+//   Averages the vector element of a ray with
+//   a vector.
 // Arguments
 //   r: Ray (Ray3)
 //   v: Vector (Vec3)
 // Returns
-//   Ray (Ray3)
+//   Ray (Ray3) = {r.pos, (r.vec.xyz + v.xyz) / 2}
 
 sol
 Ray3 ray3_avgv(Ray3 r, Vec3 v) {
   return ray3_init(r.pos, vec3_avg(r.vec, v));
 }
 
-/// ray3_avgvf ///
+/// ray3_avgf ///
 // Description
-//   Averages a ray's vector element with a vector comprised of a single scalar
-//   value.
+//   Averages the vector element of a ray with
+//   a scalar.
 // Arguments
 //   r: Ray (Ray3)
 //   f: Scalar (Float)
 // Returns
-//   Ray (Ray3)
+//   Ray (Ray3) = {r.pos, (r.vec.xyz + f) / 2}
 
 sol
-Ray3 ray3_avgvf(Ray3 r, Float f) {
-  return ray3_avgv(r, vec3_initf(f));
+Ray3 ray3_avgf(Ray3 r, Float f) {
+  return ray3_init(r.pos, vec3_avgf(r.vec, f));
 }
 
   //////////////////////////////////////////////////////////////////////////////

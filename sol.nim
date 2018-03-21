@@ -186,11 +186,9 @@ template norm*(v: Vec2): Vec2             = vec2_norm(v)
 template mag*(v: Vec2): Float             = vec2_mag(v)
 template eq*(a, b: Vec2; ep: Float): bool = vec2_eq(a, b, ep)
 
-template rot*(v: Vec2; deg: Float): Vec2  = vec2_rot(v, deg)
-template rotr*(v: Vec2; rad: Float): Vec2 = vec2_rotr(v, rad)
-
 template proj*(a, b: Vec2): Vec2   = vec2_proj(a, b)
 template rej*(a, b: Vec2): Vec2    = vec2_rej(a, b)
+template angle*(a, b: Vec2): Float = vec2_angle(a, b)
 template cross*(a, b: Vec2): Float = vec2_cross(a, b)
 template dot*(a, b: Vec2): Float   = vec2_dot(a, b)
 
@@ -277,9 +275,6 @@ template norm*(v: Vec3): Vec3             = vec3_norm(v)
 template mag*(v: Vec3): Float             = vec3_mag(v)
 template eq*(a, b: Vec3; ep: Float): bool = vec3_eq(a, b, ep)
 
-template rot*(v: Vec3; aa: Vec4): Vec3 = vec3_rot(v, aa)
-template rotq*(v: Vec3; q: Vec4): Vec3 = vec3_rotq(v, q)
-
 template proj*(a, b: Vec3): Vec3  = vec3_proj(a, b)
 template rej*(a, b: Vec3): Vec3   = vec3_rej(a, b)
 template angle*(a, b: Vec3): Vec3 = vec3_angle(a, b)
@@ -287,8 +282,6 @@ template cross*(a, b: Vec3): Vec3 = vec3_cross(a, b)
 template dot*(a, b: Vec3): Float  = vec3_dot(a, b)
 
 template sum*(v: Vec3): Float = vec3_sum(v)
-
-template print*(v: Vec3)                = vec3_print(v)
 
 template `+`*(a, b: Vec3): Vec3        = vec3_add(a, b)
 template `+`*(v: Vec3; f: Float): Vec3 = vec3_addf(v, f)
@@ -331,6 +324,8 @@ proc vec4_norm*(v: Vec4): Vec4             {.importc: "vec4_norm", header: "sol.
 proc vec4_mag*(v: Vec4): Float             {.importc: "vec4_mag",  header: "sol.h".}
 proc vec4_eq*(a, b: Vec4; ep: Float): bool {.importc: "vec4_eq",   header: "sol.h".}
 
+proc vec4_dot*(a, b: Vec4): Float {.importc: "vec4_dot", header: "sol.h".}
+
 proc vec4_sum*(v: Vec4): Float           {.importc: "vec4_sum",  header: "sol.h".}
 proc vec4_fma*(a, b, c: Vec4): Vec4      {.importc: "vec4_fma",  header: "sol.h".}
 proc vec4_add*(a, b: Vec4): Vec4         {.importc: "vec4_add",  header: "sol.h".}
@@ -359,8 +354,6 @@ template mag*(v: Vec4): Float             = vec4_mag(v)
 template eq*(a, b: Vec4; ep: Float): bool = vec4_eq(a, b, ep)
 
 template sum*(v: Vec4): Float = vec4_sum(v)
-
-template print*(v: Vec4)                = vec4_print(v)
 
 template `+`*(a, b: Vec4): Vec4        = vec4_add(a, b)
 template `+`*(v: Vec4; f: Float): Vec4 = vec4_addf(v, f)
@@ -407,35 +400,65 @@ proc ray2_eq*(a, b: Ray2; ep: Float): bool {.importc: "ray2_eq",   header: "sol.
 proc ray2_rot*(r: Ray2; deg: Float): Ray2  {.importc: "ray2_rot",  header: "sol.h".}
 proc ray2_rotr*(r: Ray2; rad: Float): Ray2 {.importc: "ray2_rotr", header: "sol.h".}
 
-proc ray2_addp*(r: Ray2; p: Vec2): Ray2   {.importc: "ray2_addp",  header: "sol.h".}
-proc ray2_addpf*(r: Ray2; f: Float): Ray2 {.importc: "ray2_addpf", header: "sol.h".}
-proc ray2_addv*(r: Ray2; v: Vec2): Ray2   {.importc: "ray2_addv",  header: "sol.h".}
-proc ray2_addvf*(r: Ray2; f: Float): Ray2 {.importc: "ray2_addvf", header: "sol.h".}
-proc ray2_subp*(r: Ray2; p: Vec2): Ray2   {.importc: "ray2_subp",  header: "sol.h".}
-proc ray2_subpf*(r: Ray2; f: Float): Ray2 {.importc: "ray2_subpf", header: "sol.h".}
-proc ray2_psub*(p: Vec2; r: Ray2): Ray2   {.importc: "ray2_psub",  header: "sol.h".}
-proc ray2_pfsub*(f: Float; r: Ray2): Ray2 {.importc: "ray2_pfsub", header: "sol.h".}
-proc ray2_subv*(r: Ray2; v: Vec2): Ray2   {.importc: "ray2_subv",  header: "sol.h".}
-proc ray2_subvf*(r: Ray2; f: Float): Ray2 {.importc: "ray2_subvf", header: "sol.h".}
-proc ray2_vsub*(v: Vec2; r: Ray2): Ray2   {.importc: "ray2_vsub",  header: "sol.h".}
-proc ray2_vfsub*(f: Float; r: Ray2): Ray2 {.importc: "ray2_vfsub", header: "sol.h".}
-proc ray2_mulp*(r: Ray2; p: Vec2): Ray2   {.importc: "ray2_mulp",  header: "sol.h".}
-proc ray2_mulpf*(r: Ray2; f: Float): Ray2 {.importc: "ray2_mulpf", header: "sol.h".}
-proc ray2_mulv*(r: Ray2; v: Vec2): Ray2   {.importc: "ray2_mulv",  header: "sol.h".}
-proc ray2_mulvf*(r: Ray2; f: Float): Ray2 {.importc: "ray2_mulvf", header: "sol.h".}
-proc ray2_divp*(r: Ray2; p: Vec2): Ray2   {.importc: "ray2_divp",  header: "sol.h".}
-proc ray2_divpf*(r: Ray2; f: Float): Ray2 {.importc: "ray2_divpf", header: "sol.h".}
-proc ray2_pdiv*(p: Vec2; r: Ray2): Ray2   {.importc: "ray2_pdiv",  header: "sol.h".}
-proc ray2_pfdiv*(f: Float; r: Ray2): Ray2 {.importc: "ray2_pfdiv", header: "sol.h".}
-proc ray2_divv*(r: Ray2; v: Vec2): Ray2   {.importc: "ray2_divv",  header: "sol.h".}
-proc ray2_divvf*(r: Ray2; f: Float): Ray2 {.importc: "ray2_divvf", header: "sol.h".}
-proc ray2_vdiv*(v: Vec2; r: Ray2): Ray2   {.importc: "ray2_vdiv",  header: "sol.h".}
-proc ray2_vfdiv*(f: Float; r: Ray2): Ray2 {.importc: "ray2_vfdiv", header: "sol.h".}
+proc ray2_add*(a, b: Ray2): Ray2         {.importc: "ray2_add",  header: "sol.h".}
+proc ray2_addv*(r: Ray2; v: Vec2): Ray2  {.importc: "ray2_addv", header: "sol.h".}
+proc ray2_addf*(r: Ray2; f: Float): Ray2 {.importc: "ray2_addf", header: "sol.h".}
+proc ray2_sub*(a, b: Ray2): Ray2         {.importc: "ray2_sub",  header: "sol.h".}
+proc ray2_subv*(r: Ray2; v: Vec2): Ray2  {.importc: "ray2_subv", header: "sol.h".}
+proc ray2_vsub*(v: Vec2; r: Ray2): Ray2  {.importc: "ray2_vsub", header: "sol.h".}
+proc ray2_subf*(r: Ray2; f: Float): Ray2 {.importc: "ray2_subf", header: "sol.h".}
+proc ray2_fsub*(f: Float; r: Ray2): Ray2 {.importc: "ray2_fsub", header: "sol.h".}
+proc ray2_mul*(a, b: Ray2): Ray2         {.importc: "ray2_mul",  header: "sol.h".}
+proc ray2_mulv*(r: Ray2; v: Vec2): Ray2  {.importc: "ray2_mulv", header: "sol.h".}
+proc ray2_mulf*(r: Ray2; f: Float): Ray2 {.importc: "ray2_mulf", header: "sol.h".}
+proc ray2_div*(a, b: Ray2): Ray2         {.importc: "ray2_div",  header: "sol.h".}
+proc ray2_divv*(r: Ray2; v: Vec2): Ray2  {.importc: "ray2_divv", header: "sol.h".}
+proc ray2_vdiv*(v: Vec2; r: Ray2): Ray2  {.importc: "ray2_vdiv", header: "sol.h".}
+proc ray2_divf*(r: Ray2; f: Float): Ray2 {.importc: "ray2_divf", header: "sol.h".}
+proc ray2_fdiv*(f: Float; r: Ray2): Ray2 {.importc: "ray2_fdiv", header: "sol.h".}
+proc ray2_avg*(a, b: Ray2): Ray2         {.importc: "ray2_avg",  header: "sol.h".}
+proc ray2_avgv*(r: Ray2; v: Vec2): Ray2  {.importc: "ray2_avgv", header: "sol.h".}
+proc ray2_avgf*(r: Ray2; f: Float): Ray2 {.importc: "ray2_avgf", header: "sol.h".}
 
-proc ray2_avgp*(r: Ray2; p: Vec2): Ray2   {.importc: "ray2_avgp",  header: "sol.h".}
-proc ray2_avgpf*(r: Ray2; f: Float): Ray2 {.importc: "ray2_avgpf", header: "sol.h".}
-proc ray2_avgv*(r: Ray2; v: Vec2): Ray2   {.importc: "ray2_avgv",  header: "sol.h".}
-proc ray2_avgvf*(r: Ray2; f: Float): Ray2 {.importc: "ray2_avgvf", header: "sol.h".}
+proc ray2_print*(r: Ray2) {.importc: "ray2_print", header: "sol.h".}
+
+################################################################################
+# Ray2 Operators ###############################################################
+################################################################################
+
+template `+`*(a, b: Ray2): Ray2        = ray2_add(a, b)
+template `+`*(r: Ray2; v: Vec2): Ray2  = ray2_addv(r, v)
+template `+`*(v: Vec2; r: Ray2): Ray2  = ray2_addv(r, v)
+template `+`*(r: Ray2; f: Float): Ray2 = ray2_addf(r, f)
+template `+`*(f: Float; r: Ray2): Ray2 = ray2_addf(r, f)
+template `-`*(a, b: Ray2): Ray2        = ray2_sub(a, b)
+template `-`*(r: Ray2; v: Vec2): Ray2  = ray2_subv(r, v)
+template `-`*(v: Vec2; r: Ray2): Ray2  = ray2_vsub(v, r)
+template `-`*(r: Ray2; f: Float): Ray2 = ray2_subf(r, f)
+template `-`*(f: Float; r: Ray2): Ray2 = ray2_fsub(f, r)
+template `*`*(a, b: Ray2): Ray2        = ray2_mul(a, b)
+template `*`*(r: Ray2; v: Vec2): Ray2  = ray2_mulv(r, v)
+template `*`*(v: Vec2; r: Ray2): Ray2  = ray2_mulv(r, v)
+template `*`*(r: Ray2; f: Float): Ray2 = ray2_mulf(r, f)
+template `*`*(f: Float; r: Ray2): Ray2 = ray2_mulf(r, f)
+template `/`*(a, b: Ray2): Ray2        = ray2_div(a, b)
+template `/`*(r: Ray2; v: Vec2): Ray2  = ray2_divv(r, v)
+template `/`*(v: Vec2; r: Ray2): Ray2  = ray2_vdiv(v, r)
+template `/`*(r: Ray2; f: Float): Ray2 = ray2_divf(r, f)
+template `/`*(f; Float; r: Ray2): Ray2 = ray2_fdiv(f, r)
+
+template `+=`*(a: var Ray2; b: Ray2)  = a = ray2_add(a, b)
+template `+=`*(r: var Ray2; v: Vec2)  = r = ray2_addv(r, v)
+template `+=`*(r: var Ray2; f: Float) = r = ray2_addf(r, f)
+template `-=`*(a: var Ray2; b: Ray2)  = a = ray2_sub(a, b)
+template `-=`*(r: var Ray2; v: Vec2)  = r = ray2_subv(r, v)
+template `-=`*(r: var Ray2; f: Float) = r = ray2_subf(r, f)
+template `*=`*(a: var Ray2; b: Ray2)  = a = ray2_mul(a, b)
+template `*=`*(r: var Ray2; v: Vec2)  = r = ray2_mulv(r, v)
+template `*=`*(r: var Ray2; f: Float) = r = ray2_mulf(r, f)
+template `/=`*(a: var Ray2; b: Ray2)  = a = ray2_div(a, b)
+template `/=`*(r: var Ray2; v: Vec2)  = r = ray2_divv(r, v)
+template `/=`*(r: var Ray2; f: Float) = r = ray2_divf(r, f)
 
 ################################################################################
 # Ray3 Functions ###############################################################
@@ -453,34 +476,65 @@ proc ray3_eq*(a, b: Ray3; ep: Float): bool {.importc: "ray3_eq",   header: "sol.
 proc ray3_rot*(r: Ray3; aa: Vec4): Ray3 {.importc: "ray3_rot",  header: "sol.h".}
 proc ray3_rotq*(r: Ray3; q: Vec4): Ray3 {.importc: "ray3_rotq", header: "sol.h".}
 
-proc ray3_addp*(r: Ray3; p: Vec3): Ray3   {.importc: "ray3_addp",  header: "sol.h".}
-proc ray3_addpf*(r: Ray3; f: Float): Ray3 {.importc: "ray3_addpf", header: "sol.h".}
-proc ray3_addv*(r: Ray3; v: Vec3): Ray3   {.importc: "ray3_addv",  header: "sol.h".}
-proc ray3_addvf*(r: Ray3; f: Float): Ray3 {.importc: "ray3_addvf", header: "sol.h".}
-proc ray3_subp*(r: Ray3; p: Vec3): Ray3   {.importc: "ray3_subp",  header: "sol.h".}
-proc ray3_subpf*(r: Ray3; f: Float): Ray3 {.importc: "ray3_subpf", header: "sol.h".}
-proc ray3_psub*(p: Vec3; r: Ray3): Ray3   {.importc: "ray3_psub",  header: "sol.h".}
-proc ray3_pfsub*(f: Float; r: Ray3): Ray3 {.importc: "ray3_pfsub", header: "sol.h".}
-proc ray3_subv*(r: Ray3; v: Vec3): Ray3   {.importc: "ray3_subv",  header: "sol.h".}
-proc ray3_subvf*(r: Ray3; f: Float): Ray3 {.importc: "ray3_subvf", header: "sol.h".}
-proc ray3_vsub*(v: Vec3; r: Ray3): Ray3   {.importc: "ray3_vsub",  header: "sol.h".}
-proc ray3_vfsub*(f: Float; r: Ray3): Ray3 {.importc: "ray3_vfsub", header: "sol.h".}
-proc ray3_mulp*(r: Ray3; p: Vec3): Ray3   {.importc: "ray3_mulp",  header: "sol.h".}
-proc ray3_mulpf*(r: Ray3; f: Float): Ray3 {.importc: "ray3_mulpf", header: "sol.h".}
-proc ray3_mulv*(r: Ray3; v: Vec3): Ray3   {.importc: "ray3_mulv",  header: "sol.h".}
-proc ray3_mulvf*(r: Ray3; f: Float): Ray3 {.importc: "ray3_mulvf", header: "sol.h".}
-proc ray3_divp*(r: Ray3; p: Vec3): Ray3   {.importc: "ray3_divp",  header: "sol.h".}
-proc ray3_divpf*(r: Ray3; f: Float): Ray3 {.importc: "ray3_divpf", header: "sol.h".}
-proc ray3_pdiv*(p: Vec3; r: Ray3): Ray3   {.importc: "ray3_pdiv",  header: "sol.h".}
-proc ray3_pfdiv*(f: Float; r: Ray3): Ray3 {.importc: "ray3_pfdiv", header: "sol.h".}
-proc ray3_divv*(r: Ray3; v: Vec3): Ray3   {.importc: "ray3_divv",  header: "sol.h".}
-proc ray3_divvf*(r: Ray3; f: Float): Ray3 {.importc: "ray3_divvf", header: "sol.h".}
-proc ray3_vdiv*(v: Vec3; r: Ray3): Ray3   {.importc: "ray3_vdiv",  header: "sol.h".}
-proc ray3_vfdiv*(f: Float; r: Ray3): Ray3 {.importc: "ray3_vfdiv", header: "sol.h".}
-proc ray3_avgp*(r: Ray3; p: Vec3): Ray3   {.importc: "ray3_avgp",  header: "sol.h".}
-proc ray3_avgpf*(r: Ray3; f: Float): Ray3 {.importc: "ray3_avgpf", header: "sol.h".}
-proc ray3_avgv*(r: Ray3; v: Vec3): Ray3   {.importc: "ray3_avgv",  header: "sol.h".}
-proc ray3_avgvf*(r: Ray3; f: Float): Ray3 {.importc: "ray3_avgvf", header: "sol.h".}
+proc ray3_add*(a, b: Ray3): Ray3         {.importc: "ray3_add",  header: "sol.h".}
+proc ray3_addv*(r: Ray3; v: Vec3): Ray3  {.importc: "ray3_addv", header: "sol.h".}
+proc ray3_addf*(r: Ray3; f: Float): Ray3 {.importc: "ray3_addf", header: "sol.h".}
+proc ray3_sub*(a, b: Ray3): Ray3         {.importc: "ray3_sub",  header: "sol.h".}
+proc ray3_subv*(r: Ray3; v: Vec3): Ray3  {.importc: "ray3_subv", header: "sol.h".}
+proc ray3_vsub*(v: Vec3; r: Ray3): Ray3  {.importc: "ray3_vsub", header: "sol.h".}
+proc ray3_subf*(r: Ray3; f: Float): Ray3 {.importc: "ray3_subf", header: "sol.h".}
+proc ray3_fsub*(f: Float; r: Ray3): Ray3 {.importc: "ray3_fsub", header: "sol.h".}
+proc ray3_mul*(a, b: Ray3): Ray3         {.importc: "ray3_mul",  header: "sol.h".}
+proc ray3_mulv*(r: Ray3; v: Vec3): Ray3  {.importc: "ray3_mulv", header: "sol.h".}
+proc ray3_mulf*(r: Ray3; f: Float): Ray3 {.importc: "ray3_mulf", header: "sol.h".}
+proc ray3_div*(a, b: Ray3): Ray3         {.importc: "ray3_div",  header: "sol.h".}
+proc ray3_divv*(r: Ray3; v: Vec3): Ray3  {.importc: "ray3_divv", header: "sol.h".}
+proc ray3_vdiv*(v: Vec3; r: Ray3): Ray3  {.importc: "ray3_vdiv", header: "sol.h".}
+proc ray3_divf*(r: Ray3; f: Float): Ray3 {.importc: "ray3_divf", header: "sol.h".}
+proc ray3_fdiv*(f: Float; r: Ray3): Ray3 {.importc: "ray3_fdiv", header: "sol.h".}
+proc ray3_avg*(a, b: Ray3): Ray3         {.importc: "ray3_avg",  header: "sol.h".}
+proc ray3_avgv*(r: Ray3; v: Vec3): Ray3  {.importc: "ray3_avgv", header: "sol.h".}
+proc ray3_avgf*(r: Ray3; f: Float): Ray3 {.importc: "ray3_avgf", header: "sol.h".}
+
+proc ray3_print*(r: Ray3) {.importc: "ray3_print", header: "sol.h".}
+
+################################################################################
+# Ray3 Operators ###############################################################
+################################################################################
+
+template `+`*(a, b: Ray3): Ray3        = ray3_add(a, b)
+template `+`*(r: Ray3; v: Vec3): Ray3  = ray3_addv(r, v)
+template `+`*(v: Vec3; r: Ray3): Ray3  = ray3_addv(r, v)
+template `+`*(r: Ray3; f: Float): Ray3 = ray3_addf(r, f)
+template `+`*(f: Float; r: Ray3): Ray3 = ray3_addf(r, f)
+template `-`*(a, b: Ray3): Ray3        = ray3_sub(a, b)
+template `-`*(r: Ray3; v: Vec3): Ray3  = ray3_subv(r, v)
+template `-`*(v: Vec3; r: Ray3): Ray3  = ray3_vsub(v, r)
+template `-`*(r: Ray3; f: Float): Ray3 = ray3_subf(r, f)
+template `-`*(f: Float; r: Ray3): Ray3 = ray3_fsub(f, r)
+template `*`*(a, b: Ray3): Ray3        = ray3_mul(a, b)
+template `*`*(r: Ray3; v: Vec3): Ray3  = ray3_mulv(r, v)
+template `*`*(v: Vec3; r: Ray3): Ray3  = ray3_mulv(r, v)
+template `*`*(r: Ray3; f: Float): Ray3 = ray3_mulf(r, f)
+template `*`*(f: Float; r: Ray3): Ray3 = ray3_mulf(r, f)
+template `/`*(a, b: Ray3): Ray3        = ray3_div(a, b)
+template `/`*(r: Ray3; v: Vec3): Ray3  = ray3_divv(r, v)
+template `/`*(v: Vec3; r: Ray3): Ray3  = ray3_vdiv(v, r)
+template `/`*(r: Ray3; f: Float): Ray3 = ray3_divf(r, f)
+template `/`*(f: Float; r: Ray3): Ray3 = ray3_fdiv(f, r)
+
+template `+=`*(a: var Ray3; b: Ray3)  = a = ray3_add(a, b)
+template `+=`*(r: var Ray3; v: Vec3)  = r = ray3_addv(r, v)
+template `+=`*(r: var Ray3; f: Float) = r = ray3_addf(r, f)
+template `-=`*(a: var Ray3; b: Ray3)  = a = ray3_sub(a, b)
+template `-=`*(r: var Ray3; v: Vec3)  = r = ray2_subv(r, v)
+template `-=`*(r: var Ray3; f: Float) = r = ray2_subf(r, f)
+template `*=`*(a: var Ray3; b: Ray3)  = a = ray3_mul(a, b)
+template `*=`*(r: var Ray3; v: Vec3)  = r = ray3_mulv(r, v)
+template `*=`*(r: var Ray3; f: Float) = r = ray3_mulf(r, f)
+template `/=`*(a: var Ray3; b: Ray3)  = a = ray3_div(a, b)
+template `/=`*(r: var Ray3; v: Vec3)  = r = ray3_divv(r, v)
+template `/=`*(r: var Ray3; f: Float) = r = ray3_divf(r, f)
 
 ################################################################################
 # Seg2 Functions ###############################################################
@@ -623,7 +677,13 @@ template `/=`*(s: var Seg3; f: Float) = s = seg3_divf(s, f)
 proc mat2_init*(f11, f12, f21, f22: Float): Mat2 {.importc: "mat2_init",  header: "sol.h".}
 proc mat2_initv*(v1, v2: Vec2): Mat2             {.importc: "mat2_initv", header: "sol.h".}
 proc mat2_initf*(f: Float): Mat2                 {.importc: "mat2_initf", header: "sol.h".}
+proc mat2_iden*(): Mat2                          {.importc: "mat2_iden",  header: "sol.h".}
 proc mat2_zero*(): Mat2                          {.importc: "mat2_zero",  header: "sol.h".}
+
+proc mat2_row*(m: Mat2; row: csize): Vec2 {.importc: "mat2_row", header: "sol.h".}
+proc mat2_col*(m: Mat2; col: csize): Vec2 {.importc: "mat2_col", header: "sol.h".}
+
+proc mat2_dot*(a, b: Mat2): Mat2 {.importc: "mat2_dot", header: "sol.h".}
 
 proc mat2_add*(a, b: Mat2): Mat2         {.importc: "mat2_add",  header: "sol.h".}
 proc mat2_addf*(m: Mat2; f: Float): Mat2 {.importc: "mat2_addf", header: "sol.h".}
@@ -643,6 +703,14 @@ proc mat2_print*(m: Mat2): void {.importc: "mat2_print", header: "sol.h".}
 ################################################################################
 # Mat2 Operators ###############################################################
 ################################################################################
+
+template mat*(f11, f12, f21, f22: Float): Mat2 =
+  mat2_init(f11, f12, f21, f22)
+
+template row*(m: Mat2; row: csize): Vec2 = mat2_row(m, row)
+template col*(m: Mat2; col: csize): Vec2 = mat2_col(m, col)
+
+template dot*(a, b: Mat2): Mat2 = mat2_dot(a, b)
 
 template `+`*(a, b: Mat2): Mat2        = mat2_add(a, b)
 template `+`*(m: Mat2; f: Float): Mat2 = mat2_addf(m, f)
@@ -670,10 +738,16 @@ template `/=`*(v: var Mat2; f: Float) = v = mat2_divf(v, f)
 # Mat3 Functions ###############################################################
 ################################################################################
 
-proc mat3_init*(f11, f12, f13, f21, f22, f23, f31, f32, f33: Float): Mat3 {.importc: "mat3_init", header: "sol.h".}
+proc mat3_init*(f11, f12, f13, f21, f22, f23, f31, f32, f33: Float): Mat3 {.importc: "mat3_init",  header: "sol.h".}
 proc mat3_initv*(v1, v2, v3: Vec3): Mat3                                  {.importc: "mat3_initv", header: "sol.h".}
 proc mat3_initf*(f: Float): Mat3                                          {.importc: "mat3_initf", header: "sol.h".}
-proc mat3_zero*(): Mat3                                                   {.importc: "mat3_zero", header: "sol.h".}
+proc mat3_iden*(): Mat3                                                   {.importc: "mat3_iden",  header: "sol.h".}
+proc mat3_zero*(): Mat3                                                   {.importc: "mat3_zero",  header: "sol.h".}
+
+proc mat3_row*(m: Mat3; row: csize): Vec3 {.importc: "mat3_row", header: "sol.h".}
+proc mat3_col*(m: Mat3; col: csize): Vec3 {.importc: "mat3_col", header: "sol.h".}
+
+proc mat3_dot*(a, b: Mat3): Mat3 {.importc: "mat3_dot", header: "sol.h".}
 
 proc mat3_add*(a, b: Mat3): Mat3         {.importc: "mat3_add",  header: "sol.h".}
 proc mat3_addf*(m: Mat3; f: Float): Mat3 {.importc: "mat3_addf", header: "sol.h".}
@@ -693,6 +767,14 @@ proc mat3_print*(m: Mat3): void {.importc: "mat3_print", header: "sol.h".}
 ################################################################################
 # Mat3 Operators ###############################################################
 ################################################################################
+
+template mat*(f11, f12, f13, f21, f22, f23, f31, f32, f33: Float): Mat3 =
+  mat3_init(f11, f12, f13, f21, f22, f23, f31, f32, f33)
+
+template row*(m: Mat3; row: csize): Vec3 = mat3_row(m, row)
+template col*(m: Mat3; col: csize): Vec3 = mat3_col(m, col)
+
+template dot*(a, b: Mat3): Mat3 = mat3_dot(a, b)
 
 template `+`*(a, b: Mat3): Mat3        = mat3_add(a, b)
 template `+`*(m: Mat3; f: Float): Mat3 = mat3_addf(m, f)
@@ -723,7 +805,13 @@ template `/=`*(m: var Mat3; f: Float) = m = mat3_divf(m, f)
 proc mat4_init*(f11, f12, f13, f14, f21, f22, f23, f24, f31, f32, f33, f34, f41, f42, f43, f44: Float): Mat4 {.importc: "mat4_init",  header: "sol.h".}
 proc mat4_initv*(v1, v2, v3, v4: Vec4): Mat4                                                                 {.importc: "mat4_initv", header: "sol.h".}
 proc mat4_initf*(f: Float): Mat4                                                                             {.importc: "mat4_initf", header: "sol.h".}
+proc mat4_iden*(): Mat4                                                                                      {.importc: "mat4_iden",  header: "sol.h".}
 proc mat4_zero*(): Mat4                                                                                      {.importc: "mat4_zero",  header: "sol.h".}
+
+proc mat4_row*(m: Mat4; row: csize): Vec4 {.importc: "mat4_row", header: "sol.h".}
+proc mat4_col*(m: Mat4; col: csize): Vec4 {.importc: "mat4_col", header: "sol.h".}
+
+proc mat4_dot*(a, b: Mat4): Mat4 {.importc: "mat4_dot", header: "sol.h".}
 
 proc mat4_add*(a, b: Mat4): Mat4         {.importc: "mat4_add",  header: "sol.h".}
 proc mat4_addf*(m: Mat4; f: Float): Mat4 {.importc: "mat4_addf", header: "sol.h".}
@@ -743,6 +831,14 @@ proc mat4_print*(m: Mat4): Mat4 {.importc: "mat4_print", header: "sol.h".}
 ################################################################################
 # Mat4 Operators ###############################################################
 ################################################################################
+
+template mat*(f11, f12, f13, f14, f21, f22, f23, f24, f31, f32, f33, f34, f41, f42, f43, f44: Float): Mat4 =
+  mat4_init(f11, f12, f13, f14, f21, f22, f23, f24, f31, f32, f33, f34, f41, f42, f43, f44)
+
+template row*(m: Mat4; row; csize): Vec4 = mat4_row(m, row)
+template col*(m: Mat4; col: csize): Vec4 = mat4_col(m, col)
+
+template dot*(a, b: Mat4): Mat4 = mat4_dot(a, b)
 
 template `+`*(a, b: Mat4): Mat4        = mat4_add(a, b)
 template `+`*(m: Mat4; f: Float): Mat4 = mat4_addf(m, f)

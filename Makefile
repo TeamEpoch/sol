@@ -2,8 +2,8 @@
 
 # C Compiler Settings #
 
-CC=clang
-CFLAGS=-Weverything -O3 -ffast-math
+CC=gcc
+CFLAGS=-O3 -ffast-math
 LDFLAGS=-lm
 
 # Nim Compiler Settings #

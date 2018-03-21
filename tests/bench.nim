@@ -127,11 +127,8 @@ bench "vec2_norm":
 bench "vec2_mag":
     fc = mag(v2c)
 
-bench "vec2_eq":
-    b = eq(v2a, v2b, 0.1)
-
 bench "vec2_rot":
-    v2c = rot(v2a, deg)
+    v2c = vec2_rot(v2a, deg)
 
 bench "vec2_cross":
     fc = cross(v2a, v2b)
@@ -157,9 +154,6 @@ bench "vec2_mul":
 bench "vec2_div":
     v2c = v2a / v2b
 
-bench "vec2_avg":
-    v2c = vec2_avg(v2a, v2b)
-
 echo ""
 echo "[sol] Vec3 Benchmarks"
 
@@ -169,14 +163,11 @@ bench "vec3_norm":
 bench "vec3_mag":
     fc = mag(v3c)
 
-bench "vec3_eq":
-    b = eq(v3a, v3b, 0.1)
-
 bench "vec3_rot":
-    v3c = rot(v3a, axis)
+    v3c = vec3_rot(v3a, axis)
 
 bench "vec3_rotq":
-    v3c = rotq(v3a, quat)
+    v3c = vec3_rotq(v3a, quat)
 
 bench "vec3_cross":
     v3c = cross(v3a, v3b)
@@ -201,9 +192,6 @@ bench "vec3_mul":
 
 bench "vec3_div":
     v3c = v3a / v3b
-
-bench "vec3_avg":
-    v3c = vec3_avg(v3a, v3b)
 
 echo ""
 echo "[sol] Vec4 Benchmarks"
@@ -235,11 +223,14 @@ bench "vec4_mul":
 bench "vec4_div":
     v4c = v4a / v4b
 
-bench "vec4_avg":
-    v4c = vec4_avg(v4a, v4b)
-
 echo ""
 echo "[sol] Mat2 Benchmarks"
+
+bench "mat2_dot":
+    m2c = mat2_dot(m2a, m2b)
+
+bench "mat2_fma":
+    m2c = m2a * m2b + m2c
 
 bench "mat2_add":
     m2c = m2a + m2b
@@ -259,6 +250,12 @@ bench "mat2_avg":
 echo ""
 echo "[sol] Mat3 Benchmarks"
 
+bench "mat3_dot":
+    m3c = mat3_dot(m3a, m3b)
+
+bench "mat3_fma":
+    m3c = m3a * m3b + m3c
+
 bench "mat3_add":
     m3c = m3a + m3b
 
@@ -276,6 +273,12 @@ bench "mat3_avg":
 
 echo ""
 echo "[sol] Mat4 Benchmarks"
+
+bench "mat4_dot":
+    m4c = mat4_dot(m4a, m4b)
+
+bench "mat4_fma":
+    m4c = m4a * m4b + m4c
 
 bench "mat4_add":
     m4c = m4a + m4b

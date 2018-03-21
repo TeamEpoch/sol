@@ -64,6 +64,20 @@ Mat2 mat2_initf(Float f) {
                    f, f);
 }
 
+/// mat2_iden ///
+// Description
+//   Returns the identity 2x2 matrix.
+// Arguments
+//   void
+// Returns
+//   Identity Matrix (Mat2)
+
+sol
+Mat2 mat2_iden(void) {
+  return mat2_init((Float) 1, (Float) 0,
+                   (Float) 0, (Float) 1);
+}
+
 /// mat2_zero ///
 // Description
 //   Initializes a 2x2 matrix using zeroes
@@ -75,12 +89,90 @@ Mat2 mat2_initf(Float f) {
 
 sol
 Mat2 mat2_zero(void) {
-  return mat2_initf(0);
+  return mat2_initf((Float) 0);
+}
+
+  //////////////////////////////////////////////////////////////////////////////
+ // Mat2 Core Operations //////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+
+/// mat2_row ///
+// Description
+//   Returns the specified row of
+//   the 2x2 matrix.
+// Arguments
+//   m: Matrix (Mat2)
+//   row: Row Number (size_t)
+// Returns
+//   Matrix (Mat2)
+
+sol
+Vec2 mat2_row(Mat2 m, size_t row) {
+  return m.v[row];
+}
+
+/// mat2_col ///
+// Description
+//   Returns the specified column of
+//   the 2x2 matrix.
+// Arguments
+//   m: Matrix (Mat2)
+//   col: Column Number (size_t)
+// Returns
+//   Matrix (Mat2)
+
+sol
+Vec2 mat2_col(Mat2 m, size_t col) {
+  return vec2_init(m.f[0][col], 
+                   m.f[1][col]);
+}
+
+  //////////////////////////////////////////////////////////////////////////////
+ // Mat2 Advanced Functions ///////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+
+/// mat2_dot ///
+// Description
+//   Properly multiplies two matrices
+//   using dot products.
+// Arguments
+//   a: Matrix (Mat2)
+//   b: Matrix (Mat2)
+// Returns
+//   Matrix (Mat2)
+
+sol
+Mat2 mat2_dot(Mat2 a, Mat2 b) {
+  const Vec2 a0 = mat2_row(a, 0);
+  const Vec2 a1 = mat2_row(a, 1);
+  const Vec2 b0 = mat2_col(b, 0);
+  const Vec2 b1 = mat2_col(b, 1);
+  return mat2_init(vec2_dot(a0, b0), 
+                   vec2_dot(a0, b1),
+                   vec2_dot(a1, b0), 
+                   vec2_dot(a1, b1));
 }
 
   //////////////////////////////////////////////////////////////////////////////
  // Mat2 Basic Functions //////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
+
+/// mat2_fma ///
+// Description
+//   Performs fused multiply add on two
+//   matrices.
+// Arguments
+//   a: Matrix (Mat2)
+//   b: Matrix (Mat2)
+//   c: Matrix (Mat2)
+// Returns
+//   Matrix (Mat2)
+
+sol
+Mat2 mat2_fma(Mat2 a, Mat2 b, Mat2 c) {
+  return mat2_initv(vec2_fma(a.v[0], b.v[0], c.v[0]),
+                    vec2_fma(a.v[1], b.v[1], c.v[1]));
+}
 
 /// mat2_add ///
 // Description

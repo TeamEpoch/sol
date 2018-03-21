@@ -27,10 +27,7 @@
 //   Matrix (Mat4)
 
 sol
-Mat4 mat4_init(Float f11, Float f12, Float f13, Float f14,
-               Float f21, Float f22, Float f23, Float f24,
-               Float f31, Float f32, Float f33, Float f34,
-               Float f41, Float f42, Float f43, Float f44) {
+Mat4 mat4_init(Float f11, Float f12, Float f13, Float f14, Float f21, Float f22, Float f23, Float f24, Float f31, Float f32, Float f33, Float f34, Float f41, Float f42, Float f43, Float f44) {
   return mat4_initv(vec4_init(f11, f12, f13, f14),
                     vec4_init(f21, f22, f23, f24),
                     vec4_init(f31, f32, f33, f34),
@@ -76,6 +73,22 @@ Mat4 mat4_initf(Float f) {
                    f, f, f, f);
 }
 
+/// mat4_iden ///
+// Description
+//   Returns the identity 4x4 matrix.
+// Arguments
+//   void
+// Returns
+//   Identity Matrix (Mat4)
+
+sol
+Mat4 mat4_iden(void) {
+  return mat4_init((Float) 1, (Float) 0, (Float) 0, (Float) 0,
+                   (Float) 0, (Float) 1, (Float) 0, (Float) 0,
+                   (Float) 0, (Float) 0, (Float) 1, (Float) 0,
+                   (Float) 0, (Float) 0, (Float) 0, (Float) 1);
+}
+
 /// mat4_zero ///
 // Description
 //   Initializes a 4x4 matrix using zero
@@ -91,7 +104,56 @@ Mat4 mat4_zero(void) {
 }
 
   //////////////////////////////////////////////////////////////////////////////
- // Mat4 Basic Functions //////////////////////////////////////////////////////
+ // Mat4 Core Operations //////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+
+sol
+Vec4 mat4_row(Mat4 m, size_t row) {
+  return m.v[row];
+}
+
+sol
+Vec4 mat4_col(Mat4 m, size_t col) {
+  return vec4_init(m.f[0][col],
+                   m.f[1][col],
+                   m.f[2][col],
+                   m.f[3][col]);
+}
+
+  //////////////////////////////////////////////////////////////////////////////
+ // Mat4 Advanced Math ////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+
+sol
+Mat4 mat4_dot(Mat4 a, Mat4 b) {
+  const Vec4 a0 = mat4_row(a, 0);
+  const Vec4 a1 = mat4_row(a, 1);
+  const Vec4 a2 = mat4_row(a, 2);
+  const Vec4 a3 = mat4_row(a, 3);
+  const Vec4 b0 = mat4_col(b, 0);
+  const Vec4 b1 = mat4_col(b, 1);
+  const Vec4 b2 = mat4_col(b, 2);
+  const Vec4 b3 = mat4_col(b, 3);
+  return mat4_init(vec4_dot(a0, b0),
+                   vec4_dot(a0, b1),
+                   vec4_dot(a0, b2),
+                   vec4_dot(a0, b3),
+                   vec4_dot(a1, b0),
+                   vec4_dot(a1, b1),
+                   vec4_dot(a1, b2),
+                   vec4_dot(a1, b3),
+                   vec4_dot(a2, b0),
+                   vec4_dot(a2, b1),
+                   vec4_dot(a2, b2),
+                   vec4_dot(a2, b3),
+                   vec4_dot(a3, b0),
+                   vec4_dot(a3, b1),
+                   vec4_dot(a3, b2),
+                   vec4_dot(a3, b3));
+}
+
+  //////////////////////////////////////////////////////////////////////////////
+ // Mat4 Basic Math ///////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
 /// mat4_add ///

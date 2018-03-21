@@ -516,7 +516,7 @@ Vec2 vec2_fpow(Float f, Vec2 v) {
 
 sol
 Vec2 vec2_avg(Vec2 a, Vec2 b) {
-  return vec2_divf(vec2_add(a, b), 2);
+  return vec2_mulf(vec2_add(a, b), (Float) 0.5);
 }
 
 /// vec2_avgf ///

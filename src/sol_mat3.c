@@ -70,6 +70,21 @@ Mat3 mat3_initf(Float f) {
                    f, f, f);
 }
 
+/// mat3_iden ///
+// Description
+//   Returns the identity 3x3 matrix.
+// Arguments
+//   void
+// Returns
+//   Identity Matrix (Mat3)
+
+sol
+Mat3 mat3_iden(void) {
+  return mat3_init((Float) 1, (Float) 0, (Float) 0,
+                   (Float) 0, (Float) 1, (Float) 0,
+                   (Float) 0, (Float) 0, (Float) 1);
+}
+
 /// mat3_zero ///
 // Description
 //   Initializes a 3x3 matrix using zeroes
@@ -82,6 +97,73 @@ Mat3 mat3_initf(Float f) {
 sol
 Mat3 mat3_zero(void) {
   return mat3_initf(0);
+}
+
+  //////////////////////////////////////////////////////////////////////////////
+ // Mat3 Core Operations //////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+
+/// mat3_row ///
+// Descrition
+//   Returns the specified row.
+// Arguments
+//   m: Matrix (Mat3)
+//   row: Row Number (size_t)
+// Returns
+//   Vector (Vec3)
+
+sol
+Vec3 mat3_row(Mat3 m, size_t row) {
+  return m.v[row];
+}
+
+/// mat3_col ///
+// Description
+//   Returns the specified column.
+// Arguments
+//   m: Matrix (Mat3)
+//   col: Column Number (size_t)
+// Returns
+//   Vector (Vec3)
+
+sol
+Vec3 mat3_col(Mat3 m, size_t col) {
+  return vec3_init(m.f[0][col],
+                   m.f[1][col],
+                   m.f[2][col]);
+}
+
+  //////////////////////////////////////////////////////////////////////////////
+ // Mat3 Advanced Math ////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+
+/// mat3_dot ///
+// Description
+//   Multiplies two matrices properly
+//   using dot products.
+// Arguments
+//   a: Matrix (Mat3)
+//   b: Matrix (Mat3)
+// Returns
+//   Matrix (Mat3)
+
+sol
+Mat3 mat3_dot(Mat3 a, Mat3 b) {
+  const Vec3 a0 = mat3_row(a, 0);
+  const Vec3 a1 = mat3_row(a, 1);
+  const Vec3 a2 = mat3_row(a, 2);
+  const Vec3 b0 = mat3_col(b, 0);
+  const Vec3 b1 = mat3_col(b, 1);
+  const Vec3 b2 = mat3_col(b, 2);
+  return mat3_init(vec3_dot(a0, b0),
+                   vec3_dot(a0, b1),
+                   vec3_dot(a0, b2),
+                   vec3_dot(a1, b0),
+                   vec3_dot(a1, b1),
+                   vec3_dot(a1, b2),
+                   vec3_dot(a2, b0),
+                   vec3_dot(a2, b1),
+                   vec3_dot(a2, b2));
 }
 
   //////////////////////////////////////////////////////////////////////////////

@@ -547,7 +547,7 @@ Vec3 vec3_fpow(Float f, Vec3 v) {
 
 sol
 Vec3 vec3_avg(Vec3 a, Vec3 b) {
-  return vec3_divf(vec3_add(a, b), 2);
+  return vec3_mulf(vec3_add(a, b), (Float) 0.5);
 }
 
 /// vec3_avgf ///

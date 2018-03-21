@@ -581,6 +581,8 @@ Vec4 vec4_norm(Vec4 v);
 Float vec4_mag(Vec4 v);
 bool vec4_eq(Vec4 a, Vec4 b, Float ep);
 
+Float vec4_dot(Vec4 a, Vec4 b);
+
 Float vec4_sum(Vec4 v);
 Vec4 vec4_fma(Vec4 a, Vec4 b, Vec4 c);
 Vec4 vec4_add(Vec4 a, Vec4 b);
@@ -614,36 +616,25 @@ bool ray2_eq(Ray2 a, Ray2 b, Float ep);
 Ray2 ray2_rot(Ray2 r, Float deg);
 Ray2 ray2_rotr(Ray2 r, Float rad);
 
-Float ray2_sump(Ray2 r);
-Float ray2_sumv(Ray2 r);
-Ray2 ray2_addp(Ray2 r, Vec2 p);
-Ray2 ray2_addpf(Ray2 r, Float f);
+Ray2 ray2_add(Ray2 a, Ray2 b);
 Ray2 ray2_addv(Ray2 r, Vec2 v);
-Ray2 ray2_addvf(Ray2 r, Float f);
-Ray2 ray2_subp(Ray2 r, Vec2 p);
-Ray2 ray2_subpf(Ray2 r, Float f);
-Ray2 ray2_psub(Vec2 p, Ray2 r);
-Ray2 ray2_pfsub(Float f, Ray2 r);
+Ray2 ray2_addf(Ray2 r, Float f);
+Ray2 ray2_sub(Ray2 a, Ray2 b);
 Ray2 ray2_subv(Ray2 r, Vec2 v);
-Ray2 ray2_subvf(Ray2 r, Float f);
 Ray2 ray2_vsub(Vec2 v, Ray2 r);
-Ray2 ray2_vfsub(Float f, Ray2 r);
-Ray2 ray2_mulp(Ray2 r, Vec2 p);
-Ray2 ray2_mulpf(Ray2 r, Float f);
+Ray2 ray2_subf(Ray2 r, Float f);
+Ray2 ray2_fsub(Float f, Ray2 r);
+Ray2 ray2_mul(Ray2 a, Ray2 b);
 Ray2 ray2_mulv(Ray2 r, Vec2 v);
-Ray2 ray2_mulvf(Ray2 r, Float f);
-Ray2 ray2_divp(Ray2 r, Vec2 p);
-Ray2 ray2_divpf(Ray2 r, Float f);
-Ray2 ray2_pdiv(Vec2 p, Ray2 r);
-Ray2 ray2_pfdiv(Float f, Ray2 r);
+Ray2 ray2_mulf(Ray2 r, Float f);
+Ray2 ray2_div(Ray2 a, Ray2 b);
 Ray2 ray2_divv(Ray2 r, Vec2 v);
-Ray2 ray2_divvf(Ray2 r, Float f);
 Ray2 ray2_vdiv(Vec2 v, Ray2 r);
-Ray2 ray2_vfdiv(Float f, Ray2 r);
-Ray2 ray2_avgp(Ray2 r, Vec2 p);
-Ray2 ray2_avgpf(Ray2 r, Float f);
+Ray2 ray2_divf(Ray2 r, Float f);
+Ray2 ray2_fdiv(Float f, Ray2 r);
+Ray2 ray2_avg(Ray2 a, Ray2 b);
 Ray2 ray2_avgv(Ray2 r, Vec2 v);
-Ray2 ray2_avgvf(Ray2 r, Float f);
+Ray2 ray2_avgf(Ray2 r, Float f);
 
 void ray2_print(Ray2 r);
 
@@ -663,36 +654,25 @@ bool ray3_eq(Ray3 a, Ray3 b, Float ep);
 Ray3 ray3_rot(Ray3 r, Vec4 aa);
 Ray3 ray3_rotq(Ray3 r, Vec4 q);
 
-Float ray3_sump(Ray3 r);
-Float ray3_sumv(Ray3 r);
-Ray3 ray3_addp(Ray3 r, Vec3 p);
-Ray3 ray3_addpf(Ray3 r, Float f);
+Ray3 ray3_add(Ray3 a, Ray3 b);
 Ray3 ray3_addv(Ray3 r, Vec3 v);
-Ray3 ray3_addvf(Ray3 r, Float f);
-Ray3 ray3_subp(Ray3 r, Vec3 p);
-Ray3 ray3_subpf(Ray3 r, Float f);
-Ray3 ray3_psub(Vec3 p, Ray3 r);
-Ray3 ray3_pfsub(Float f, Ray3 r);
+Ray3 ray3_addf(Ray3 r, Float f);
+Ray3 ray3_sub(Ray3 a, Ray3 b);
 Ray3 ray3_subv(Ray3 r, Vec3 v);
-Ray3 ray3_subvf(Ray3 r, Float f);
 Ray3 ray3_vsub(Vec3 v, Ray3 r);
-Ray3 ray3_vfsub(Float f, Ray3 r);
-Ray3 ray3_mulp(Ray3 r, Vec3 p);
-Ray3 ray3_mulpf(Ray3 r, Float f);
+Ray3 ray3_subf(Ray3 r, Float f);
+Ray3 ray3_fsub(Float f, Ray3 r);
+Ray3 ray3_mul(Ray3 a, Ray3 b);
 Ray3 ray3_mulv(Ray3 r, Vec3 v);
-Ray3 ray3_mulvf(Ray3 r, Float f);
-Ray3 ray3_divp(Ray3 r, Vec3 p);
-Ray3 ray3_divpf(Ray3 r, Float f);
-Ray3 ray3_pdiv(Vec3 p, Ray3 r);
-Ray3 ray3_pfdiv(Float f, Ray3 r);
+Ray3 ray3_mulf(Ray3 r, Float f);
+Ray3 ray3_div(Ray3 a, Ray3 b);
 Ray3 ray3_divv(Ray3 r, Vec3 v);
-Ray3 ray3_divvf(Ray3 r, Float f);
 Ray3 ray3_vdiv(Vec3 v, Ray3 r);
-Ray3 ray3_vfdiv(Float f, Ray3 r);
-Ray3 ray3_avgp(Ray3 r, Vec3 p);
-Ray3 ray3_avgpf(Ray3 r, Float f);
+Ray3 ray3_divf(Ray3 r, Float f);
+Ray3 ray3_fdiv(Float f, Ray3 r);
+Ray3 ray3_avg(Ray3 a, Ray3 b);
 Ray3 ray3_avgv(Ray3 r, Vec3 v);
-Ray3 ray3_avgvf(Ray3 r, Float f);
+Ray3 ray3_avgf(Ray3 r, Float f);
 
 void ray3_print(Ray3 r);
 
@@ -762,14 +742,18 @@ void seg3_print(Seg3 s);
  // Mat2 Function Declarations ////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-Mat2 mat2_init(Float f11, Float f12,
-                          Float f21, Float f22);
-Mat2 mat2_initv(Vec2 v1,
-                           Vec2 v2);
+Mat2 mat2_init(Float f11, Float f12, Float f21, Float f22);
+Mat2 mat2_initv(Vec2 v1, Vec2 v2);
 Mat2 mat2_initf(Float f);
-
+Mat2 mat2_iden(void);
 Mat2 mat2_zero(void);
 
+Vec2 mat2_row(Mat2 m, size_t row);
+Vec2 mat2_col(Mat2 m, size_t col);
+
+Mat2 mat2_dot(Mat2 a, Mat2 b);
+
+Mat2 mat2_fma(Mat2 a, Mat2 b, Mat2 c);
 Mat2 mat2_add(Mat2 a, Mat2 b);
 Mat2 mat2_addf(Mat2 m, Float f);
 Mat2 mat2_sub(Mat2 a, Mat2 b);
@@ -789,15 +773,18 @@ void mat2_print(Mat2 m);
  // Mat3 Function Declarations ////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-Mat3 mat3_init(Float f11, Float f12, Float f13,
-                          Float f21, Float f22, Float f23,
-                          Float f31, Float f32, Float f33);
-Mat3 mat3_initv(Vec3 v1,
-                           Vec3 v2,
-                           Vec3 v3);
+Mat3 mat3_init(Float f11, Float f12, Float f13, Float f21, Float f22, Float f23, Float f31, Float f32, Float f33);
+Mat3 mat3_initv(Vec3 v1, Vec3 v2, Vec3 v3);
 Mat3 mat3_initf(Float f);
+Mat3 mat3_iden(void);
 Mat3 mat3_zero(void);
 
+Vec3 mat3_row(Mat3 m, size_t row);
+Vec3 mat3_col(Mat3 m, size_t col);
+
+Mat3 mat3_dot(Mat3 a, Mat3 b);
+
+Mat3 mat3_fma(Mat3 a, Mat3 b, Mat3 c);
 Mat3 mat3_add(Mat3 a, Mat3 b);
 Mat3 mat3_addf(Mat3 m, Float f);
 Mat3 mat3_sub(Mat3 a, Mat3 b);
@@ -817,17 +804,18 @@ void mat3_print(Mat3 m);
  // Mat4 Function Declarations ////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-Mat4 mat4_init(Float f11, Float f12, Float f13, Float f14,
-                          Float f21, Float f22, Float f23, Float f24,
-                          Float f31, Float f32, Float f33, Float f34,
-                          Float f41, Float f42, Float f43, Float f44);
-Mat4 mat4_initv(Vec4 v1,
-                           Vec4 v2,
-                           Vec4 v3,
-                           Vec4 v4);
+Mat4 mat4_init(Float f11, Float f12, Float f13, Float f14, Float f21, Float f22, Float f23, Float f24, Float f31, Float f32, Float f33, Float f34, Float f41, Float f42, Float f43, Float f44);
+Mat4 mat4_initv(Vec4 v1, Vec4 v2, Vec4 v3, Vec4 v4);
 Mat4 mat4_initf(Float f);
+Mat4 mat4_iden(void);
 Mat4 mat4_zero(void);
 
+Vec4 mat4_row(Mat4 m, size_t row);
+Vec4 mat4_col(Mat4 m, size_t col);
+
+Mat4 mat4_dot(Mat4 a, Mat4 b);
+
+Mat4 mat4_fma(Mat4 a, Mat4 b, Mat4 c);
 Mat4 mat4_add(Mat4 a, Mat4 b);
 Mat4 mat4_addf(Mat4 m, Float f);
 Mat4 mat4_sub(Mat4 a, Mat4 b);
