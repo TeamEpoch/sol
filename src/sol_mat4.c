@@ -107,10 +107,30 @@ Mat4 mat4_zero(void) {
  // Mat4 Core Operations //////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
+/// mat4_row ///
+// Description
+//   Returns the specified row
+//   in the 4x4 matrix.
+// Arguments
+//   m: Matrix (Mat4)
+//   row: Row Number (size_t)
+// Returns
+//   Vector (Vec4)
+
 sol
 Vec4 mat4_row(Mat4 m, size_t row) {
   return m.v[row];
 }
+
+/// mat4_col ///
+// Description
+//   Returns the specified column
+//   in the 4x4 matrix.
+// Arguments
+//   m: Matrix (Mat4)
+//   col: Column Number (size_t)
+// Returns
+//   Vector (Vec4)
 
 sol
 Vec4 mat4_col(Mat4 m, size_t col) {
@@ -120,6 +140,17 @@ Vec4 mat4_col(Mat4 m, size_t col) {
                    m.f[3][col]);
 }
 
+/// mat4_f ///
+// Description
+//   Returns the specified scalar
+//   in the 4x4 matrix.
+// Arguments
+//   m: Matrix (Mat4)
+//   row: Row Number (size_t)
+//   col: Column Number (size_t)
+// Returns
+//   Scalar (Float)
+
 sol
 Float mat4_f(Mat4 m, size_t row, size_t col) {
   return m.f[row][col];
@@ -128,6 +159,16 @@ Float mat4_f(Mat4 m, size_t row, size_t col) {
   //////////////////////////////////////////////////////////////////////////////
  // Mat4 Advanced Math ////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
+
+/// mat4_dot ///
+// Description
+//   Returns the dot product of
+//   two 4x4 matrices.
+// Arguments
+//   a: Matrix (Mat4)
+//   b: Matrix (Mat4)
+// Returns
+//   Matrix (Mat4)
 
 sol
 Mat4 mat4_dot(Mat4 a, Mat4 b) {

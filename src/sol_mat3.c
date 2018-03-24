@@ -105,7 +105,8 @@ Mat3 mat3_zero(void) {
 
 /// mat3_row ///
 // Descrition
-//   Returns the specified row.
+//   Returns the specified row in
+//   the 3x3 matrix.
 // Arguments
 //   m: Matrix (Mat3)
 //   row: Row Number (size_t)
@@ -119,7 +120,8 @@ Vec3 mat3_row(Mat3 m, size_t row) {
 
 /// mat3_col ///
 // Description
-//   Returns the specified column.
+//   Returns the specified column
+//   in the 3x3 matrix.
 // Arguments
 //   m: Matrix (Mat3)
 //   col: Column Number (size_t)
