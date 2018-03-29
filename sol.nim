@@ -176,9 +176,6 @@ proc vec2_mulf*(v: Vec2, f: Float): Vec2 {.importc: "vec2_mulf", header: "sol.h"
 proc vec2_div*(a, b: Vec2): Vec2         {.importc: "vec2_div",  header: "sol.h".}
 proc vec2_divf*(v: Vec2, f: Float): Vec2 {.importc: "vec2_divf", header: "sol.h".}
 proc vec2_fdiv*(f: Float, v: Vec2): Vec2 {.importc: "vec2_fdiv", header: "sol.h".}
-proc vec2_pow*(a, b: Vec2): Vec2         {.importc: "vec2_pow",  header: "sol.h".}
-proc vec2_powf*(v: Vec2; f: Float): Vec2 {.importc: "vec2_powf", header: "sol.h".}
-proc vec2_fpow*(f: Float; v: Vec2): Vec2 {.importc: "vec2_fpow", header: "sol.h".}
 proc vec2_avg*(a, b: Vec2): Vec2         {.importc: "vec2_avg",  header: "sol.h".}
 proc vec2_avgf*(v: Vec2, f: Float): Vec2 {.importc: "vec2_avgf", header: "sol.h".}
 
@@ -275,9 +272,6 @@ proc vec3_mulf*(v: Vec3, f: Float): Vec3 {.importc: "vec3_mulf", header: "sol.h"
 proc vec3_div*(a, b: Vec3): Vec3         {.importc: "vec3_div",  header: "sol.h".}
 proc vec3_divf*(v: Vec3, f: Float): Vec3 {.importc: "vec3_divf", header: "sol.h".}
 proc vec3_fdiv*(f: Float, v: Vec3): Vec3 {.importc: "vec3_fdiv", header: "sol.h".}
-proc vec3_pow*(a, b: Vec3): Vec3         {.importc: "vec3_pow",  header: "sol.h".}
-proc vec3_powf*(v: Vec3; f: Float): Vec3 {.importc: "vec3_powf", header: "sol.h".}
-proc vec3_fpow*(f: Float; v: Vec3): Vec3 {.importc: "vec3_fpow", header: "sol.h".}
 proc vec3_avg*(a, b: Vec3): Vec3         {.importc: "vec3_avg",  header: "sol.h".}
 proc vec3_avgf*(v: Vec3, f: Float): Vec3 {.importc: "vec3_avgf", header: "sol.h".}
 
