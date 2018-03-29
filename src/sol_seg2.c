@@ -23,7 +23,7 @@
 // Returns
 //   Segment (Seg2) = {orig, dest}
 
-sol
+_sol_
 Seg2 seg2_init(Vec2 orig, Vec2 dest) {
   Seg2 out = {orig, dest};
   return out;
@@ -37,7 +37,7 @@ Seg2 seg2_init(Vec2 orig, Vec2 dest) {
 // Returns
 //   Segment (Seg2) = {v, v}
 
-sol
+_sol_
 Seg2 seg2_initv(Vec2 v) {
   return seg2_init(v, v);
 }
@@ -51,7 +51,7 @@ Seg2 seg2_initv(Vec2 v) {
 // Returns
 //   Segment (Seg2) = {{f, f}, {f, f}}
 
-sol
+_sol_
 Seg2 seg2_initf(Float f) {
   return seg2_initv(vec2_initf(f));
 }
@@ -65,7 +65,7 @@ Seg2 seg2_initf(Float f) {
 // Returns
 //   Segment (Seg2) = {{0, 0}, {0, 0}}
 
-sol
+_sol_
 Seg2 seg2_zero(void) {
   return seg2_initf((Float) 0);
 }
@@ -83,7 +83,7 @@ Seg2 seg2_zero(void) {
 // Returns
 //   Segment (Seg2) = {s.orig.xy + b.orig.xy, a.dest.xy + b.dest.xy}
 
-sol
+_sol_
 Seg2 seg2_add(Seg2 a, Seg2 b) {
   return seg2_init(vec2_add(a.orig, b.orig),
 		   vec2_add(a.dest, b.dest));
@@ -98,7 +98,7 @@ Seg2 seg2_add(Seg2 a, Seg2 b) {
 // Returns
 //   Segment (Seg2) = {s.orig.xy + v.xy, s.dest.xy + v.xy}
 
-sol
+_sol_
 Seg2 seg2_addv(Seg2 s, Vec2 v) {
   return seg2_add(s, seg2_initv(v));
 }
@@ -112,7 +112,7 @@ Seg2 seg2_addv(Seg2 s, Vec2 v) {
 // Returns
 //   Segment (Seg2) = {s.orig.xy + f, s.dest.xy + f}
 
-sol
+_sol_
 Seg2 seg2_addf(Seg2 s, Float f) {
   return seg2_addv(s, vec2_initf(f));
 }
@@ -126,7 +126,7 @@ Seg2 seg2_addf(Seg2 s, Float f) {
 // Returns
 //   Segment (Seg2) = {a.orig.xy - b.orig.xy, a.dest.xy - b.dest.xy}
 
-sol
+_sol_
 Seg2 seg2_sub(Seg2 a, Seg2 b) {
   return seg2_init(vec2_sub(a.orig, b.orig),
 		               vec2_sub(a.dest, b.dest));
@@ -141,7 +141,7 @@ Seg2 seg2_sub(Seg2 a, Seg2 b) {
 // Returns
 //   Segment (Seg2) = {s.orig.xy - v.xy, s.dest.xy - v.xy}
 
-sol
+_sol_
 Seg2 seg2_subv(Seg2 s, Vec2 v) {
   return seg2_sub(s, seg2_initv(v));
 }
@@ -155,7 +155,7 @@ Seg2 seg2_subv(Seg2 s, Vec2 v) {
 // Returns
 //   Segment (Seg2) = {v.xy - s.orig.xy, v.xy - x.dest.xy}
 
-sol
+_sol_
 Seg2 seg2_vsub(Vec2 v, Seg2 s) {
   return seg2_sub(seg2_initv(v), s);
 }
@@ -169,7 +169,7 @@ Seg2 seg2_vsub(Vec2 v, Seg2 s) {
 // Returns
 //   Segment (Seg2) = {s.orig.xy - f, s.dest.xy - f}
 
-sol
+_sol_
 Seg2 seg2_subf(Seg2 s, Float f) {
   return seg2_subv(s, vec2_initf(f));
 }
@@ -183,7 +183,7 @@ Seg2 seg2_subf(Seg2 s, Float f) {
 // Returns
 //   Segment (Seg2) = {f - s.orig.xy, f - s.dest.xy}
 
-sol
+_sol_
 Seg2 seg2_fsub(Float f, Seg2 s) {
   return seg2_vsub(vec2_initf(f), s);
 }
@@ -197,7 +197,7 @@ Seg2 seg2_fsub(Float f, Seg2 s) {
 // Returns
 //   Segment (Seg2) = {a.orig.xy * b.orig.xy, a.dest.xy * b.dest.xy}
 
-sol
+_sol_
 Seg2 seg2_mul(Seg2 a, Seg2 b) {
   return seg2_init(vec2_mul(a.orig, b.orig),
 		               vec2_mul(a.dest, b.dest));
@@ -212,7 +212,7 @@ Seg2 seg2_mul(Seg2 a, Seg2 b) {
 // Returns
 //   Segment (Seg2) {s.orig.xy * f, s.dest.xy * f}
 
-sol
+_sol_
 Seg2 seg2_mulf(Seg2 s, Float f) {
   return seg2_mul(s, seg2_initf(f));
 }
@@ -226,7 +226,7 @@ Seg2 seg2_mulf(Seg2 s, Float f) {
 // Returns
 //   Segment (Seg2) {a.orig.xy * b.orig.xy, a.dest.xy * b.dest.xy}
 
-sol
+_sol_
 Seg2 seg2_div(Seg2 a, Seg2 b) {
   return seg2_init(vec2_div(a.orig, b.orig),
 		               vec2_div(a.dest, b.dest));
@@ -241,7 +241,7 @@ Seg2 seg2_div(Seg2 a, Seg2 b) {
 // Returns
 //   Segment (Seg2) {s.orig.xy / v.xy, s.dest.xy / v.xy}
 
-sol
+_sol_
 Seg2 seg2_divv(Seg2 s, Vec2 v) {
   return seg2_sub(s, seg2_initv(v));
 }
@@ -255,7 +255,7 @@ Seg2 seg2_divv(Seg2 s, Vec2 v) {
 // Returns
 //   Segment (Seg2) {v.xy / s.orig.xy, v.xy / s.dest.xy}
 
-sol
+_sol_
 Seg2 seg2_vdiv(Vec2 v, Seg2 s) {
   return seg2_div(seg2_initv(v), s);
 }
@@ -269,7 +269,7 @@ Seg2 seg2_vdiv(Vec2 v, Seg2 s) {
 // Returns
 //   Segment (Seg2) {s.orig.xyz * f, s.dest.xyz * f}
 
-sol
+_sol_
 Seg2 seg2_divf(Seg2 s, Float f) {
   return seg2_divv(s, vec2_initf(f));
 }
@@ -283,7 +283,7 @@ Seg2 seg2_divf(Seg2 s, Float f) {
 // Returns
 //   Segment (Seg2) {f * s.orig.xyz, f * s.dest.xyz}
 
-sol
+_sol_
 Seg2 seg2_fdiv(Float f, Seg2 s) {
   return seg2_vdiv(vec2_initf(f), s);
 }
@@ -297,7 +297,7 @@ Seg2 seg2_fdiv(Float f, Seg2 s) {
 // Returns
 //   Segment (Seg2) {(a.orig.xy + b.orig.xy) / 2, (a.dest.xy + b.dest.xy) / 2}
 
-sol
+_sol_
 Seg2 seg2_avg(Seg2 a, Seg2 b) {
   return seg2_subf(seg2_add(a, b), 2);
 }
@@ -311,7 +311,7 @@ Seg2 seg2_avg(Seg2 a, Seg2 b) {
 // Returns
 //   Segment (Seg2) {(s.orig.xy + v.xy) / 2, (s.dest.xy + v.xy) / 2}
 
-sol
+_sol_
 Seg2 seg2_avgv(Seg2 s, Vec2 v) {
   return seg2_avg(s, seg2_initv(v));
 }
@@ -325,7 +325,7 @@ Seg2 seg2_avgv(Seg2 s, Vec2 v) {
 // Returns
 //   Segment (Seg2) {(s.orig.xy + f) / 2, (s.dest.xy + f) / 2}
 
-sol
+_sol_
 Seg2 seg2_avgf(Seg2 s, Float f) {
   return seg2_avgv(s, vec2_initf(f));
 }
@@ -342,7 +342,7 @@ Seg2 seg2_avgf(Seg2 s, Float f) {
 // Returns
 //   void
 
-sol
+_sol_
 void seg2_print(Seg2 s) {
   vec2_print(s.orig);
   vec2_print(s.dest);

@@ -25,7 +25,7 @@
 // Returns
 //   Matrix (Mat3)
 
-sol
+_sol_
 Mat3 mat3_init(Float f11, Float f12, Float f13,
                Float f21, Float f22, Float f23,
                Float f31, Float f32, Float f33) {
@@ -45,7 +45,7 @@ Mat3 mat3_init(Float f11, Float f12, Float f13,
 // Returns
 //   Matrix (Mat3)
 
-sol
+_sol_
 Mat3 mat3_initv(Vec3 v1, Vec3 v2, Vec3 v3) {
   Mat3 out;
   out.v[0] = v1;
@@ -63,7 +63,7 @@ Mat3 mat3_initv(Vec3 v1, Vec3 v2, Vec3 v3) {
 // Returns
 //   Matrix (Mat3)
 
-sol
+_sol_
 Mat3 mat3_initf(Float f) {
   return mat3_init(f, f, f,
                    f, f, f,
@@ -78,7 +78,7 @@ Mat3 mat3_initf(Float f) {
 // Returns
 //   Identity Matrix (Mat3)
 
-sol
+_sol_
 Mat3 mat3_iden(void) {
   return mat3_init((Float) 1, (Float) 0, (Float) 0,
                    (Float) 0, (Float) 1, (Float) 0,
@@ -94,7 +94,7 @@ Mat3 mat3_iden(void) {
 // Returns
 //   Matrix (Mat3)
 
-sol
+_sol_
 Mat3 mat3_zero(void) {
   return mat3_initf(0);
 }
@@ -113,7 +113,7 @@ Mat3 mat3_zero(void) {
 // Returns
 //   Vector (Vec3)
 
-sol
+_sol_
 Vec3 mat3_row(Mat3 m, size_t row) {
   return m.v[row];
 }
@@ -128,7 +128,7 @@ Vec3 mat3_row(Mat3 m, size_t row) {
 // Returns
 //   Vector (Vec3)
 
-sol
+_sol_
 Vec3 mat3_col(Mat3 m, size_t col) {
   return vec3_init(m.f[0][col],
                    m.f[1][col],
@@ -144,7 +144,7 @@ Vec3 mat3_col(Mat3 m, size_t col) {
 //   row: Row Number (size_t)
 //   col: Column Number (size_t)
 
-sol
+_sol_
 Float mat3_f(Mat3 m, size_t row, size_t col) {
   return m.f[row][col];
 }
@@ -163,7 +163,7 @@ Float mat3_f(Mat3 m, size_t row, size_t col) {
 // Returns
 //   Matrix (Mat3)
 
-sol
+_sol_
 Mat3 mat3_dot(Mat3 a, Mat3 b) {
   const Vec3 a0 = mat3_row(a, 0);
   const Vec3 a1 = mat3_row(a, 1);
@@ -196,7 +196,7 @@ Mat3 mat3_dot(Mat3 a, Mat3 b) {
 // Returns
 //   Matrix (Mat3)
 
-sol
+_sol_
 Mat3 mat3_add(Mat3 a, Mat3 b) {
   return mat3_initv(vec3_add(a.v[0], b.v[0]),
                     vec3_add(a.v[1], b.v[1]),
@@ -213,7 +213,7 @@ Mat3 mat3_add(Mat3 a, Mat3 b) {
 // Returns
 //   Matrix (Mat3)
 
-sol
+_sol_
 Mat3 mat3_addf(Mat3 m, Float f) {
   return mat3_add(m, mat3_initf(f));
 }
@@ -228,7 +228,7 @@ Mat3 mat3_addf(Mat3 m, Float f) {
 // Returns
 //   Matrix (Mat3)
 
-sol
+_sol_
 Mat3 mat3_sub(Mat3 a, Mat3 b) {
   return mat3_initv(vec3_sub(a.v[0], b.v[0]),
                     vec3_sub(a.v[1], b.v[1]),
@@ -245,7 +245,7 @@ Mat3 mat3_sub(Mat3 a, Mat3 b) {
 // Returns
 //   Matrix (Mat3)
 
-sol
+_sol_
 Mat3 mat3_subf(Mat3 m, Float f) {
   return mat3_sub(m, mat3_initf(f));
 }
@@ -260,7 +260,7 @@ Mat3 mat3_subf(Mat3 m, Float f) {
 // Returns
 //   Matrix (Mat3)
 
-sol
+_sol_
 Mat3 mat3_fsub(Float f, Mat3 m) {
   return mat3_sub(mat3_initf(f), m);
 }
@@ -274,7 +274,7 @@ Mat3 mat3_fsub(Float f, Mat3 m) {
 // Returns
 //   Matrix (Mat3)
 
-sol
+_sol_
 Mat3 mat3_mul(Mat3 a, Mat3 b) {
   return mat3_initv(vec3_mul(a.v[0], b.v[0]),
                     vec3_mul(a.v[1], b.v[1]),
@@ -291,7 +291,7 @@ Mat3 mat3_mul(Mat3 a, Mat3 b) {
 // Returns
 //   Matrix (Mat3)
 
-sol
+_sol_
 Mat3 mat3_mulf(Mat3 m, Float f) {
   return mat3_mul(m, mat3_initf(f));
 }
@@ -306,7 +306,7 @@ Mat3 mat3_mulf(Mat3 m, Float f) {
 // Returns
 //   Matrix (Mat3)
 
-sol
+_sol_
 Mat3 mat3_div(Mat3 a, Mat3 b) {
   return mat3_initv(vec3_div(a.v[0], b.v[0]),
                     vec3_div(a.v[1], b.v[1]),
@@ -323,7 +323,7 @@ Mat3 mat3_div(Mat3 a, Mat3 b) {
 // Returns
 //   Matrix (Mat3)
 
-sol
+_sol_
 Mat3 mat3_divf(Mat3 m, Float f) {
   return mat3_div(m, mat3_initf(f));
 }
@@ -338,7 +338,7 @@ Mat3 mat3_divf(Mat3 m, Float f) {
 // Returns
 //   Matrix (Mat3)
 
-sol
+_sol_
 Mat3 mat3_fdiv(Float f, Mat3 m) {
   return mat3_div(mat3_initf(f), m);
 }
@@ -352,7 +352,7 @@ Mat3 mat3_fdiv(Float f, Mat3 m) {
 // Returns
 //   Matrix (Mat3)
 
-sol
+_sol_
 Mat3 mat3_avg(Mat3 a, Mat3 b) {
   return mat3_initv(vec3_avg(a.v[0], b.v[0]),
                     vec3_avg(a.v[1], b.v[1]),
@@ -369,7 +369,7 @@ Mat3 mat3_avg(Mat3 a, Mat3 b) {
 // Returns
 //   Matrix (Mat3)
 
-sol
+_sol_
 Mat3 mat3_avgf(Mat3 m, Float f) {
   return mat3_avg(m, mat3_initf(f));
 }
@@ -386,7 +386,7 @@ Mat3 mat3_avgf(Mat3 m, Float f) {
 // Returns
 //   void
 
-sol
+_sol_
 void mat3_print(Mat3 m) {
   vec3_print(m.v[0]);
   vec3_print(m.v[1]);

@@ -23,7 +23,7 @@
 // Returns
 //   Ray (Ray2)
 
-sol
+_sol_
 Ray2 ray2_init(Vec2 pos, Vec2 vec) {
   Ray2 out = {pos, vec};
   return out;
@@ -37,7 +37,7 @@ Ray2 ray2_init(Vec2 pos, Vec2 vec) {
 // Returns
 //   Ray (Ray2)
 
-sol
+_sol_
 Ray2 ray2_initv(Vec2 v) {
   return ray2_init(vec2_zero(), v);
 }
@@ -51,7 +51,7 @@ Ray2 ray2_initv(Vec2 v) {
 // Returns
 //   Ray (Ray2)
 
-sol
+_sol_
 Ray2 ray2_initf(Float f) {
   return ray2_initv(vec2_initf(f));
 }
@@ -64,7 +64,7 @@ Ray2 ray2_initf(Float f) {
 // Returns
 //   Ray (Ray2)
 
-sol
+_sol_
 Ray2 ray2_zero(void) {
   return ray2_init(vec2_initf(0), vec2_initf(0));
 }
@@ -81,7 +81,7 @@ Ray2 ray2_zero(void) {
 // Returns
 //   Ray (Ray2)
 
-sol
+_sol_
 Ray2 ray2_norm(Ray2 r) {
   return ray2_init(r.pos, vec2_norm(r.vec));
 }
@@ -94,7 +94,7 @@ Ray2 ray2_norm(Ray2 r) {
 // Returns
 //   Magnitude (Float)
 
-sol
+_sol_
 Float ray2_mag(Ray2 r) {
   return vec2_mag(r.vec);
 }
@@ -109,7 +109,7 @@ Float ray2_mag(Ray2 r) {
 // Returns
 //   Equality (Bool)
 
-sol
+_sol_
 bool ray2_eq(Ray2 a, Ray2 b, Float ep) {
   if (vec2_eq(a.pos, b.pos, ep)){
     vec2_eq(a.vec, b.vec, ep);
@@ -130,7 +130,7 @@ bool ray2_eq(Ray2 a, Ray2 b, Float ep) {
 // Returns
 //   Rotated Ray (Ray2)
 
-sol
+_sol_
 Ray2 ray2_rot(Ray2 r, Float deg) {
   return ray2_rotr(r, cv_deg_rad(deg));
 }
@@ -144,7 +144,7 @@ Ray2 ray2_rot(Ray2 r, Float deg) {
 // Returns
 //   Rotated Ray (Ray2)
 
-sol
+_sol_
 Ray2 ray2_rotr(Ray2 r, Float rad) {
   return ray2_init(r.pos, vec2_rotr(r.vec, rad));
 }
@@ -163,7 +163,7 @@ Ray2 ray2_rotr(Ray2 r, Float rad) {
 // Returns
 //   Ray (Ray2) = {a.pos, a.vec.xy + b.vec.xy}
 
-sol
+_sol_
 Ray2 ray2_add(Ray2 a, Ray2 b) {
   return ray2_init(a.pos, vec2_add(a.vec, b.vec));
 }
@@ -177,7 +177,7 @@ Ray2 ray2_add(Ray2 a, Ray2 b) {
 // Returns
 //   Ray (Ray2) = {r.pos, r.vec.xy + v.xyz}
 
-sol
+_sol_
 Ray2 ray2_addv(Ray2 r, Vec2 v) {
   return ray2_init(r.pos, vec2_add(r.vec, v));
 }
@@ -191,7 +191,7 @@ Ray2 ray2_addv(Ray2 r, Vec2 v) {
 // Returns
 //   Ray (Ray2) = {r.pos, r.vec.xy + f}
 
-sol
+_sol_
 Ray2 ray2_addf(Ray2 r, Float f) {
   return ray2_init(r.pos, vec2_addf(r.vec, f));
 }
@@ -206,7 +206,7 @@ Ray2 ray2_addf(Ray2 r, Float f) {
 // Returns
 //   Ray (Ray2) = {a.pos, a.vec.xy + b.vec.xyz}
 
-sol
+_sol_
 Ray2 ray2_sub(Ray2 a, Ray2 b) {
   return ray2_init(a.pos, vec2_sub(a.vec, b.vec));
 }
@@ -221,7 +221,7 @@ Ray2 ray2_sub(Ray2 a, Ray2 b) {
 // Returns
 //   Ray (Ray2) = {r.pos, r.vec.xy - v.xyz}
 
-sol
+_sol_
 Ray2 ray2_subv(Ray2 r, Vec2 v) {
   return ray2_init(r.pos, vec2_sub(r.vec, v));
 }
@@ -236,7 +236,7 @@ Ray2 ray2_subv(Ray2 r, Vec2 v) {
 // Returns
 //   Ray (Ray2) = {r.pos, v.xy - r.vec.xyz}
 
-sol
+_sol_
 Ray2 ray2_vsub(Vec2 v, Ray2 r) {
   return ray2_init(r.pos, vec2_sub(v, r.vec));
 }
@@ -251,7 +251,7 @@ Ray2 ray2_vsub(Vec2 v, Ray2 r) {
 // Returns
 //   Ray (Ray2) = {r.pos, r.vec.xy - f}
 
-sol
+_sol_
 Ray2 ray2_subf(Ray2 r, Float f) {
   return ray2_init(r.pos, vec2_subf(r.vec, f));
 }
@@ -266,7 +266,7 @@ Ray2 ray2_subf(Ray2 r, Float f) {
 // Returns
 //   Ray (Ray2) = {r.pos, f - r.vec.xy}
 
-sol
+_sol_
 Ray2 ray2_fsub(Float f, Ray2 r) {
   return ray2_init(r.pos, vec2_fsub(f, r.vec));
 }
@@ -281,7 +281,7 @@ Ray2 ray2_fsub(Float f, Ray2 r) {
 // Returns
 //   Ray (Ray2) = {a.pos, a.vec.xy * b.vec.xyz}
 
-sol
+_sol_
 Ray2 ray2_mul(Ray2 a, Ray2 b) {
   return ray2_init(a.pos, vec2_mul(a.vec, b.vec));
 }
@@ -296,7 +296,7 @@ Ray2 ray2_mul(Ray2 a, Ray2 b) {
 // Returns
 //   Ray (Ray2) = {r.pos, r.vec.xy * v.xyz}
 
-sol
+_sol_
 Ray2 ray2_mulv(Ray2 r, Vec2 v) {
   return ray2_init(r.pos, vec2_mul(r.vec, v));
 }
@@ -311,7 +311,7 @@ Ray2 ray2_mulv(Ray2 r, Vec2 v) {
 // Returns
 //   Ray (Ray2) = {r.pos, r.vec.xy * f}
 
-sol
+_sol_
 Ray2 ray2_mulf(Ray2 r, Float f) {
   return ray2_init(r.pos, vec2_mulf(r.vec, f));
 }
@@ -326,7 +326,7 @@ Ray2 ray2_mulf(Ray2 r, Float f) {
 // Returns
 //   Ray (Ray2) = {a.pos, a.vec.xy / b.vec.xyz}
 
-sol
+_sol_
 Ray2 ray2_div(Ray2 a, Ray2 b) {
   return ray2_init(a.pos, vec2_div(a.vec, b.vec));
 }
@@ -341,7 +341,7 @@ Ray2 ray2_div(Ray2 a, Ray2 b) {
 // Returns
 //   Ray (Ray2) = {r.pos, r.vec.xy / v.xyz}
 
-sol
+_sol_
 Ray2 ray2_divv(Ray2 r, Vec2 v) {
   return ray2_init(r.pos, vec2_div(r.vec, v));
 }
@@ -356,7 +356,7 @@ Ray2 ray2_divv(Ray2 r, Vec2 v) {
 // Returns
 //   Ray (Ray2) = {r.pos, v.xy / r.vec.xyz}
 
-sol
+_sol_
 Ray2 ray2_vdiv(Vec2 v, Ray2 r) {
   return ray2_init(r.pos, vec2_div(v, r.vec));
 }
@@ -371,7 +371,7 @@ Ray2 ray2_vdiv(Vec2 v, Ray2 r) {
 // Returns
 //   Ray (Ray2) = {r.pos, r.vec.xy + f}
 
-sol
+_sol_
 Ray2 ray2_divf(Ray2 r, Float f) {
   return ray2_init(r.pos, vec2_divf(r.vec, f));
 }
@@ -386,7 +386,7 @@ Ray2 ray2_divf(Ray2 r, Float f) {
 // Returns
 //   Ray (Ray2) = {r.pos, f / r.vec.xy}
 
-sol
+_sol_
 Ray2 ray2_fdiv(Float f, Ray2 r) {
   return ray2_init(r.pos, vec2_fdiv(f, r.vec));
 }
@@ -401,7 +401,7 @@ Ray2 ray2_fdiv(Float f, Ray2 r) {
 // Returns
 //   Ray (Ray2) = {a.pos, (a.vec.xy + b.vec.xy) / 2}
 
-sol
+_sol_
 Ray2 ray2_avg(Ray2 a, Ray2 b) {
   return ray2_init(a.pos, vec2_avg(a.vec, b.vec));
 }
@@ -416,7 +416,7 @@ Ray2 ray2_avg(Ray2 a, Ray2 b) {
 // Returns
 //   Ray (Ray2) = {r.pos, (r.vec.xyz + v.xyz) / 2}
 
-sol
+_sol_
 Ray2 ray2_avgv(Ray2 r, Vec2 v) {
   return ray2_init(r.pos, vec2_avg(r.vec, v));
 }
@@ -431,7 +431,7 @@ Ray2 ray2_avgv(Ray2 r, Vec2 v) {
 // Returns
 //   Ray (Ray2) = {r.pos, (r.vec.xyz + f) / 2}
 
-sol
+_sol_
 Ray2 ray2_avgf(Ray2 r, Float f) {
   return ray2_init(r.pos, vec2_avgf(r.vec, f));
 }
@@ -448,7 +448,7 @@ Ray2 ray2_avgf(Ray2 r, Float f) {
 // Returns
 //   void
 
-sol
+_sol_
 void ray2_print(Ray2 r) {
   vec2_print(r.pos);
   vec2_print(r.vec);

@@ -16,7 +16,7 @@
 // Returns
 //   Bounding Box (Box3)
 
-sol
+_sol_
 Box3 box3_init(Vec3 lower, Vec3 upper) {
   Box3 out;
   out.lower = lower;
@@ -34,7 +34,7 @@ Box3 box3_init(Vec3 lower, Vec3 upper) {
 // Returns
 //   Bounding Box (Box3)
 
-sol
+_sol_
 Box3 box3_initv(Vec3 v) {
   return box3_init(v, v);
 }
@@ -49,7 +49,7 @@ Box3 box3_initv(Vec3 v) {
 // Returns
 //   Bounding Box (Box3)
 
-sol
+_sol_
 Box3 box3_initf(Float f) {
   return box3_initv(vec3_initf(f));
 }
@@ -63,7 +63,7 @@ Box3 box3_initf(Float f) {
 // Returns
 //   Bounding Box (Box3) 
 
-sol
+_sol_
 Box3 box3_zero(void) {
   return box3_initf((Float) 0);
 }
@@ -81,7 +81,7 @@ Box3 box3_zero(void) {
 // Returns
 //   Position (Vec3)
 
-sol
+_sol_
 Vec3 box3_pos(Box3 b) {
   return vec3_avg(b.lower, b.upper);
 }
@@ -94,9 +94,9 @@ Vec3 box3_pos(Box3 b) {
 // Returns
 //   Width (Float)
 
-sol
+_sol_
 Float box3_x(Box3 b) {
-  return b.upper.x - b.lower.x;
+  return b.upper[X] - b.lower[X];
 }
 
 /// box3_y ///
@@ -107,9 +107,9 @@ Float box3_x(Box3 b) {
 // Returns
 //   Height (Float)
 
-sol
+_sol_
 Float box3_y(Box3 b) {
-  return b.upper.y - b.lower.y;
+  return b.upper[Y] - b.lower[Y];
 }
 
 /// box3_z ///
@@ -120,9 +120,9 @@ Float box3_y(Box3 b) {
 // Returns
 //   Depth (Float)
 
-sol
+_sol_
 Float box3_z(Box3 b) {
-  return b.upper.z - b.lower.z;
+  return b.upper[Z] - b.lower[Z];
 }
 
 /// box3_pip ///
@@ -135,11 +135,11 @@ Float box3_z(Box3 b) {
 // Returns
 //   Point In Polygon (bool)
 
-sol
+_sol_
 bool box3_pip(Box3 b, Vec3 v) {
-  return (b.lower.x <= v.x) && (v.x <= b.upper.x)
-      && (b.lower.y <= v.y) && (v.y <= b.upper.y)
-      && (b.lower.z <= v.z) && (v.z <= b.upper.z);
+  return (b.lower[X] <= v[X]) && (v[X] <= b.upper[X])
+      && (b.lower[Y] <= v[Y]) && (v[Y] <= b.upper[Y])
+      && (b.lower[Z] <= v[Z]) && (v[Z] <= b.upper[Z]);
 }
 
   /////////////////////
@@ -156,7 +156,7 @@ bool box3_pip(Box3 b, Vec3 v) {
 // Returns
 //   Bounding Box (Box3)
 
-sol
+_sol_
 Box3 box3_add(Box3 a, Box3 b) {
   return box3_init(vec3_add(a.lower, b.lower),
                    vec3_add(a.upper, b.upper));
@@ -172,7 +172,7 @@ Box3 box3_add(Box3 a, Box3 b) {
 // Returns
 //   Bounding Box (Box3) 
 
-sol
+_sol_
 Box3 box3_addv(Box3 b, Vec3 v) {
   return box3_add(b, box3_initv(v));
 }
@@ -187,7 +187,7 @@ Box3 box3_addv(Box3 b, Vec3 v) {
 // Returns
 //   Scalar (Float)
 
-sol
+_sol_
 Box3 box3_addf(Box3 b, Float f) {
   return box3_add(b, box3_initf(f));
 }
@@ -202,7 +202,7 @@ Box3 box3_addf(Box3 b, Float f) {
 // Returns
 //   Bounding Box (Box3)
 
-sol
+_sol_
 Box3 box3_sub(Box3 a, Box3 b) {
   return box3_init(vec3_sub(a.lower, b.lower),
                    vec3_sub(a.upper, b.upper));
@@ -218,7 +218,7 @@ Box3 box3_sub(Box3 a, Box3 b) {
 // Returns
 //   Bounding Box (Box3)
 
-sol
+_sol_
 Box3 box3_subv(Box3 b, Vec3 v) {
   return box3_sub(b, box3_initv(v));
 }
@@ -233,7 +233,7 @@ Box3 box3_subv(Box3 b, Vec3 v) {
 // Returns
 //   Bounding Box (Box3)
 
-sol
+_sol_
 Box3 box3_vsub(Vec3 v, Box3 b) {
   return box3_sub(box3_initv(v), b);
 }
@@ -248,7 +248,7 @@ Box3 box3_vsub(Vec3 v, Box3 b) {
 // Returns
 //   Bounding Box (Box3)
 
-sol
+_sol_
 Box3 box3_subf(Box3 b, Float f) {
   return box3_sub(b, box3_initf(f));
 }
@@ -263,7 +263,7 @@ Box3 box3_subf(Box3 b, Float f) {
 // Returns
 //   Bounding Box (Box3)
 
-sol
+_sol_
 Box3 box3_fsub(Float f, Box3 b) {
   return box3_sub(box3_initf(f), b);
 }
@@ -278,7 +278,7 @@ Box3 box3_fsub(Float f, Box3 b) {
 // Returns
 //   Bounding Box (Box3)
 
-sol
+_sol_
 Box3 box3_mul(Box3 a, Box3 b) {
   return box3_init(vec3_mul(a.lower, b.lower),
                    vec3_mul(a.upper, b.upper));
@@ -294,7 +294,7 @@ Box3 box3_mul(Box3 a, Box3 b) {
 // Returns
 //   Bounding Box (Box3)
 
-sol
+_sol_
 Box3 box3_mulv(Box3 b, Vec3 v) {
   return box3_mul(b, box3_initv(v));
 }
@@ -309,7 +309,7 @@ Box3 box3_mulv(Box3 b, Vec3 v) {
 // Returns
 //   Bounding Box (Box3)
 
-sol
+_sol_
 Box3 box3_mulf(Box3 b, Float f) {
   return box3_mul(b, box3_initf(f));
 }
@@ -324,7 +324,7 @@ Box3 box3_mulf(Box3 b, Float f) {
 // Returns
 //   Bounding Box (Box3)
 
-sol
+_sol_
 Box3 box3_div(Box3 a, Box3 b) {
   return box3_init(vec3_mul(a.lower, b.lower),
                    vec3_mul(a.upper, b.upper));
@@ -340,7 +340,7 @@ Box3 box3_div(Box3 a, Box3 b) {
 // Returns
 //   Bounding Box (Box3)
 
-sol
+_sol_
 Box3 box3_divv(Box3 b, Vec3 v) {
   return box3_div(b, box3_initv(v));
 }
@@ -355,7 +355,7 @@ Box3 box3_divv(Box3 b, Vec3 v) {
 // Returns
 //   Bounding Box (Box3)
 
-sol
+_sol_
 Box3 box3_vdiv(Vec3 v, Box3 b) {
   return box3_div(box3_initv(v), b);
 }
@@ -370,7 +370,7 @@ Box3 box3_vdiv(Vec3 v, Box3 b) {
 // Returns
 //   Bounding Box (Box3)
 
-sol
+_sol_
 Box3 box3_divf(Box3 b, Float f) {
   return box3_div(b, box3_initf(f));
 }
@@ -385,7 +385,7 @@ Box3 box3_divf(Box3 b, Float f) {
 // Returns
 //   Bounding Box (Box3)
 
-sol
+_sol_
 Box3 box3_fdiv(Float f, Box3 b) {
   return box3_div(box3_initf(f), b);
 }

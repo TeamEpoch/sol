@@ -26,7 +26,7 @@
 // Returns
 //   Matrix (Mat4)
 
-sol
+_sol_
 Mat4 mat4_init(Float f11, Float f12, Float f13, Float f14, Float f21, Float f22, Float f23, Float f24, Float f31, Float f32, Float f33, Float f34, Float f41, Float f42, Float f43, Float f44) {
   return mat4_initv(vec4_init(f11, f12, f13, f14),
                     vec4_init(f21, f22, f23, f24),
@@ -46,7 +46,7 @@ Mat4 mat4_init(Float f11, Float f12, Float f13, Float f14, Float f21, Float f22,
 // Returns
 //   Matrix (Mat4)
 
-sol
+_sol_
 Mat4 mat4_initv(Vec4 v1, Vec4 v2, Vec4 v3, Vec4 v4) {
   Mat4 out;
   out.v[0] = v1;
@@ -65,7 +65,7 @@ Mat4 mat4_initv(Vec4 v1, Vec4 v2, Vec4 v3, Vec4 v4) {
 // Returns
 //   Matrix (Mat4)
 
-sol
+_sol_
 Mat4 mat4_initf(Float f) {
   return mat4_init(f, f, f, f,
                    f, f, f, f,
@@ -81,7 +81,7 @@ Mat4 mat4_initf(Float f) {
 // Returns
 //   Identity Matrix (Mat4)
 
-sol
+_sol_
 Mat4 mat4_iden(void) {
   return mat4_init((Float) 1, (Float) 0, (Float) 0, (Float) 0,
                    (Float) 0, (Float) 1, (Float) 0, (Float) 0,
@@ -98,7 +98,7 @@ Mat4 mat4_iden(void) {
 // Returns
 //   Matrix (Mat4)
 
-sol
+_sol_
 Mat4 mat4_zero(void) {
   return mat4_initf(0);
 }
@@ -117,7 +117,7 @@ Mat4 mat4_zero(void) {
 // Returns
 //   Vector (Vec4)
 
-sol
+_sol_
 Vec4 mat4_row(Mat4 m, size_t row) {
   return m.v[row];
 }
@@ -132,7 +132,7 @@ Vec4 mat4_row(Mat4 m, size_t row) {
 // Returns
 //   Vector (Vec4)
 
-sol
+_sol_
 Vec4 mat4_col(Mat4 m, size_t col) {
   return vec4_init(m.f[0][col],
                    m.f[1][col],
@@ -151,7 +151,7 @@ Vec4 mat4_col(Mat4 m, size_t col) {
 // Returns
 //   Scalar (Float)
 
-sol
+_sol_
 Float mat4_f(Mat4 m, size_t row, size_t col) {
   return m.f[row][col];
 }
@@ -170,7 +170,7 @@ Float mat4_f(Mat4 m, size_t row, size_t col) {
 // Returns
 //   Matrix (Mat4)
 
-sol
+_sol_
 Mat4 mat4_dot(Mat4 a, Mat4 b) {
   const Vec4 a0 = mat4_row(a, 0);
   const Vec4 a1 = mat4_row(a, 1);
@@ -211,7 +211,7 @@ Mat4 mat4_dot(Mat4 a, Mat4 b) {
 // Returns
 //   Matrix (Mat4)
 
-sol
+_sol_
 Mat4 mat4_add(Mat4 a, Mat4 b) {
   return mat4_initv(vec4_add(a.v[0], b.v[0]),
                     vec4_add(a.v[1], b.v[1]),
@@ -229,7 +229,7 @@ Mat4 mat4_add(Mat4 a, Mat4 b) {
 // Returns
 //   Matrix (Mat4)
 
-sol
+_sol_
 Mat4 mat4_addf(Mat4 m, Float f) {
   return mat4_add(m, mat4_initf(f));
 }
@@ -244,7 +244,7 @@ Mat4 mat4_addf(Mat4 m, Float f) {
 // Returns
 //   Matrix (Mat4)
 
-sol
+_sol_
 Mat4 mat4_sub(Mat4 a, Mat4 b) {
   return mat4_initv(vec4_sub(a.v[0], b.v[0]),
                     vec4_sub(a.v[1], b.v[1]),
@@ -262,7 +262,7 @@ Mat4 mat4_sub(Mat4 a, Mat4 b) {
 // Returns
 //   Matrix (Mat4)
 
-sol
+_sol_
 Mat4 mat4_subf(Mat4 m, Float f) {
   return mat4_sub(m, mat4_initf(f));
 }
@@ -277,7 +277,7 @@ Mat4 mat4_subf(Mat4 m, Float f) {
 // Returns
 //   Matrix (Mat4)
 
-sol
+_sol_
 Mat4 mat4_fsub(Float f, Mat4 m) {
   return mat4_sub(mat4_initf(f), m);
 }
@@ -291,7 +291,7 @@ Mat4 mat4_fsub(Float f, Mat4 m) {
 // Returns
 //   Matrix (Mat4)
 
-sol
+_sol_
 Mat4 mat4_mul(Mat4 a, Mat4 b) {
   return mat4_initv(vec4_mul(a.v[0], b.v[0]),
                     vec4_mul(a.v[1], b.v[1]),
@@ -309,7 +309,7 @@ Mat4 mat4_mul(Mat4 a, Mat4 b) {
 // Returns
 //   Matrix (Mat4)
 
-sol
+_sol_
 Mat4 mat4_mulf(Mat4 m, Float f) {
   return mat4_mul(m, mat4_initf(f));
 }
@@ -324,7 +324,7 @@ Mat4 mat4_mulf(Mat4 m, Float f) {
 // Returns
 //   Matrix (Mat4)
 
-sol
+_sol_
 Mat4 mat4_div(Mat4 a, Mat4 b) {
   return mat4_initv(vec4_div(a.v[0], b.v[0]),
                     vec4_div(a.v[1], b.v[1]),
@@ -342,7 +342,7 @@ Mat4 mat4_div(Mat4 a, Mat4 b) {
 // Returns
 //   Matrix (Mat4)
 
-sol
+_sol_
 Mat4 mat4_divf(Mat4 m, Float f) {
   return mat4_div(m, mat4_initf(f));
 }
@@ -357,7 +357,7 @@ Mat4 mat4_divf(Mat4 m, Float f) {
 // Returns
 //   Matrix (Mat4)
 
-sol
+_sol_
 Mat4 mat4_fdiv(Float f, Mat4 m) {
   return mat4_div(mat4_initf(f), m);
 }
@@ -371,7 +371,7 @@ Mat4 mat4_fdiv(Float f, Mat4 m) {
 // Returns
 //   Matrix (Mat4)
 
-sol
+_sol_
 Mat4 mat4_avg(Mat4 a, Mat4 b) {
   return mat4_initv(vec4_avg(a.v[0], b.v[0]),
                     vec4_avg(a.v[1], b.v[1]),
@@ -389,7 +389,7 @@ Mat4 mat4_avg(Mat4 a, Mat4 b) {
 // Returns
 //   Matrix (Mat4)
 
-sol
+_sol_
 Mat4 mat4_avgf(Mat4 m, Float f) {
   return mat4_avg(m, mat4_initf(f));
 }
@@ -406,7 +406,7 @@ Mat4 mat4_avgf(Mat4 m, Float f) {
 // Returns
 //   void
 
-sol
+_sol_
 void mat4_print(Mat4 m) {
   vec4_print(m.v[0]);
   vec4_print(m.v[1]);

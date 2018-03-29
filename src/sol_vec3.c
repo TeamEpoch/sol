@@ -24,18 +24,9 @@
 // Returns
 //   Vector (Vec3) = {x, y, z}
 
-sol
+_sol_
 Vec3 vec3_init(Float x, Float y, Float z) {
-  Vec3 out;
-  #if defined(SOL_AVX_64)
-    out.avx64 = _mm256_set_pd(x, y, z, 0);
-  #elif defined(SOL_AVX_32)
-    out.avx32 = _mm_set_ps(x, y, z, 0);
-  #else
-    out.x = x;
-    out.y = y;
-    out.z = z;
-  #endif
+  const Vec3 out = {x, y, z, (Float) 0};
   return out;
 }
 
@@ -47,20 +38,9 @@ Vec3 vec3_init(Float x, Float y, Float z) {
 // Returns
 //   Vector (Vec3) = {f, f, f}
 
-sol
+_sol_
 Vec3 vec3_initf(Float f) {
-  Vec3 out;
-  #if defined(SOL_AVX_64)
-    out.avx64 = _mm256_set1_pd(f);
-  #elif defined(SOL_AVX_32)
-    out.avx32 = _mm_set1_ps(f);
-  #elif defined(SOL_NEON_64)
-    out.neon64 = vdupq_n_f64(f);
-  #elif defined(SOL_NEON_32)
-    out.neon32 = vdupq_n_f32(f);
-  #else
-    out = vec3_init(f, f, f);
-  #endif
+  const Vec3 out = {f, f, f, (Float) 0};
   return out;
 }
 
@@ -72,9 +52,10 @@ Vec3 vec3_initf(Float f) {
 // Returns
 //   Vector (Vec3) = {0, 0, 0}
 
-sol
+_sol_
 Vec3 vec3_zero(void) {
-  return vec3_initf(0);
+  const Vec3 out = {(Float) 0, (Float) 0, (Float) 0, (Float) 0};
+  return out;
 }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -89,7 +70,7 @@ Vec3 vec3_zero(void) {
 // Returns
 //   Normalized Vector (Vec3)
 
-sol
+_sol_
 Vec3 vec3_norm(Vec3 v) {
   return vec3_divf(v, vec3_mag(v));
 }
@@ -102,7 +83,7 @@ Vec3 vec3_norm(Vec3 v) {
 // Returns
 //   Magnitude (Float)
 
-sol
+_sol_
 Float vec3_mag(Vec3 v) {
   return flt_sqrt(vec3_dot(v, v));
 }
@@ -117,12 +98,12 @@ Float vec3_mag(Vec3 v) {
 // Returns
 //   Equality (bool)
 
-sol
+_sol_
 bool vec3_eq(Vec3 a, Vec3 b, Float ep) {
   const Vec3 c = vec3_sub(a, b);
-  return (flt_abs(c.x) < ep)
-      && (flt_abs(c.y) < ep)
-      && (flt_abs(c.z) < ep);
+  return (flt_abs(c[X]) < ep)
+      && (flt_abs(c[Y]) < ep)
+      && (flt_abs(c[Z]) < ep);
 }
 
 /// vec3_yzx ///
@@ -133,16 +114,9 @@ bool vec3_eq(Vec3 a, Vec3 b, Float ep) {
 // Returns
 //   Vector (Vec3)
 
-sol
+_sol_
 Vec3 vec3_yzx(Vec3 v) {
-  Vec3 out;
-  #if defined(SOL_AVX_64)
-    out.avx64 = _mm256_shuffle_pd(v.avx64, v.avx64, _MM_SHUFFLE(3, 0, 2, 1));
-  #elif defined(SOL_AVX_32)
-    out.avx32 = _mm_shuffle_ps(v.avx32, v.avx32, _MM_SHUFFLE(3, 0, 2, 1));
-  #else
-    out = vec3_init(v.y, v.z, v.x);
-  #endif
+  const Vec3 out = {v[Y], v[Z], v[X]};
   return out;
 }
 
@@ -159,7 +133,7 @@ Vec3 vec3_yzx(Vec3 v) {
 // Returns
 //   Vector (Vec3)
 
-sol
+_sol_
 Vec3 vec3_rot(Vec3 v, Vec4 aa) {
   return vec3_rotq(v, cv_axis_quat(aa));
 }
@@ -173,11 +147,11 @@ Vec3 vec3_rot(Vec3 v, Vec4 aa) {
 // Returns
 //   Vector (Vec3)
 
-sol
+_sol_
 Vec3 vec3_rotq(Vec3 v, Vec4 q) {
-  const Vec3 qv = vec3_init(q.x, q.y, q.z);
+  const Vec3 qv = {q[X], q[Y], q[Z]};
   const Vec3 t = vec3_mulf(vec3_cross(qv, v), 2);
-  return vec3_add(v, vec3_add(vec3_mulf(t, q.w), vec3_cross(qv, t)));
+  return vec3_add(v, vec3_add(vec3_mulf(t, q[W]), vec3_cross(qv, t)));
 }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -193,7 +167,7 @@ Vec3 vec3_rotq(Vec3 v, Vec4 q) {
 // Returns
 //   Projection (Vec3)
 
-sol
+_sol_
 Vec3 vec3_proj(Vec3 a, Vec3 b) {
   const Float ma = vec3_mag(a);
   const Float d = ma * ma;
@@ -210,7 +184,7 @@ Vec3 vec3_proj(Vec3 a, Vec3 b) {
 // Returns
 //   Rejection (Vec3)
 
-sol
+_sol_
 Vec3 vec3_rej(Vec3 a, Vec3 b) {
   return vec3_sub(a, vec3_proj(a, b));
 }
@@ -224,7 +198,7 @@ Vec3 vec3_rej(Vec3 a, Vec3 b) {
 // Returns
 //   Angle (Float)
 
-sol
+_sol_
 Float vec3_angle(Vec3 a, Vec3 b) {
   return flt_acos(vec3_dot(a, b) / (vec3_mag(a) / vec3_mag(b)));
 }
@@ -238,7 +212,7 @@ Float vec3_angle(Vec3 a, Vec3 b) {
 // Returns
 //   Cross Product (Vec3)
 
-sol
+_sol_
 Vec3 vec3_cross(Vec3 a, Vec3 b) {
   const Vec3 va = vec3_yzx(a);
   const Vec3 vb = vec3_yzx(b);
@@ -255,7 +229,7 @@ Vec3 vec3_cross(Vec3 a, Vec3 b) {
 // Returns
 //   Dot Product (Float)
 
-sol
+_sol_
 Float vec3_dot(Vec3 a, Vec3 b) {
   return vec3_sum(vec3_mul(a, b));
 }
@@ -272,9 +246,9 @@ Float vec3_dot(Vec3 a, Vec3 b) {
 // Returns
 //   Sum (Float) = a.x + a.y + a.z
 
-sol
+_sol_
 Float vec3_sum(Vec3 v) {
-  return v.x + v.y + v.z;
+  return v[X] + v[Y] + v[Z];
 }
 
 /// vec3_fma ///
@@ -287,21 +261,9 @@ Float vec3_sum(Vec3 v) {
 // Returns
 //   Vector (Vec3) = {(a.xyz * b.xyz) + c.xyz}
 
-sol
+_sol_
 Vec3 vec3_fma(Vec3 a, Vec3 b, Vec3 c) {
-  Vec3 out;
-  #if defined(SOL_AVX2_64)
-    out.avx64 = _mm256_fmadd_pd(a.avx64, b.avx64, c.avx64);
-  #elif defined(SOL_AVX2_32)
-    out.avx32 = _mm_fmadd_ps(a.avx32, b.avx32, c.avx32);
-  #elif defined(SOL_NEON_64)
-    out.neon64 = vfmaq_f64(a.neon64, b.neon64, c.neon64);
-  #elif defined(SOL_NEON_32)
-    out.neon32 = vfmaq_f32(a.neon32, b.neon32, c.neon32);
-  #else
-    out = vec3_add(vec3_mul(a, b), c);
-  #endif
-  return out;
+  return (a * b) + c;
 }
 
 /// vec3_add ///
@@ -313,23 +275,9 @@ Vec3 vec3_fma(Vec3 a, Vec3 b, Vec3 c) {
 // Returns
 //   Vector (Vec3) = {a.xyz + b.xyz}
 
-sol
+_sol_
 Vec3 vec3_add(Vec3 a, Vec3 b) {
-  Vec3 out;
-  #if defined(SOL_AVX_64)
-    out.avx64 = _mm256_add_pd(a.avx64, b.avx64);
-  #elif defined(SOL_AVX_32)
-    out.avx32 = _mm_add_ps(a.avx32, b.avx32);
-  #elif defined(SOL_NEON_64)
-    out.neon64 = vaddq_f64(a.neon64, b.neon64);
-  #elif defined(SOL_NEON_32)
-    out.neon32 = vaddq_f32(a.neon32, b.neon32);
-  #else
-    out.x = a.x + b.x;
-    out.y = a.y + b.y;
-    out.z = a.z + b.z;
-  #endif
-  return out;
+  return a + b;
 }
 
 /// vec3_addf ///
@@ -341,9 +289,9 @@ Vec3 vec3_add(Vec3 a, Vec3 b) {
 // Returns
 //   Vector (Vec3) = {v.xyz + f}
 
-sol
+_sol_
 Vec3 vec3_addf(Vec3 v, Float f) {
-  return vec3_add(v, vec3_initf(f));
+  return v + f;
 }
 
 /// vec3_sub ///
@@ -355,23 +303,9 @@ Vec3 vec3_addf(Vec3 v, Float f) {
 // Returns
 //   Vector (Vec3) = {a.xyz - b.xyz}
 
-sol
+_sol_
 Vec3 vec3_sub(Vec3 a, Vec3 b) {
-  Vec3 out;
-  #if defined(SOL_AVX_64)
-    out.avx64 = _mm256_add_pd(a.avx64, b.avx64);
-  #elif defined(SOL_AVX_32)
-    out.avx32 = _mm_add_ps(a.avx32, b.avx32);
-  #elif defined(SOL_NEON_64)
-    out.neon64 = vsubq_f64(a.neon64, b.neon64);
-  #elif defined(SOL_NEON_32)
-    out.neon32 = vsubq_f32(a.neon32, b.neon32);
-  #else
-    out.x = a.x - b.x;
-    out.y = a.y - b.y;
-    out.z = a.z - b.z;
-  #endif
-  return out;
+  return a - b;
 }
 
 /// vec3_subf ///
@@ -383,9 +317,9 @@ Vec3 vec3_sub(Vec3 a, Vec3 b) {
 // Returns
 //   Vector (Vec3) = {v.xyz - f}
 
-sol
+_sol_
 Vec3 vec3_subf(Vec3 v, Float f) {
-  return vec3_sub(v, vec3_initf(f));
+  return v - f;
 }
 
 /// vec3_fsub ///
@@ -397,9 +331,9 @@ Vec3 vec3_subf(Vec3 v, Float f) {
 // Returns
 //   Vector (Vec3) = {f - v.xyz}
 
-sol
+_sol_
 Vec3 vec3_fsub(Float f, Vec3 v) {
-  return vec3_sub(vec3_initf(f), v);
+  return f - v;
 }
 
 /// vec3_mul ///
@@ -411,23 +345,9 @@ Vec3 vec3_fsub(Float f, Vec3 v) {
 // Returns
 //   Vector (Vec3) = {a.xyz * b.xyz}
 
-sol
+_sol_
 Vec3 vec3_mul(Vec3 a, Vec3 b) {
-  Vec3 out;
-  #if defined(SOL_AVX_64)
-    out.avx64 = _mm256_add_pd(a.avx64, b.avx64);
-  #elif defined(SOL_AVX_32)
-    out.avx32 = _mm_add_ps(a.avx32, b.avx32);
-  #elif defined(SOL_NEON_64)
-    out.neon64 = vmulq_f64(a.neon64, b.neon64);
-  #elif defined(SOL_NEON_32)
-    out.neon32 = vmulq_f32(a.neon32, b.neon32);
-  #else
-    out.x = a.x * b.x;
-    out.y = a.y * b.y;
-    out.z = a.z * b.z;
-  #endif
-  return out;
+  return a * b;
 }
 
 /// vec3_mulf ///
@@ -439,9 +359,9 @@ Vec3 vec3_mul(Vec3 a, Vec3 b) {
 // Returns
 //   Vector (Vec3) = {v.xyz * f}
 
-sol
+_sol_
 Vec3 vec3_mulf(Vec3 v, Float f) {
-  return vec3_mul(v, vec3_initf(f));
+  return v * f;
 }
 
 /// vec3_div ///
@@ -453,13 +373,9 @@ Vec3 vec3_mulf(Vec3 v, Float f) {
 // Returns
 //   Vector (Vec3) = {a.xyz / b.xyz}
 
-sol
+_sol_
 Vec3 vec3_div(Vec3 a, Vec3 b) {
-  Vec3 out;
-  out.x = a.x / b.x;
-  out.y = a.y / b.y;
-  out.z = a.z / b.z;
-  return out;
+  return a / b;
 }
 
 /// vec3_divf ///
@@ -471,9 +387,9 @@ Vec3 vec3_div(Vec3 a, Vec3 b) {
 // Returns
 //   Vector (Vec3) = {v.xyz / f}
 
-sol
+_sol_
 Vec3 vec3_divf(Vec3 v, Float f) {
-  return vec3_div(v, vec3_initf(f));
+  return v / f;
 }
 
 /// vec3_fdiv ///
@@ -485,55 +401,9 @@ Vec3 vec3_divf(Vec3 v, Float f) {
 // Returns
 //   Vector (Vec3) = {f / v.xyz}
 
-sol
+_sol_
 Vec3 vec3_fdiv(Float f, Vec3 v) {
-  return vec3_div(vec3_initf(f), v);
-}
-
-/// vec3_pow ///
-// Description
-//   Find a vector to the power of another.
-// Arguments
-//   a: Vector (Vec3)
-//   b: Vector (Vec3)
-// Returns
-//   Vector (Vec3) = {a.xyz ^ b.xyz}
-
-sol
-Vec3 vec3_pow(Vec3 a, Vec3 b) {
-  Vec3 out;
-  out.x = flt_pow(a.x, b.x);
-  out.y = flt_pow(a.y, b.y);
-  out.z = flt_pow(a.z, b.z);
-  return out;
-}
-
-/// vec3_powf ///
-// Description
-//   Find a vector to the power of a scalar.
-// Arguments
-//   v: Vector (Vec3)
-//   f: Scalar (Float)
-// Returns
-//   Vector (Vec3) = {v.xyz ^ f}
-
-sol
-Vec3 vec3_powf(Vec3 v, Float f) {
-  return vec3_pow(v, vec3_initf(f));
-}
-
-/// vec3_fpow ///
-// Description
-//   Find a scalar to the power of a vector.
-// Arguments
-//   f: Scalar (Float)
-//   v: Vector (Vec3)
-// Returns
-//   Vector (Vec3) = {f ^ v.xyz}
-
-sol
-Vec3 vec3_fpow(Float f, Vec3 v) {
-  return vec3_pow(vec3_initf(f), v);
+  return f / v;
 }
 
 /// vec3_avg ///
@@ -545,9 +415,9 @@ Vec3 vec3_fpow(Float f, Vec3 v) {
 // Returns
 //   Vector (Vec3) = {(a.xyz + b.xyz) / 2}
 
-sol
+_sol_
 Vec3 vec3_avg(Vec3 a, Vec3 b) {
-  return vec3_mulf(vec3_add(a, b), (Float) 0.5);
+  return (a + b) * ((Float) 0.5);
 }
 
 /// vec3_avgf ///
@@ -559,9 +429,9 @@ Vec3 vec3_avg(Vec3 a, Vec3 b) {
 // Returns
 //   Vector (Vec3) = {(v.xyz + f) / 2}
 
-sol
+_sol_
 Vec3 vec3_avgf(Vec3 v, Float f) {
-  return vec3_avg(v, vec3_initf(f));
+  return (v + f) * ((Float) 0.5);
 }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -576,9 +446,9 @@ Vec3 vec3_avgf(Vec3 v, Float f) {
 // Returns
 //   void
 
-sol
+_sol_
 void vec3_print(Vec3 v) {
-  printf("(" SOL_F_FMT ", " SOL_F_FMT ", " SOL_F_FMT ")\n", (FloatCast) v.x,
-                                                            (FloatCast) v.y,
-                                                            (FloatCast) v.z);
+  printf("(" SOL_F_FMT ", " SOL_F_FMT ", " SOL_F_FMT ")\n", (FloatCast) v[X],
+                                                            (FloatCast) v[Y],
+                                                            (FloatCast) v[Z]);
 }

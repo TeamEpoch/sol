@@ -25,19 +25,9 @@
 // Returns
 //   Vector (Vec4) = {x, y, z, w}
 
-sol
+_sol_
 Vec4 vec4_init(Float x, Float y, Float z, Float w) {
-  Vec4 out;
-  #if defined(SOL_AVX_64)
-    out.avx64 = _mm256_set_pd(x, y, z, w);
-  #elif defined(SOL_AVX_32)
-    out.avx32 = _mm_set_ps(x, y, z, w);
-  #else
-    out.x = x;
-    out.y = y;
-    out.z = z;
-    out.w = w;
-  #endif
+  const Vec4 out = {x, y, z, w};
   return out;
 }
 
@@ -49,20 +39,9 @@ Vec4 vec4_init(Float x, Float y, Float z, Float w) {
 // Returns
 //   Vector (Vec4) = {f, f, f, f}
 
-sol
+_sol_
 Vec4 vec4_initf(Float f) {
-  Vec4 out;
-  #if defined(SOL_AVX_64)
-    out.avx64 = _mm256_set1_pd(f);
-  #elif defined(SOL_AVX_32)
-    out.avx32 = _mm_set1_ps(f);
-  #elif defined(SOL_NEON_64)
-    out.neon64 = vdupq_n_f64(f);
-  #elif defined(SOL_NEON_32)
-    out.neon32 = vdupq_n_f32(f);
-  #else
-    out = vec4_init(f, f, f, f);
-  #endif
+  const Vec4 out = {f, f, f, f};
   return out;
 }
 
@@ -74,9 +53,10 @@ Vec4 vec4_initf(Float f) {
 // Returns
 //   Vector (Vec4) = {0, 0, 0, 0}
 
-sol
+_sol_
 Vec4 vec4_zero(void) {
-  return vec4_initf(0);
+  const Vec4 out = {(Float) 0, (Float) 0, (Float) 0, (Float) 0};
+  return out;
 }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -91,7 +71,7 @@ Vec4 vec4_zero(void) {
 // Returns
 //   Normalized Vector (Vec4)
 
-sol
+_sol_
 Vec4 vec4_norm(Vec4 v) {
   return vec4_divf(v, vec4_mag(v));
 }
@@ -104,7 +84,7 @@ Vec4 vec4_norm(Vec4 v) {
 // Returns
 //   Magnitude (Float)
 
-sol
+_sol_
 Float vec4_mag(Vec4 v) {
   return flt_sqrt(vec4_sum(vec4_mul(v, v)));
 }
@@ -118,13 +98,13 @@ Float vec4_mag(Vec4 v) {
 // Returns
 //   Equality (bool)
 
-sol
+_sol_
 bool vec4_eq(Vec4 a, Vec4 b, Float ep) {
   const Vec4 c = vec4_sub(a, b);
-  return (flt_abs(c.x) < ep)
-      && (flt_abs(c.y) < ep)
-      && (flt_abs(c.z) < ep)
-      && (flt_abs(c.w) < ep);
+  return (flt_abs(c[X]) < ep)
+      && (flt_abs(c[Y]) < ep)
+      && (flt_abs(c[Z]) < ep)
+      && (flt_abs(c[W]) < ep);
 }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -140,7 +120,7 @@ bool vec4_eq(Vec4 a, Vec4 b, Float ep) {
 // Returns
 //   Dot Product (Float)
 
-sol
+_sol_
 Float vec4_dot(Vec4 a, Vec4 b) {
   return vec4_sum(vec4_mul(a, b));
 }
@@ -157,9 +137,9 @@ Float vec4_dot(Vec4 a, Vec4 b) {
 // Returns
 //   Scalar (Float) = v.x + v.y + v.z + v.w
 
-sol
+_sol_
 Float vec4_sum(Vec4 v) {
-  return v.x + v.y + v.z + v.w;
+  return v[X] + v[Y] + v[Z] + v[W];
 }
 
 /// vec4_fma ///
@@ -172,21 +152,9 @@ Float vec4_sum(Vec4 v) {
 // Returns
 //   Vector (Vec4) = {(a.xyzw * b.xyzw) + c.xyzw}
 
-sol
+_sol_
 Vec4 vec4_fma(Vec4 a, Vec4 b, Vec4 c) {
-  Vec4 out;
-  #if defined(SOL_AVX_64)
-    out.avx64 = _mm256_fmadd_pd(a.avx64, b.avx64, c.avx64);
-  #elif defined(SOL_AVX_32)
-    out.avx32 = _mm_fmadd_ps(a.avx32, b.avx32, c.avx32);
-  #elif defined(SOL_NEON_64)
-    out.neon64 = vfmaq_f64(a.neon64, b.neon64, c.neon64);
-  #elif defined(SOL_NEON_32)
-    out.neon32 = vfmaq_f32(a.neon32, b.neon32, c.neon32);
-  #else
-    out = vec4_add(vec4_mul(a, b), c);
-  #endif
-  return out;
+  return (a * b) + c;
 }
 
 /// vec4_add ///
@@ -198,24 +166,9 @@ Vec4 vec4_fma(Vec4 a, Vec4 b, Vec4 c) {
 // Returns
 //   Vector (Vec4) = {a.xyzw + b.xyzw}
 
-sol
+_sol_
 Vec4 vec4_add(Vec4 a, Vec4 b) {
-  Vec4 out;
-  #if defined(SOL_AVX_64)
-    out.avx64 = _mm256_add_pd(a.avx64, b.avx64);
-  #elif defined(SOL_AVX_32)
-    out.avx32 = _mm_add_ps(a.avx32, b.avx32);
-  #elif defined(SOL_NEON_64)
-    out.neon64 = vaddq_f64(a.neon64, b.neon64);
-  #elif defined(SOL_NEON_32)
-    out.neon32 = vaddq_f32(a.neon32, b.neon32);
-  #else
-    out.x = a.x + b.x;
-    out.y = a.y + b.y;
-    out.z = a.z + b.z;
-    out.w = a.w + b.w;
-  #endif
-  return out;
+  return a + b;
 }
 
 /// vec4_addf ///
@@ -227,9 +180,9 @@ Vec4 vec4_add(Vec4 a, Vec4 b) {
 // Returns
 //   Vector (Vec4) = {v.xyzw + f}
 
-sol
+_sol_
 Vec4 vec4_addf(Vec4 v, Float f) {
-  return vec4_add(v, vec4_initf(f));
+  return v + f;
 }
 
 /// vec4_sub ///
@@ -241,24 +194,9 @@ Vec4 vec4_addf(Vec4 v, Float f) {
 // Returns
 //   Vector (Vec4) = {a.xyzw - b.xyzw}
 
-sol
+_sol_
 Vec4 vec4_sub(Vec4 a, Vec4 b) {
-  Vec4 out;
-  #if defined(SOL_AVX_64)
-    out.avx64 = _mm256_add_pd(a.avx64, b.avx64);
-  #elif defined(SOL_AVX_32)
-    out.avx32 = _mm_add_ps(a.avx32, b.avx32);
-  #elif defined(SOL_NEON_64)
-    out.neon64 = vsubq_f64(a.neon64, b.neon64);
-  #elif defined(SOL_NEON_32)
-    out.neon32 = vsubq_f32(a.neon32, b.neon32);
-  #else
-    out.x = a.x - b.x;
-    out.y = a.y - b.y;
-    out.z = a.z - b.z;
-    out.w = a.w - b.w;
-  #endif
-  return out;
+  return a - b;
 }
 
 /// vec4_subf ///
@@ -270,9 +208,9 @@ Vec4 vec4_sub(Vec4 a, Vec4 b) {
 // Returns
 //   Vector (Vec4) = {v.xyzw - f}
 
-sol
+_sol_
 Vec4 vec4_subf(Vec4 v, Float f) {
-  return vec4_sub(v, vec4_initf(f));
+  return v - f;
 }
 
 /// vec4_fsub ///
@@ -284,9 +222,9 @@ Vec4 vec4_subf(Vec4 v, Float f) {
 // Returns
 //   Vector (Vec4) = {f - v.xyzw}
 
-sol
+_sol_
 Vec4 vec4_fsub(Float f, Vec4 v) {
-  return vec4_sub(vec4_initf(f), v);
+  return f - v;
 }
 
 /// vec4_mul ///
@@ -298,24 +236,9 @@ Vec4 vec4_fsub(Float f, Vec4 v) {
 // Returns
 //   Vector (Vec4) = {a.xyzw * b.xyzw}
 
-sol
+_sol_
 Vec4 vec4_mul(Vec4 a, Vec4 b) {
-  Vec4 out;
-  #if defined(SOL_AVX_64)
-    out.avx64 = _mm256_mul_pd(a.avx64, b.avx64);
-  #elif defined(SOL_AVX_32)
-    out.avx32 = _mm_mul_ps(a.avx32, b.avx32);
-  #elif defined(SOL_NEON_64)
-    out.neon64 = vmulq_f64(a.neon64, b.neon64);
-  #elif defined(SOL_NEON_32)
-    out.neon32 = vmulq_f32(a.neon32, b.neon32);
-  #else
-    out.x = a.x * b.x;
-    out.y = a.y * b.y;
-    out.z = a.z * b.z;
-    out.w = a.w * b.w;
-  #endif
-  return out;
+  return a * b;
 }
 
 /// vec4_mulf ///
@@ -327,9 +250,9 @@ Vec4 vec4_mul(Vec4 a, Vec4 b) {
 // Returns
 //   Vector (Vec4) = {v.xyzw * f}
 
-sol
+_sol_
 Vec4 vec4_mulf(Vec4 v, Float f) {
-  return vec4_mul(v, vec4_initf(f));
+  return v * f;
 }
 
 /// vec4_div ///
@@ -341,14 +264,9 @@ Vec4 vec4_mulf(Vec4 v, Float f) {
 // Returns
 //   Vector (Vec4) = {a.xyzw / b.xyzw}
 
-sol
+_sol_
 Vec4 vec4_div(Vec4 a, Vec4 b) {
-  Vec4 out;
-  out.x = a.x / b.x;
-  out.y = a.y / b.y;
-  out.z = a.z / b.z;
-  out.w = a.w / b.w;
-  return out;
+  return a / b;
 }
 
 /// vec4_divf ///
@@ -360,9 +278,9 @@ Vec4 vec4_div(Vec4 a, Vec4 b) {
 // Returns
 //   Vector (Vec4) = {v.xyzw / f}
 
-sol
+_sol_
 Vec4 vec4_divf(Vec4 v, Float f) {
-  return vec4_div(v, vec4_initf(f));
+  return v / f;
 }
 
 /// vec4_fdiv ///
@@ -374,9 +292,9 @@ Vec4 vec4_divf(Vec4 v, Float f) {
 // Returns
 //   Vector (Vec4) = {f / v.xyzw}
 
-sol
+_sol_
 Vec4 vec4_fdiv(Float f, Vec4 v) {
-  return vec4_div(vec4_initf(f), v);
+  return f / v;
 }
 
 /// vec4_avg ///
@@ -388,9 +306,9 @@ Vec4 vec4_fdiv(Float f, Vec4 v) {
 // Returns
 //   Vector (Vec4) = {(a.xyzw + b.xyzw) / 2}
 
-sol
+_sol_
 Vec4 vec4_avg(Vec4 a, Vec4 b) {
-  return vec4_mulf(vec4_mul(a, b), (Float) 0.5);
+  return (a + b) * ((Float) 0.5);
 }
 
 /// vec4_avgf ///
@@ -402,9 +320,9 @@ Vec4 vec4_avg(Vec4 a, Vec4 b) {
 // Returns
 //   Vector (Vec4) = {(v.xyzw + f) / 2}
 
-sol
+_sol_
 Vec4 vec4_avgf(Vec4 v, Float f) {
-  return vec4_avg(v, vec4_initf(f));
+  return (v + f) * ((Float) 0.5);
 }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -419,10 +337,10 @@ Vec4 vec4_avgf(Vec4 v, Float f) {
 // Returns
 //   void
 
-sol
+_sol_
 void vec4_print(Vec4 v) {
-  printf("(" SOL_F_FMT ", " SOL_F_FMT ", " SOL_F_FMT ", " SOL_F_FMT ")\n", (FloatCast) v.x,
-                                                                           (FloatCast) v.y,
-                                                                           (FloatCast) v.z,
-                                                                           (FloatCast) v.w);
+  printf("(" SOL_F_FMT ", " SOL_F_FMT ", " SOL_F_FMT ", " SOL_F_FMT ")\n", (FloatCast) v[X],
+                                                                           (FloatCast) v[Y],
+                                                                           (FloatCast) v[Z],
+                                                                           (FloatCast) v[W]);
 }

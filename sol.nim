@@ -22,6 +22,15 @@
   passc: "-DSOL_NO_FAM"
 .}
 
+##########
+# Config #
+##########
+
+const sol_epsilon* = 0.000001
+
+when not defined(sol_fsize):
+  const sol_fsize*   = 64
+
 ################################################################################
 # Command-Line Options #########################################################
 ################################################################################
@@ -39,16 +48,18 @@ else:
 # Type Definitions #############################################################
 ################################################################################
 
-type Float* {.importc: "Float", header: "sol.h".} = cfloat
+when sol_fsize > 32:
+  type Float* {.importc: "Float", header: "sol.h".} = cdouble
+  {.passc: "-DSOL_FSIZE=64".}
+else:
+  type Float* {.importc: "Float", header: "sol.h".} = cfloat
+  {.passc: "-DSOL_FSIZE=32".}
 
-type Vec2* {.importc: "Vec2", header: "sol.h".} = object
-    x*, y*: Float
+type Vec2* {.importc: "Vec2", header: "sol.h", unchecked, packed.} = object
 
-type Vec3* {.importc: "Vec3", header: "sol.h".} = object
-    x*, y*, z*: Float
+type Vec3* {.importc: "Vec3", header: "sol.h", unchecked, packed.} = object
 
-type Vec4* {.importc: "Vec4", header: "sol.h".} = object
-    x*, y*, z*, w*: Float
+type Vec4* {.importc: "Vec4", header: "sol.h", unchecked, packed.} = object
 
 type Ray2* {.importc: "Ray2", header: "sol.h".} = object
     pos*, vec*: Vec2
@@ -69,7 +80,7 @@ type Mat3* {.importc: "Mat3", header: "sol.h".} = object
 type Mat4* {.importc: "Mat4", header: "sol.h".} = object
 
 type Box2* {.importc: "Box2", header: "sol.h".} = object
-  lower*, upper*: Vec2
+    lower*, upper*: Vec2
 
 type Box3* {.importc: "Box3", header: "sol.h".} = object
     lower*, upper*: Vec3
@@ -139,6 +150,12 @@ proc cv_rad_deg*(rad: Float): Float {.importc: "cv_rad_deg", header: "sol.h".}
 # Vec2 Functions ###############################################################
 ################################################################################
 
+proc x*(v: Vec2): Float {.inline.} = {.emit: [result, " = ", v, "[0];"].}
+proc y*(v: Vec2): Float {.inline.} = {.emit: [result, " = ", v, "[1];"].}
+
+proc `x=`*(v: var Vec2; f: Float) {.inline.} = {.emit: [v, "[0][0] = ", f, ";"].}
+proc `y=`*(v: var Vec2; f: Float) {.inline.} = {.emit: [v, "[0][1] = ", f, ";"].}
+
 proc vec2_init*(x, y: Float): Vec2 {.importc: "vec2_init",  header: "sol.h".}
 proc vec2_initf*(f: Float): Vec2   {.importc: "vec2_initf", header: "sol.h".}
 proc vec2_zero*(): Vec2            {.importc: "vec2_zero",  header: "sol.h".}
@@ -194,6 +211,8 @@ template dot*(a, b: Vec2): Float   = vec2_dot(a, b)
 
 template sum*(v: Vec2): Float = vec2_sum(v)
 
+template `==`*(a, b: Vec2): bool = vec2_eq(a, b, sol_epsilon)
+
 template `+`*(a, b: Vec2): Vec2        = vec2_add(a, b)
 template `+`*(v: Vec2; f: Float): Vec2 = vec2_addf(v, f)
 template `+`*(f: Float; v: Vec2): Vec2 = vec2_addf(v, f)
@@ -226,6 +245,14 @@ template vec2_opt_fma*{vec2_add(vec2_mul(a, b), c)}(a, b, c: Vec2): Vec2 =
 ################################################################################
 # Vec3 Functions ###############################################################
 ################################################################################
+
+proc x*(v: Vec3): Float {.inline.} = {.emit: [result, " = ", v, "[0];"].}
+proc y*(v: Vec3): Float {.inline.} = {.emit: [result, " = ", v, "[1];"].}
+proc z*(v: Vec3): Float {.inline.} = {.emit: [result, " = ", v, "[2];"].}
+
+proc `x=`*(v: var Vec3; f: Float) {.inline.} = {.emit: [v, "[0][0] = ", f, ";"].}
+proc `y=`*(v: var Vec3; f: Float) {.inline.} = {.emit: [v, "[0][1] = ", f, ";"].}
+proc `z=`*(v: var Vec3; f: Float) {.inline.} = {.emit: [v, "[0][2] = ", f, ";"].}
 
 proc vec3_init*(x, y, z: Float): Vec3 {.importc: "vec3_init",  header: "sol.h".}
 proc vec3_initf*(f: Float): Vec3      {.importc: "vec3_initf", header: "sol.h".}
@@ -283,6 +310,8 @@ template dot*(a, b: Vec3): Float  = vec3_dot(a, b)
 
 template sum*(v: Vec3): Float = vec3_sum(v)
 
+template `==`*(a, b: Vec3): bool = vec3_eq(a, b, sol_epsilon)
+
 template `+`*(a, b: Vec3): Vec3        = vec3_add(a, b)
 template `+`*(v: Vec3; f: Float): Vec3 = vec3_addf(v, f)
 template `+`*(f: Float; v: Vec3): Vec3 = vec3_addf(v, f)
@@ -315,6 +344,16 @@ template vec3_opt_fma*{vec3_add(vec3_mul(a, b), c)}(a, b, c: Vec3): Vec3 =
 ################################################################################
 # Vec4 Functions ###############################################################
 ################################################################################
+
+proc x*(v: Vec4): Float {.inline.} = {.emit: [result, " = ", v, "[0];"].}
+proc y*(v: Vec4): Float {.inline.} = {.emit: [result, " = ", v, "[1];"].}
+proc z*(v: Vec4): Float {.inline.} = {.emit: [result, " = ", v, "[2];"].}
+proc w*(v: Vec4): Float {.inline.} = {.emit: [result, " = ", v, "[3];"].}
+
+proc `x=`*(v: var Vec4; f: Float) {.inline.} = {.emit: [v, "[0][0] = ", f, ";"].}
+proc `y=`*(v: var Vec4; f: Float) {.inline.} = {.emit: [v, "[0][1] = ", f, ";"].}
+proc `z=`*(v: var Vec4; f: Float) {.inline.} = {.emit: [v, "[0][2] = ", f, ";"].}
+proc `w=`*(v: var Vec4; f: Float) {.inline.} = {.emit: [v, "[0][3] = ", f, ";"].}
 
 proc vec4_init*(x, y, z, w: Float): Vec4 {.importc: "vec4_init",  header: "sol.h".}
 proc vec4_initf*(f: Float): Vec4         {.importc: "vec4_initf", header: "sol.h".}
@@ -354,6 +393,8 @@ template mag*(v: Vec4): Float             = vec4_mag(v)
 template eq*(a, b: Vec4; ep: Float): bool = vec4_eq(a, b, ep)
 
 template sum*(v: Vec4): Float = vec4_sum(v)
+
+template `==`*(a, b: Vec4): bool = vec4_eq(a, b, sol_epsilon)
 
 template `+`*(a, b: Vec4): Vec4        = vec4_add(a, b)
 template `+`*(v: Vec4; f: Float): Vec4 = vec4_addf(v, f)

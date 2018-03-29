@@ -23,7 +23,7 @@
 // Returns
 //   Ray (Ray3)
 
-sol
+_sol_
 Ray3 ray3_init(Vec3 pos, Vec3 vec) {
   Ray3 out = {pos, vec};
   return out;
@@ -37,7 +37,7 @@ Ray3 ray3_init(Vec3 pos, Vec3 vec) {
 // Returns
 //   Ray (Ray3)
 
-sol
+_sol_
 Ray3 ray3_initv(Vec3 v) {
   return ray3_init(vec3_zero(), v);
 }
@@ -51,7 +51,7 @@ Ray3 ray3_initv(Vec3 v) {
 // Returns
 //   Ray (Ray3)
 
-sol
+_sol_
 Ray3 ray3_initf(Float f) {
   return ray3_initv(vec3_initf(f));
 }
@@ -68,7 +68,7 @@ Ray3 ray3_initf(Float f) {
 // Returns
 //   Ray (Ray3)
 
-sol
+_sol_
 Ray3 ray3_norm(Ray3 r) {
   return ray3_init(r.pos, vec3_norm(r.vec));
 }
@@ -81,7 +81,7 @@ Ray3 ray3_norm(Ray3 r) {
 // Returns
 //   Magnitude (Float)
 
-sol
+_sol_
 Float ray3_mag(Ray3 r) {
   return vec3_mag(r.vec);
 }
@@ -96,7 +96,7 @@ Float ray3_mag(Ray3 r) {
 // Returns
 //   Equality (Bool)
 
-sol
+_sol_
 bool ray3_eq(Ray3 a, Ray3 b, Float ep) {
   if (vec3_eq(a.pos, b.pos, ep)){
     return vec3_eq(a.vec, b.vec, ep);
@@ -117,7 +117,7 @@ bool ray3_eq(Ray3 a, Ray3 b, Float ep) {
 // Returns
 //   Ray (Ray3)
 
-sol
+_sol_
 Ray3 ray3_rot(Ray3 r, Vec4 aa) {
   return ray3_rotq(r, cv_axis_quat(aa));
 }
@@ -131,7 +131,7 @@ Ray3 ray3_rot(Ray3 r, Vec4 aa) {
 // Returns
 //   Ray (Ray3)
 
-sol
+_sol_
 Ray3 ray3_rotq(Ray3 r, Vec4 q) {
   return ray3_init(r.pos, vec3_rotq(r.vec, q));
 }
@@ -150,7 +150,7 @@ Ray3 ray3_rotq(Ray3 r, Vec4 q) {
 // Returns
 //   Ray (Ray3) = {a.pos, a.vec.xyz + b.vec.xyz}
 
-sol
+_sol_
 Ray3 ray3_add(Ray3 a, Ray3 b) {
   return ray3_init(a.pos, vec3_add(a.vec, b.vec));
 }
@@ -165,7 +165,7 @@ Ray3 ray3_add(Ray3 a, Ray3 b) {
 // Returns
 //   Ray (Ray3) = {r.pos, r.vec.xyz + v.xyz}
 
-sol
+_sol_
 Ray3 ray3_addv(Ray3 r, Vec3 v) {
   return ray3_init(r.pos, vec3_add(r.vec, v));
 }
@@ -180,7 +180,7 @@ Ray3 ray3_addv(Ray3 r, Vec3 v) {
 // Returns
 //   Ray (Ray3) = {r.pos, r.vec.xyz + f}
 
-sol
+_sol_
 Ray3 ray3_addf(Ray3 r, Float f) {
   return ray3_init(r.pos, vec3_addf(r.vec, f));
 }
@@ -195,7 +195,7 @@ Ray3 ray3_addf(Ray3 r, Float f) {
 // Returns
 //   Ray (Ray3) = {r.pos, a.vec.xyz + b.vec.xyz}
 
-sol
+_sol_
 Ray3 ray3_sub(Ray3 a, Ray3 b) {
   return ray3_init(a.pos, vec3_sub(a.vec, b.vec));
 }
@@ -210,7 +210,7 @@ Ray3 ray3_sub(Ray3 a, Ray3 b) {
 // Returns
 //   Ray (Ray3) = {r.pos, r.vec.xyz - v.xyz}
 
-sol
+_sol_
 Ray3 ray3_subv(Ray3 r, Vec3 v) {
   return ray3_init(r.pos, vec3_sub(r.vec, v));
 }
@@ -225,7 +225,7 @@ Ray3 ray3_subv(Ray3 r, Vec3 v) {
 // Returns
 //   Ray (Ray3) = {r.pos, v.xyz - r.vec.xyz}
 
-sol
+_sol_
 Ray3 ray3_vsub(Vec3 v, Ray3 r) {
   return ray3_init(r.pos, vec3_sub(v, r.vec));
 }
@@ -240,7 +240,7 @@ Ray3 ray3_vsub(Vec3 v, Ray3 r) {
 // Returns
 //   Ray (Ray3) = {r.pos, r.vec.xyz - f}
 
-sol
+_sol_
 Ray3 ray3_subf(Ray3 r, Float f) {
   return ray3_init(r.pos, vec3_subf(r.vec, f));
 }
@@ -255,7 +255,7 @@ Ray3 ray3_subf(Ray3 r, Float f) {
 // Returns
 //   Ray (Ray3) = {r.pos, f - r.vec.xyz}
 
-sol
+_sol_
 Ray3 ray3_fsub(Float f, Ray3 r) {
   return ray3_init(r.pos, vec3_fsub(f, r.vec));
 }
@@ -270,7 +270,7 @@ Ray3 ray3_fsub(Float f, Ray3 r) {
 // Returns
 //   Ray (Ray3) = {a.pos, a.vec.xyz * b.vec.xyz}
 
-sol
+_sol_
 Ray3 ray3_mul(Ray3 a, Ray3 b) {
   return ray3_init(a.pos, vec3_mul(a.vec, b.vec));
 }
@@ -285,7 +285,7 @@ Ray3 ray3_mul(Ray3 a, Ray3 b) {
 // Returns
 //   Ray (Ray3) = {r.pos, v.vec.xyz * v.xyz}
 
-sol
+_sol_
 Ray3 ray3_mulv(Ray3 r, Vec3 v) {
   return ray3_init(r.pos, vec3_mul(r.vec, v));
 }
@@ -300,7 +300,7 @@ Ray3 ray3_mulv(Ray3 r, Vec3 v) {
 // Returns
 //   Ray (Ray3) = {r.pos, r.vec.xyz * f}
 
-sol
+_sol_
 Ray3 ray3_mulf(Ray3 r, Float f) {
   return ray3_init(r.pos, vec3_mulf(r.vec, f));
 }
@@ -315,7 +315,7 @@ Ray3 ray3_mulf(Ray3 r, Float f) {
 // Returns
 //   Ray (Ray3) = {a.pos, a.vec.xyz / b.vec.xyz}
 
-sol
+_sol_
 Ray3 ray3_div(Ray3 a, Ray3 b) {
   return ray3_init(a.pos, vec3_div(a.vec, b.vec));
 }
@@ -330,7 +330,7 @@ Ray3 ray3_div(Ray3 a, Ray3 b) {
 // Returns
 //   Ray (Ray3) = {r.pos, r.vec.xyz / v.xyz}
 
-sol
+_sol_
 Ray3 ray3_divv(Ray3 r, Vec3 v) {
   return ray3_init(r.pos, vec3_div(r.vec, v));
 }
@@ -345,7 +345,7 @@ Ray3 ray3_divv(Ray3 r, Vec3 v) {
 // Returns
 //   Ray (Ray3) = {r.pos, v.xyz / r.vec.xyz}
 
-sol
+_sol_
 Ray3 ray3_vdiv(Vec3 v, Ray3 r) {
   return ray3_init(r.pos, vec3_div(v, r.vec));
 }
@@ -360,7 +360,7 @@ Ray3 ray3_vdiv(Vec3 v, Ray3 r) {
 // Returns
 //   Ray (Ray3) = {a.pos, (a.vec.xyz + b.vec.xyz) / 2}
 
-sol
+_sol_
 Ray3 ray3_avg(Ray3 a, Ray3 b) {
   return ray3_init(a.pos, vec3_avg(a.vec, b.vec));
 }
@@ -375,7 +375,7 @@ Ray3 ray3_avg(Ray3 a, Ray3 b) {
 // Returns
 //   Ray (Ray3) = {r.pos, (r.vec.xyz + v.xyz) / 2}
 
-sol
+_sol_
 Ray3 ray3_avgv(Ray3 r, Vec3 v) {
   return ray3_init(r.pos, vec3_avg(r.vec, v));
 }
@@ -390,7 +390,7 @@ Ray3 ray3_avgv(Ray3 r, Vec3 v) {
 // Returns
 //   Ray (Ray3) = {r.pos, (r.vec.xyz + f) / 2}
 
-sol
+_sol_
 Ray3 ray3_avgf(Ray3 r, Float f) {
   return ray3_init(r.pos, vec3_avgf(r.vec, f));
 }
@@ -407,7 +407,7 @@ Ray3 ray3_avgf(Ray3 r, Float f) {
 // Returns
 //   void
 
-sol
+_sol_
 void ray3_print(Ray3 r) {
   vec3_print(r.pos);
   vec3_print(r.vec);

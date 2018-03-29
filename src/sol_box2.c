@@ -20,7 +20,7 @@
 // Returns
 //   Bounding Box (Box2)
 
-sol
+_sol_
 Box2 box2_init(Vec2 lower, Vec2 upper) {
   Box2 out;
   out.lower = lower;
@@ -37,7 +37,7 @@ Box2 box2_init(Vec2 lower, Vec2 upper) {
 // Returns
 //   Bounding Box (Box2)
 
-sol
+_sol_
 Box2 box2_initv(Vec2 v) {
   return box2_init(v, v);
 }
@@ -52,7 +52,7 @@ Box2 box2_initv(Vec2 v) {
 // Returns
 //   Bounding Box (Box2)
 
-sol
+_sol_
 Box2 box2_initf(Float f) {
   return box2_initv(vec2_initf(f));
 }
@@ -66,7 +66,7 @@ Box2 box2_initf(Float f) {
 // Returns
 //   Bounding Box (Box2)
 
-sol
+_sol_
 Box2 box2_zero(void) {
   return box2_initf((Float) 0);
 }
@@ -84,7 +84,7 @@ Box2 box2_zero(void) {
 // Returns
 //   Position (Vec2)
 
-sol
+_sol_
 Vec2 box2_pos(Box2 b) {
   return vec2_avg(b.lower, b.upper);
 }
@@ -97,9 +97,9 @@ Vec2 box2_pos(Box2 b) {
 // Returns
 //   Box Width (Float)
 
-sol
+_sol_
 Float box2_x(Box2 b) {
-  return b.upper.x - b.lower.x;
+  return b.upper[X] - b.lower[X];
 }
 
 /// box2_y ///
@@ -110,9 +110,9 @@ Float box2_x(Box2 b) {
 // Returns
 //   Box Height (Float)
 
-sol
+_sol_
 Float box2_y(Box2 b) {
-  return b.upper.y - b.lower.y;
+  return b.upper[Y] - b.lower[Y];
 }
 
 /// box2_pip ///
@@ -125,10 +125,10 @@ Float box2_y(Box2 b) {
 // Returns
 //   Point In Polygon (bool)
 
-sol 
+_sol_ 
 bool box2_pip(Box2 b, Vec2 v) {
-  return (b.lower.x >= v.x) && (v.x <= b.upper.x)
-      && (b.lower.y >= v.y) && (v.y <= b.upper.y);
+  return (b.lower[X] >= v[X]) && (v[X] <= b.upper[X])
+      && (b.lower[Y] >= v[Y]) && (v[Y] <= b.upper[Y]);
 }
 
   /////////////////////
@@ -145,7 +145,7 @@ bool box2_pip(Box2 b, Vec2 v) {
 // Returns
 //   Bounding Box (Box2)
 
-sol
+_sol_
 Box2 box2_add(Box2 a, Box2 b) {
   return box2_init(vec2_add(a.lower, b.lower),
                    vec2_add(a.upper, b.upper));
@@ -161,7 +161,7 @@ Box2 box2_add(Box2 a, Box2 b) {
 // Returns
 //   Bounding Box (Box2)
 
-sol
+_sol_
 Box2 box2_addv(Box2 b, Vec2 v) {
   return box2_add(b, box2_initv(v));
 }
@@ -176,7 +176,7 @@ Box2 box2_addv(Box2 b, Vec2 v) {
 // Returns
 //   Bounding Box (Box2)
 
-sol
+_sol_
 Box2 box2_addf(Box2 b, Float f) {
   return box2_addv(b, vec2_initf(f));
 }
@@ -191,7 +191,7 @@ Box2 box2_addf(Box2 b, Float f) {
 // Returns
 //   Bounding Box (Box2)
 
-sol
+_sol_
 Box2 box2_sub(Box2 a, Box2 b) {
   return box2_init(vec2_sub(a.lower, b.lower),
                    vec2_sub(a.upper, b.upper));
@@ -207,7 +207,7 @@ Box2 box2_sub(Box2 a, Box2 b) {
 // Returns
 //   Bounding Box (Box2)
 
-sol
+_sol_
 Box2 box2_subv(Box2 b, Vec2 v) {
   return box2_sub(b, box2_initv(v));
 }
@@ -222,7 +222,7 @@ Box2 box2_subv(Box2 b, Vec2 v) {
 // Returns
 //   Bounding Box (Box2)
 
-sol
+_sol_
 Box2 box2_vsub(Vec2 v, Box2 b) {
   return box2_sub(box2_initv(v), b);
 }
@@ -237,7 +237,7 @@ Box2 box2_vsub(Vec2 v, Box2 b) {
 // Returns
 //   Bounding Box (Box2)
 
-sol
+_sol_
 Box2 box2_subf(Box2 b, Float f) {
   return box2_subv(b, vec2_initf(f));
 }
@@ -252,7 +252,7 @@ Box2 box2_subf(Box2 b, Float f) {
 // Returns
 //   Bounding Box (Box2)
 
-sol
+_sol_
 Box2 box2_fsub(Float f, Box2 b) {
   return box2_vsub(vec2_initf(f), b);
 }
@@ -267,7 +267,7 @@ Box2 box2_fsub(Float f, Box2 b) {
 // Returns
 //   Bounding Box (Box2)
 
-sol
+_sol_
 Box2 box2_mul(Box2 a, Box2 b) {
   return box2_init(vec2_mul(a.lower, b.lower),
                    vec2_mul(a.upper, b.upper));
@@ -283,7 +283,7 @@ Box2 box2_mul(Box2 a, Box2 b) {
 // Returns
 //   Bounding Box (Box2)
 
-sol
+_sol_
 Box2 box2_mulv(Box2 b, Vec2 v) {
   return box2_mul(b, box2_initv(v));
 }
@@ -298,7 +298,7 @@ Box2 box2_mulv(Box2 b, Vec2 v) {
 // Returns
 //   Bounding Box (Box2)
 
-sol
+_sol_
 Box2 box2_mulf(Box2 b, Float f) {
   return box2_mulv(b, vec2_initf(f));
 }
@@ -313,7 +313,7 @@ Box2 box2_mulf(Box2 b, Float f) {
 // Returns
 //   Bounding Box (Box2)
 
-sol
+_sol_
 Box2 box2_div(Box2 a, Box2 b) {
   return box2_init(vec2_div(a.lower, b.lower),
                    vec2_div(a.upper, b.upper));
@@ -329,7 +329,7 @@ Box2 box2_div(Box2 a, Box2 b) {
 // Returns
 //   Bounding Box (Box2)
 
-sol
+_sol_
 Box2 box2_divv(Box2 b, Vec2 v) {
   return box2_div(b, box2_initv(v));
 }
@@ -344,7 +344,7 @@ Box2 box2_divv(Box2 b, Vec2 v) {
 // Returns
 //   Bounding Box (Box2)
 
-sol
+_sol_
 Box2 box2_vdiv(Vec2 v, Box2 b) {
   return box2_div(box2_initv(v), b);
 }
@@ -359,7 +359,7 @@ Box2 box2_vdiv(Vec2 v, Box2 b) {
 // Returns
 //   Bounding Box (Box2)
 
-sol
+_sol_
 Box2 box2_divf(Box2 b, Float f) {
   return box2_divv(b, vec2_initf(f));
 }
@@ -372,7 +372,7 @@ Box2 box2_divf(Box2 b, Float f) {
 //   f: Scalar (Float)
 //   b: Bounding Box (Box2)
 
-sol
+_sol_
 Box2 box2_fdiv(Float f, Box2 b) {
   return box2_vdiv(vec2_initf(f), b);
 }

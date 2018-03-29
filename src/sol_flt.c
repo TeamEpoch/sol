@@ -24,7 +24,7 @@
 // Returns
 //   Clamped Scalar (Float)
 
-sol
+_sol_
 Float flt_clamp(Float f, Float lower, Float upper) {
   return (f > upper) ? upper : (f < lower) ? lower : f;
 }
@@ -36,13 +36,13 @@ Float flt_clamp(Float f, Float lower, Float upper) {
 // Arguments
 //   f: Scalar (Float)
 // Returns
-//   Absolute Value (Float)
+//   Ab_sol_ute Value (Float)
 
-sol
+_sol_
 Float flt_abs(Float f) {
-  #if SOL_F_SIZE > 64
+  #if SOL_FSIZE > 64
     return fabsl(f);
-  #elif SOL_F_SIZE > 32
+  #elif SOL_FSIZE > 32
     return fabs(f);
   #else
     return fabsf(f);
@@ -59,11 +59,11 @@ Float flt_abs(Float f) {
 // Returns
 //   Power (Float)
 
-sol
+_sol_
 Float flt_pow(Float a, Float b) {
-  #if SOL_F_SIZE > 64
+  #if SOL_FSIZE > 64
     return powl(a, b);
-  #elif SOL_F_SIZE > 32
+  #elif SOL_FSIZE > 32
     return pow(a, b);
   #else
     return powf(a, b);
@@ -79,11 +79,11 @@ Float flt_pow(Float a, Float b) {
 // Returns
 //   Square Root (Float)
 
-sol
+_sol_
 Float flt_sqrt(Float f) {
-  #if SOL_F_SIZE > 64
+  #if SOL_FSIZE > 64
     return sqrtl(f);
-  #elif SOL_F_SIZE > 32
+  #elif SOL_FSIZE > 32
     return sqrt(f);
   #else
     return sqrtf(f);
@@ -103,11 +103,11 @@ Float flt_sqrt(Float f) {
 // Returns
 //   Tangent (Float)
 
-sol
+_sol_
 Float flt_tan(Float f) {
-  #if SOL_F_SIZE > 64
+  #if SOL_FSIZE > 64
     return tanl(f);
-  #elif SOL_F_SIZE > 32
+  #elif SOL_FSIZE > 32
     return tan(f);
   #else
     return tanf(f);
@@ -123,11 +123,11 @@ Float flt_tan(Float f) {
 // Returns
 //   Arctangent (Float)
 
-sol
+_sol_
 Float flt_atan(Float f) {
-  #if SOL_F_SIZE > 64
+  #if SOL_FSIZE > 64
     return atanl(f);
-  #elif SOL_F_SIZE > 32
+  #elif SOL_FSIZE > 32
     return atan(f);
   #else
     return atanf(f);
@@ -144,11 +144,11 @@ Float flt_atan(Float f) {
 // Returns
 //   Arctangent (Float)
 
-sol
+_sol_
 Float flt_atan2(Float y, Float x) {
-  #if SOL_F_SIZE > 64
+  #if SOL_FSIZE > 64
     return atan2l(y, x);
-  #elif SOL_F_SIZE > 32
+  #elif SOL_FSIZE > 32
     return atan2(y, x);
   #else
     return atan2f(y, x);
@@ -164,11 +164,11 @@ Float flt_atan2(Float y, Float x) {
 // Returns
 //   Sine (Float)
 
-sol
+_sol_
 Float flt_sin(Float f) {
-  #if SOL_F_SIZE > 64
+  #if SOL_FSIZE > 64
     return sinl(f);
-  #elif SOL_F_SIZE > 32
+  #elif SOL_FSIZE > 32
     return sin(f);
   #else
     return sinf(f);
@@ -184,11 +184,11 @@ Float flt_sin(Float f) {
 // Returns
 //   Arcsine (Float)
 
-sol
+_sol_
 Float flt_asin(Float f) {
-  #if SOL_F_SIZE > 64
+  #if SOL_FSIZE > 64
     return asinl(f);
-  #elif SOL_F_SIZE > 32
+  #elif SOL_FSIZE > 32
     return asin(f);
   #else
     return asinf(f);
@@ -204,11 +204,11 @@ Float flt_asin(Float f) {
 // Returns
 //   Cosine (Float)
 
-sol
+_sol_
 Float flt_cos(Float f) {
-  #if SOL_F_SIZE > 64
+  #if SOL_FSIZE > 64
     return cosl(f);
-  #elif SOL_F_SIZE > 32
+  #elif SOL_FSIZE > 32
     return cos(f);
   #else
     return cosf(f);
@@ -224,11 +224,11 @@ Float flt_cos(Float f) {
 // Returns
 //   Arc-cosine (Float)
 
-sol
+_sol_
 Float flt_acos(Float f) {
-  #if SOL_F_SIZE > 64
+  #if SOL_FSIZE > 64
     return acosl(f);
-  #elif SOL_F_SIZE > 32
+  #elif SOL_FSIZE > 32
     return acos(f);
   #else
     return acosf(f);

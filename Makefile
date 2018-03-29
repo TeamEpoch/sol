@@ -22,9 +22,9 @@ SHARED=-fpic -shared
 
 # Sol SIMD Settings #
 
-SOLAVX2=-DSOL_AVX2 -DSOL_AVX -mavx2 -mfma
-SOLAVX=-DSOL_AVX -mavx
-SOLNEON=-DSOL_NEON -mfpu=neon
+SOLAVX2=-mavx2 -mavx -mfma
+SOLAVX=-mavx
+SOLNEON=-mfpu=neon
 
 # Convenience Strings #
 
@@ -48,7 +48,7 @@ ifeq ($(CC), gcc)
 	LDFLAGS += -pipe -flto=8
 else ifeq ($(CC), clang)
 	SOLSRC += $(SOLHDR)
-	LDFLAGS += -pipe -Weverything
+	LDFLAGS += -pipe -Weverything -Wno-shadow
 else
 	# ...
 endif
@@ -56,7 +56,7 @@ endif
 # Default #
 
 default:
-	-@make -B build $(MUTE)
+	-@make -B build >/dev/null
 
 # Build Rules #
 
@@ -179,6 +179,24 @@ disas_neon:
 	-@$(CC) $(CFLAGS) $(SOLNEON) $(SOLSRC) $(LDFLAGS) -S masm=intel
 	-@mv $(SOLGEN) out $(MUTE)
 
+# Test Rules #
+
+test:
+	-@$(NIMC) $(NIMLANG) $(NIMFLAGS) -d:none tests/test.nim
+	-@mv tests/test . $(MUTE)
+
+test_avx2:
+	-@$(NIMC) $(NIMLANG) $(NIMFLAGS) -d:avx2 tests/test.nim
+	-@mv tests/test . $(MUTE)
+
+test_avx:
+	-@$(NIMC) $(NIMLANG) $(NIMFLAGS) -d:avx tests/test.nim
+	-@mv tests/test . $(MUTE)
+
+test_neon:
+	-@$(NIMC) $(NIMLANG) $(NIMFLAGS) -d:neon tests/test.nim
+	-@mv tests/test . $(MUTE)
+
 # Benchmark Rules #
 
 bench:
@@ -196,7 +214,7 @@ bench_avx:
 bench_neon:
 	-@$(NIMC) $(NIMLANG) $(NIMFLAGS) -d:release -d:neon --opt:speed tests/bench.nim
 	-@mv tests/bench . $(MUTE)
- 
+
 # Cleanup Rules #
 
 clean:

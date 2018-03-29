@@ -23,17 +23,9 @@
 // Returns
 //   Vector (Vec2) = {x, y}
 
-sol
+_sol_
 Vec2 vec2_init(Float x, Float y) {
-  Vec2 out;
-  #if defined(SOL_AVX_64)
-    out.avx64 = _mm_set_pd(x, y);
-  #elif defined(SOL_AVX_32)
-    out.avx32 = _mm_set_ps(x, y, 0, 0);
-  #else
-    out.x = x;
-    out.y = y;
-  #endif
+  const Vec2 out = {x, y};
   return out;
 }
 
@@ -45,20 +37,9 @@ Vec2 vec2_init(Float x, Float y) {
 // Returns
 //   Vector (Vec2) = {f, f}
 
-sol
+_sol_
 Vec2 vec2_initf(Float f) {
-  Vec2 out;
-  #if defined(SOL_AVX_64)
-    out.avx64 = _mm_set1_pd(f);
-  #elif defined(SOL_AVX_32)
-    out.avx32 = _mm_set1_ps(f);
-  #elif defined(SOL_NEON_64)
-    out.neon64 = vdup_n_f64(f);
-  #elif defined(SOL_NEON)
-    out.neon32 = vdup_n_f32(f);
-  #else
-    out = vec2_init(f, f);
-  #endif
+  Vec2 out = {f, f};
   return out;
 }
 
@@ -70,9 +51,10 @@ Vec2 vec2_initf(Float f) {
 // Returns
 //   Vector (Vec2) = {0, 0}
 
-sol
+_sol_
 Vec2 vec2_zero(void) {
-  return vec2_initf(0);
+  Vec2 out = {(Float) 0, (Float) 0};
+  return out;
 }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -87,7 +69,7 @@ Vec2 vec2_zero(void) {
 // Returns
 //   Normalized Vector (Vec2)
 
-sol
+_sol_
 Vec2 vec2_norm(Vec2 v) {
   return vec2_divf(v, vec2_mag(v));
 }
@@ -100,7 +82,7 @@ Vec2 vec2_norm(Vec2 v) {
 // Returns
 //   Magnitude (Float)
 
-sol
+_sol_
 Float vec2_mag(Vec2 v) {
   return flt_sqrt(vec2_dot(v, v));
 }
@@ -115,11 +97,11 @@ Float vec2_mag(Vec2 v) {
 // Returns
 //   Equality (Bool)
 
-sol
+_sol_
 bool vec2_eq(Vec2 a, Vec2 b, Float ep) {
   const Vec2 c = vec2_sub(a, b);
-  return (flt_abs(c.x) < ep)
-      && (flt_abs(c.y) < ep);
+  return (flt_abs(c[X]) < ep)
+      && (flt_abs(c[Y]) < ep);
 }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -135,7 +117,7 @@ bool vec2_eq(Vec2 a, Vec2 b, Float ep) {
 // Returns
 //   Vector (Vec2)
 
-sol
+_sol_
 Vec2 vec2_rot(Vec2 v, Float deg) {
   return vec2_rotr(v, cv_deg_rad(deg));
 }
@@ -149,12 +131,12 @@ Vec2 vec2_rot(Vec2 v, Float deg) {
 // Returns
 //   Vector (Vec2)
 
-sol
+_sol_
 Vec2 vec2_rotr(Vec2 v, Float rad) {
   const Float cs = flt_cos(rad);
   const Float sn = flt_sin(rad);
-  return vec2_init((v.x * cs) - (v.y * sn),
-                   (v.x * sn) + (v.y * cs));
+  return vec2_init((v[X] * cs) - (v[Y] * sn),
+                   (v[X] * sn) + (v[Y] * cs));
 }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -170,7 +152,7 @@ Vec2 vec2_rotr(Vec2 v, Float rad) {
 // Returns
 //   Projection (Vec2)
 
-sol
+_sol_
 Vec2 vec2_proj(Vec2 a, Vec2 b) {
   const Float f = vec2_mag(a) * flt_cos(vec2_angle(a, b));
   return vec2_mulf(b, f);
@@ -185,7 +167,7 @@ Vec2 vec2_proj(Vec2 a, Vec2 b) {
 // Returns
 //   Rejection (Vec2)
 
-sol
+_sol_
 Vec2 vec2_rej(Vec2 a, Vec2 b) {
   return vec2_sub(a, vec2_proj(a, b));
 }
@@ -199,7 +181,7 @@ Vec2 vec2_rej(Vec2 a, Vec2 b) {
 // Returns
 //   Angle (Float)
 
-sol
+_sol_
 Float vec2_angle(Vec2 a, Vec2 b) {
   return flt_atan2(vec2_cross(a, b), vec2_dot(a, b));
 }
@@ -213,10 +195,10 @@ Float vec2_angle(Vec2 a, Vec2 b) {
 // Returns
 //   Cross Product (Float)
 
-sol
+_sol_
 Float vec2_cross(Vec2 a, Vec2 b) {
-  return (a.x * b.y)
-       - (b.x * a.y);
+  return (a[X] * b[Y])
+       - (b[X] * a[Y]);
 }
 
 /// vec2_dot ///
@@ -228,7 +210,7 @@ Float vec2_cross(Vec2 a, Vec2 b) {
 // Returns
 //   Dot Product (Float)
 
-sol
+_sol_
 Float vec2_dot(Vec2 a, Vec2 b) {
   return vec2_sum(vec2_mul(a, b));
 }
@@ -245,9 +227,9 @@ Float vec2_dot(Vec2 a, Vec2 b) {
 // Returns
 //   Sum (Float) = a.x + a.y
 
-sol
+_sol_
 Float vec2_sum(Vec2 v) {
-  return v.x + v.y;
+  return v[X] + v[Y];
 }
 
 /// vec2_fma ///
@@ -260,20 +242,9 @@ Float vec2_sum(Vec2 v) {
 // Returns
 //   Vector (Vec2) = {(a.xy * b.xy) + c.xy}
 
-sol
+_sol_
 Vec2 vec2_fma(Vec2 a, Vec2 b, Vec2 c) {
-  Vec2 out;
-  #if defined(SOL_AVX_64)
-    out.avx64 = _mm_fmadd_pd(a.avx64, b.avx64, c.avx64);
-  #elif defined(SOL_AVX_32)
-    out.avx32 = _mm_fmadd_ps(a.avx32, b.avx32, c.avx32);
-  #elif defined(SOL_NEON_64)
-    out.neon64 = vfma_f64(a.neon64, b.neon64, c.neon64);
-  #elif defined(SOL_NEON_32)
-    out.neon32 = vfma_f32(a.neon32, b.neon32, c.neon32);
-  #else
-    out = vec2_add(vec2_mul(a, b), c);
-  #endif
+  const Vec2 out = (a * b) + c;
   return out;
 }
 
@@ -286,22 +257,9 @@ Vec2 vec2_fma(Vec2 a, Vec2 b, Vec2 c) {
 // Returns
 //   Vector (Vec2) = {a.xy + b.xy}
 
-sol
+_sol_
 Vec2 vec2_add(Vec2 a, Vec2 b) {
-  Vec2 out;
-  #if defined(SOL_AVX_64)
-    out.avx64 = _mm_add_pd(a.avx64, b.avx64);
-  #elif defined(SOL_AVX_32)
-    out.avx32 = _mm_add_ps(a.avx32, b.avx32);
-  #elif defined(SOL_NEON_64)
-    out.neon64 = vadd_f64(a.neon64, b.neon64);
-  #elif defined(SOL_NEON_32)
-    out.neon32 = vadd_f32(a.neon32, b.neon32);
-  #else
-    out.x = a.x + b.x;
-    out.y = a.y + b.y;
-  #endif
-  return out;
+  return a + b;
 }
 
 /// vec2_addf ///
@@ -313,9 +271,9 @@ Vec2 vec2_add(Vec2 a, Vec2 b) {
 // Returns
 //   Vector (Vec2) = {v.xyz + f}
 
-sol
+_sol_
 Vec2 vec2_addf(Vec2 v, Float f) {
-  return vec2_add(v, vec2_initf(f));
+  return v + f;
 }
 
 /// vec2_sub ///
@@ -327,23 +285,9 @@ Vec2 vec2_addf(Vec2 v, Float f) {
 // Returns
 //   Vector (Vec2) = {a.xyz - b.xyz}
 
-sol
+_sol_
 Vec2 vec2_sub(Vec2 a, Vec2 b) {
-  Vec2 out;
-  #if defined(SOL_AVX_64)
-    out.avx64 = _mm_sub_pd(a.avx64, b.avx64);
-  #elif defined(SOL_AVX_32)
-    out.avx32 = _mm_sub_ps(a.avx32, b.avx32);
-  #elif defined(SOL_NEON_64)
-    out.neon64 = vsub_f64(a.neon64, b.neon64);
-  #elif defined(SOL_NEON_32)
-    out.neon32 = vsub_f32(a.neon32, b.neon32);
-  #else
-    out.x = a.x - b.x;
-    out.y = a.y - b.y;
-  
-#endif
-  return out;
+  return a - b;
 }
 
 /// vec2_subf ///
@@ -355,23 +299,23 @@ Vec2 vec2_sub(Vec2 a, Vec2 b) {
 // Returns
 //   Vector (Vec2) = {v.xyz - f}
 
-sol
+_sol_
 Vec2 vec2_subf(Vec2 v, Float f) {
-  return vec2_sub(v, vec2_initf(f));
+  return v - f;
 }
 
 /// vec2_fsub ///
 // Description
 //   Subtracts each element of a vector from a float.
 // Arguments
-//   f: Scalar (sol_f)
+//   f: Scalar (_sol__f)
 //   v: Vector (Vec2)
 // Returns
 //   Vector (Vec2) = {f - v.xyz}
 
-sol
+_sol_
 Vec2 vec2_fsub(Float f, Vec2 v) {
-  return vec2_sub(vec2_initf(f), v);
+  return f - v;
 }
 
 /// vec2_mul ///
@@ -383,22 +327,9 @@ Vec2 vec2_fsub(Float f, Vec2 v) {
 // Returns
 //   Vector (Vec2) = {a.xyz * b.xyz}
 
-sol
+_sol_
 Vec2 vec2_mul(Vec2 a, Vec2 b) {
-  Vec2 out;
-  #if defined(SOL_AVX_64)
-    out.avx64 = _mm_mul_pd(a.avx64, b.avx64);
-  #elif defined(SOL_AVX_32)
-    out.avx32 = _mm_mul_ps(a.avx32, b.avx32);
-  #elif defined(SOL_NEON_64)
-    out.neon64 = vmul_f64(a.neon64, b.neon64);
-  #elif defined(SOL_NEON_32)
-    out.neon32 = vmul_f32(a.neon32, b.neon32);
-  #else
-    out.x = a.x * b.x;
-    out.y = a.y * b.y;
-  #endif
-  return out;
+  return a * b;
 }
 
 /// vec2_mulf ///
@@ -410,9 +341,9 @@ Vec2 vec2_mul(Vec2 a, Vec2 b) {
 // Returns
 //   Vector (Vec2) = {v.xyz * f}
 
-sol
+_sol_
 Vec2 vec2_mulf(Vec2 v, Float f) {
-  return vec2_mul(v, vec2_initf(f));
+  return v * f;
 }
 
 /// vec2_div ///
@@ -424,12 +355,9 @@ Vec2 vec2_mulf(Vec2 v, Float f) {
 // Returns
 //   Vector (Vec2) = {a.xyz / b.xyz}
 
-sol
+_sol_
 Vec2 vec2_div(Vec2 a, Vec2 b) {
-  Vec2 out;
-  out.x = a.x / b.x;
-  out.y = a.y / b.y;
-  return out;
+  return a / b;
 }
 
 /// vec2_divf ///
@@ -441,9 +369,9 @@ Vec2 vec2_div(Vec2 a, Vec2 b) {
 // Returns
 //   Vector (Vec2) = {v.xyz / f}
 
-sol
+_sol_
 Vec2 vec2_divf(Vec2 v, Float f) {
-  return vec2_div(v, vec2_initf(f));
+  return v / f;
 }
 
 /// vec2_fdiv ///
@@ -455,54 +383,9 @@ Vec2 vec2_divf(Vec2 v, Float f) {
 // Returns
 //   Vector (Vec2) = {f / v.xyz}
 
-sol
+_sol_
 Vec2 vec2_fdiv(Float f, Vec2 v) {
-  return vec2_div(vec2_initf(f), v);
-}
-
-/// vec2_pow ///
-// Description
-//   Find a vector to the power of another.
-// Arguments
-//   a: Vector (Vec2)
-//   b: Vector (Vec2)
-// Returns
-//   Vector (Vec2) = {a.xyz ^ b.xyz}
-
-sol
-Vec2 vec2_pow(Vec2 a, Vec2 b) {
-  Vec2 out;
-  out.x = flt_pow(a.x, b.x);
-  out.y = flt_pow(a.y, b.y);
-  return out;
-}
-
-/// vec2_powf ///
-// Description
-//   Find a vector to the power of a scalar.
-// Arguments
-//   v: Vector (Vec2)
-//   f: Scalar (Float)
-// Returns
-//   Vector (Vec2) = {v.xyz ^ f}
-
-sol
-Vec2 vec2_powf(Vec2 v, Float f) {
-  return vec2_pow(v, vec2_initf(f));
-}
-
-/// vec2_fpow ///
-// Description
-//   Find a scalar to the power of a vector.
-// Arguments
-//   f: Scalar (Float)
-//   v: Vector (Vec2)
-// Returns
-//   Vector (Vec2) = {f ^ v.xyz}
-
-sol
-Vec2 vec2_fpow(Float f, Vec2 v) {
-  return vec2_pow(vec2_initf(f), v);
+  return f / v;
 }
 
 /// vec2_avg ///
@@ -514,9 +397,9 @@ Vec2 vec2_fpow(Float f, Vec2 v) {
 // Returns
 //   Vector (Vec2) = {(a.xyz + b.xyz) / 2}
 
-sol
+_sol_
 Vec2 vec2_avg(Vec2 a, Vec2 b) {
-  return vec2_mulf(vec2_add(a, b), (Float) 0.5);
+  return (a + b) * ((Float) 0.5);
 }
 
 /// vec2_avgf ///
@@ -528,9 +411,9 @@ Vec2 vec2_avg(Vec2 a, Vec2 b) {
 // Returns
 //   Vector (Vec2) = {(v.xyz + f) / 2}
 
-sol
+_sol_
 Vec2 vec2_avgf(Vec2 v, Float f) {
-  return vec2_avg(v, vec2_initf(f));
+  return (v + f) * ((Float) 0.5);
 }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -545,8 +428,8 @@ Vec2 vec2_avgf(Vec2 v, Float f) {
 // Returns
 //   void
 
-sol
+_sol_
 void vec2_print(Vec2 v) {
-  printf("(" SOL_F_FMT ", " SOL_F_FMT ")\n", (FloatCast) v.x,
-                                             (FloatCast) v.y);
+  printf("(" SOL_F_FMT ", " SOL_F_FMT ")\n", (FloatCast) v[X],
+                                             (FloatCast) v[Y]);
 }

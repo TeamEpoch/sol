@@ -23,7 +23,7 @@
 // Returns
 //   Segment (Seg3) = {orig, dest}
 
-sol
+_sol_
 Seg3 seg3_init(Vec3 orig, Vec3 dest) {
   Seg3 out = {orig, dest};
   return out;
@@ -37,7 +37,7 @@ Seg3 seg3_init(Vec3 orig, Vec3 dest) {
 // Returns
 //   Segment (Seg3) = {v, v}
 
-sol
+_sol_
 Seg3 seg3_initv(Vec3 v) {
   return seg3_init(v, v);
 }
@@ -51,7 +51,7 @@ Seg3 seg3_initv(Vec3 v) {
 // Returns
 //   Segment (Seg3) = {{f, f}, {f, f}}
 
-sol
+_sol_
 Seg3 seg3_initf(Float f) {
   return seg3_initv(vec3_initf(f));
 }
@@ -65,7 +65,7 @@ Seg3 seg3_initf(Float f) {
 // Returns
 //   Segment (Seg3) = {{0, 0}, {0, 0}}
 
-sol
+_sol_
 Seg3 seg3_zero(void) {
   return seg3_initf(0);
 }
@@ -83,7 +83,7 @@ Seg3 seg3_zero(void) {
 // Returns
 //   Segment (Seg3) = {a.orig.xyz + b.orig.xyz, a.dest.xyz + b.dest.xyz}
 
-sol
+_sol_
 Seg3 seg3_add(Seg3 a, Seg3 b) {
   return seg3_init(vec3_add(a.orig, b.orig),
                    vec3_add(a.dest, b.dest));
@@ -98,7 +98,7 @@ Seg3 seg3_add(Seg3 a, Seg3 b) {
 // Returns
 //   Segment (Seg3) = {s.orig.xyz + v.xyz, s.dest.xyz + v.xyz}
 
-sol
+_sol_
 Seg3 seg3_addv(Seg3 s, Vec3 v) {
   return seg3_add(s, seg3_initv(v));
 }
@@ -112,7 +112,7 @@ Seg3 seg3_addv(Seg3 s, Vec3 v) {
 // Returns
 //   Segment (Seg3) = {s.orig.xyz + f, s.dest.xyz + f}
 
-sol
+_sol_
 Seg3 seg3_addf(Seg3 s, Float f) {
   return seg3_addv(s, vec3_initf(f));
 }
@@ -126,7 +126,7 @@ Seg3 seg3_addf(Seg3 s, Float f) {
 // Returns
 //   Segment (Seg3) = {a.orig.xyz - b.orig.xyz, a.dest.xyz - b.dest.xyz}
 
-sol
+_sol_
 Seg3 seg3_sub(Seg3 a, Seg3 b) {
   return seg3_init(vec3_sub(a.orig, b.orig),
                    vec3_sub(a.dest, b.dest));
@@ -141,7 +141,7 @@ Seg3 seg3_sub(Seg3 a, Seg3 b) {
 // Returns
 //   Segment (Seg3) = {s.orig.xyz - v.xyz, s.dest.xyz - v.xyz}
 
-sol
+_sol_
 Seg3 seg3_subv(Seg3 s, Vec3 v) {
   return seg3_sub(s, seg3_initv(v));
 }
@@ -155,7 +155,7 @@ Seg3 seg3_subv(Seg3 s, Vec3 v) {
 // Returns
 //   Segment (Seg3) = {v.xyz - s.orig.xyz, v.xyz - s.dest.xyz}
 
-sol
+_sol_
 Seg3 seg3_vsub(Vec3 v, Seg3 s) {
   return seg3_sub(seg3_initv(v), s);
 }
@@ -169,7 +169,7 @@ Seg3 seg3_vsub(Vec3 v, Seg3 s) {
 // Returns
 //   Segment (Seg3) = {s.orig.xyz - f, s.dest.xyz - f}
 
-sol
+_sol_
 Seg3 seg3_subf(Seg3 s, Float f) {
   return seg3_subv(s,vec3_initf(f));
 }
@@ -183,7 +183,7 @@ Seg3 seg3_subf(Seg3 s, Float f) {
 // Returns
 //   Segment (Seg3) = {f - s.orig.xyz, f - s.dest.xyz}
 
-sol
+_sol_
 Seg3 seg3_fsub(Float f, Seg3 s) {
   return seg3_vsub(vec3_initf(f), s);
 }
@@ -197,7 +197,7 @@ Seg3 seg3_fsub(Float f, Seg3 s) {
 // Returns
 //   Segment (Seg3) = {a.orig.xyz * b.orig.xyz, a.dest.xyz * b.dest.xyz}
 
-sol
+_sol_
 Seg3 seg3_mul(Seg3 a, Seg3 b) {
   return seg3_init(vec3_mul(a.orig, b.orig),
                    vec3_mul(a.dest, b.dest));
@@ -212,7 +212,7 @@ Seg3 seg3_mul(Seg3 a, Seg3 b) {
 // Returns
 //   Segment (Seg3) = {s.orig.xyz * v.xyz, s.dest.xyz * v.xyz}
 
-sol
+_sol_
 Seg3 seg3_mulv(Seg3 s, Vec3 v) {
   return seg3_mul(s, seg3_initv(v));
 }
@@ -226,7 +226,7 @@ Seg3 seg3_mulv(Seg3 s, Vec3 v) {
 // Returns
 //   Segment (Seg3) = {s.orig.xyz * f, s.dest.xyz * f}
 
-sol
+_sol_
 Seg3 seg3_mulf(Seg3 s, Float f) {
   return seg3_mulv(s, vec3_initf(f));
 }
@@ -240,7 +240,7 @@ Seg3 seg3_mulf(Seg3 s, Float f) {
 // Returns
 //   Segment (Seg3) = {a.orig.xyz / b.orig.xyz, a.dest.xyz / b.dest.xyz}
 
-sol
+_sol_
 Seg3 seg3_div(Seg3 a, Seg3 b) {
   return seg3_init(vec3_div(a.orig, b.orig),
                    vec3_div(a.dest, b.dest));
@@ -255,7 +255,7 @@ Seg3 seg3_div(Seg3 a, Seg3 b) {
 // Returns
 //   Segment (Seg3) = {s.orig.xyz / v.xyz, s.dest.xyz / v.xyz}
 
-sol
+_sol_
 Seg3 seg3_divv(Seg3 s, Vec3 v) {
   return seg3_div(s, seg3_initv(v));
 }
@@ -269,7 +269,7 @@ Seg3 seg3_divv(Seg3 s, Vec3 v) {
 // Returns
 //   Segment (Seg3) = {v.xyz / s.orig.xyz, v.xyz / s.dest.xyz}
 
-sol
+_sol_
 Seg3 seg3_vdiv(Vec3 v, Seg3 s) {
   return seg3_div(seg3_initv(v), s);
 }
@@ -283,7 +283,7 @@ Seg3 seg3_vdiv(Vec3 v, Seg3 s) {
 // Returns
 //   Segment (Seg3) = {s.orig.xyz / f, s.dest.xyz / f}
 
-sol
+_sol_
 Seg3 seg3_divf(Seg3 s, Float f) {
   return seg3_divv(s, vec3_initf(f));
 }
@@ -297,7 +297,7 @@ Seg3 seg3_divf(Seg3 s, Float f) {
 // Returns
 //   Segment (Seg3) = {f / s.orig.xyz, f / s.dest.xyz}
 
-sol
+_sol_
 Seg3 seg3_fdiv(Float f, Seg3 s) {
   return seg3_vdiv(vec3_initf(f), s);
 }
@@ -312,7 +312,7 @@ Seg3 seg3_fdiv(Float f, Seg3 s) {
 //   Segment (Seg3) = {(a.orig.xyz + b.orig.xyz) / 2,
 //                     (a.dest.xyz + b.dest.xyz) / 2}
 
-sol
+_sol_
 Seg3 seg3_avg(Seg3 a, Seg3 b) {
   return seg3_subf(seg3_add(a, b), 2);
 }
@@ -326,7 +326,7 @@ Seg3 seg3_avg(Seg3 a, Seg3 b) {
 // Returns
 //   Segment (Seg3) = {(s.orig.xyz + v.xyz) / 2, (s.dest.xyz + v.xyz) / 2}
 
-sol
+_sol_
 Seg3 seg3_avgv(Seg3 s, Vec3 v) {
   return seg3_avg(s, seg3_initv(v));
 }
@@ -340,7 +340,7 @@ Seg3 seg3_avgv(Seg3 s, Vec3 v) {
 // Returns
 //   Segment (Seg3) = {(s.orig.xyz + f) / 2, (s.dest.xyz + f) / 2}
 
-sol
+_sol_
 Seg3 seg3_avgf(Seg3 s, Float f) {
   return seg3_avgv(s, vec3_initf(f));
 }
@@ -357,7 +357,7 @@ Seg3 seg3_avgf(Seg3 s, Float f) {
 // Returns
 //   void
 
-sol
+_sol_
 void seg3_print(Seg3 s) {
   vec3_print(s.orig);
   vec3_print(s.dest);
