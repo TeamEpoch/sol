@@ -71,7 +71,7 @@ Vec2 vec2_zero(void) {
 
 _sol_
 Vec2 vec2_norm(Vec2 v) {
-  return vec2_divf(v, vec2_mag(v));
+  return v / vec2_mag(v);
 }
 
 /// vec2_mag ///
@@ -99,7 +99,7 @@ Float vec2_mag(Vec2 v) {
 
 _sol_
 bool vec2_eq(Vec2 a, Vec2 b, Float ep) {
-  const Vec2 c = vec2_sub(a, b);
+  const Vec2 c = a - b;
   return (flt_abs(c[X]) < ep)
       && (flt_abs(c[Y]) < ep);
 }
@@ -155,7 +155,7 @@ Vec2 vec2_rotr(Vec2 v, Float rad) {
 _sol_
 Vec2 vec2_proj(Vec2 a, Vec2 b) {
   const Float f = vec2_mag(a) * flt_cos(vec2_angle(a, b));
-  return vec2_mulf(b, f);
+  return b * f;
 }
 
 /// vec2_rej ///
@@ -169,7 +169,7 @@ Vec2 vec2_proj(Vec2 a, Vec2 b) {
 
 _sol_
 Vec2 vec2_rej(Vec2 a, Vec2 b) {
-  return vec2_sub(a, vec2_proj(a, b));
+  return a - vec2_proj(a, b);
 }
 
 /// vec2_angle ///
@@ -212,7 +212,7 @@ Float vec2_cross(Vec2 a, Vec2 b) {
 
 _sol_
 Float vec2_dot(Vec2 a, Vec2 b) {
-  return vec2_sum(vec2_mul(a, b));
+  return vec2_sum(a * b);
 }
 
   //////////////////////////////////////////////////////////////////////////////

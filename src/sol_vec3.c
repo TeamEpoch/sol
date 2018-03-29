@@ -72,7 +72,7 @@ Vec3 vec3_zero(void) {
 
 _sol_
 Vec3 vec3_norm(Vec3 v) {
-  return vec3_divf(v, vec3_mag(v));
+  return v / vec3_mag(v);
 }
 
 /// vec3_mag ///
@@ -100,7 +100,7 @@ Float vec3_mag(Vec3 v) {
 
 _sol_
 bool vec3_eq(Vec3 a, Vec3 b, Float ep) {
-  const Vec3 c = vec3_sub(a, b);
+  const Vec3 c = a - b;
   return (flt_abs(c[X]) < ep)
       && (flt_abs(c[Y]) < ep)
       && (flt_abs(c[Z]) < ep);
@@ -150,8 +150,8 @@ Vec3 vec3_rot(Vec3 v, Vec4 aa) {
 _sol_
 Vec3 vec3_rotq(Vec3 v, Vec4 q) {
   const Vec3 qv = {q[X], q[Y], q[Z]};
-  const Vec3 t = vec3_mulf(vec3_cross(qv, v), 2);
-  return vec3_add(v, vec3_add(vec3_mulf(t, q[W]), vec3_cross(qv, t)));
+  const Vec3 t = vec3_cross(qv, v) * 2;
+  return v + (t * q[W]) + vec3_cross(qv, t);
 }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -172,7 +172,7 @@ Vec3 vec3_proj(Vec3 a, Vec3 b) {
   const Float ma = vec3_mag(a);
   const Float d = ma * ma;
   const Float f = vec3_dot(a, b) / d;
-  return vec3_mulf(a, f);
+  return a * f;
 }
 
 /// vec3_rej ///
@@ -186,7 +186,7 @@ Vec3 vec3_proj(Vec3 a, Vec3 b) {
 
 _sol_
 Vec3 vec3_rej(Vec3 a, Vec3 b) {
-  return vec3_sub(a, vec3_proj(a, b));
+  return a - vec3_proj(a, b);
 }
 
 /// vec3_angle ///
@@ -216,7 +216,7 @@ _sol_
 Vec3 vec3_cross(Vec3 a, Vec3 b) {
   const Vec3 va = vec3_yzx(a);
   const Vec3 vb = vec3_yzx(b);
-  const Vec3 c = vec3_sub(vec3_mul(a, vb), vec3_mul(b, va));
+  const Vec3 c = (a * vb) - (b * va);
   return vec3_yzx(c);
 }
 
@@ -231,7 +231,7 @@ Vec3 vec3_cross(Vec3 a, Vec3 b) {
 
 _sol_
 Float vec3_dot(Vec3 a, Vec3 b) {
-  return vec3_sum(vec3_mul(a, b));
+  return vec3_sum(a * b);
 }
 
   //////////////////////////////////////////////////////////////////////////////

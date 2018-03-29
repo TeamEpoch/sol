@@ -73,7 +73,7 @@ Vec4 vec4_zero(void) {
 
 _sol_
 Vec4 vec4_norm(Vec4 v) {
-  return vec4_divf(v, vec4_mag(v));
+  return v / vec4_mag(v);
 }
 
 /// vec4_mag ///
@@ -86,7 +86,7 @@ Vec4 vec4_norm(Vec4 v) {
 
 _sol_
 Float vec4_mag(Vec4 v) {
-  return flt_sqrt(vec4_sum(vec4_mul(v, v)));
+  return flt_sqrt(vec4_sum(v * v));
 }
 
 /// vec4_eq ///
@@ -100,7 +100,7 @@ Float vec4_mag(Vec4 v) {
 
 _sol_
 bool vec4_eq(Vec4 a, Vec4 b, Float ep) {
-  const Vec4 c = vec4_sub(a, b);
+  const Vec4 c = a - b;
   return (flt_abs(c[X]) < ep)
       && (flt_abs(c[Y]) < ep)
       && (flt_abs(c[Z]) < ep)
@@ -122,7 +122,7 @@ bool vec4_eq(Vec4 a, Vec4 b, Float ep) {
 
 _sol_
 Float vec4_dot(Vec4 a, Vec4 b) {
-  return vec4_sum(vec4_mul(a, b));
+  return vec4_sum(a * b);
 }
 
   //////////////////////////////////////////////////////////////////////////////
