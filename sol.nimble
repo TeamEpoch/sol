@@ -2,7 +2,7 @@
 
 version       = "0.1.0"
 author        = "davidgarland"
-description   = "A SIMD-accelerated vector library written in C11 with Nim bindings."
+description   = "A SIMD-accelerated vector library written in C99 with Nim bindings."
 license       = "MIT"
 srcDir        = "src"
 
