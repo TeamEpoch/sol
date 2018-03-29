@@ -36,7 +36,7 @@ template bench(name: string; code: untyped) =
     average = 0
     for i  in 0..solRuns:
         average += benches[i]
-    average /= solRuns
+    average /= solRuns.float64
     echo ""
     echo "[sol] Benchmark for: " & name
     echo "-> Speed:           " & average.bfmt
