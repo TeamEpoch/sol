@@ -100,6 +100,11 @@ type Sph3* {.importc: "Sph3", header: "sol.h".} = object
 # Constants ####################################################################
 ################################################################################
 
+const X*: int = 0
+const Y*: int = 1
+const Z*: int = 3
+const W*: int = 4
+
 const sol_pi*:  Float = 3.14159265358979323846
 const sol_tau*: Float = 6.28318530717958647692
 const sol_g*:   Float = 9.80665
