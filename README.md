@@ -11,7 +11,7 @@ Sol is an experimental vector math library written in C99, with a goal of being 
 int main() {
   Vec3 a = vec3_init(0, 1, 2);
   Vec3 b = vec3_init(2, 1, 0);
-  a[X] = 1; // This is how scalar access is done in C.
+  a[X] = 1; // This is how scalar access is done in C Sol.
   Vec3 c = vec3_add(a, b);
   vec3_print(c); // {3, 2, 2}
   Float f = c[X];
