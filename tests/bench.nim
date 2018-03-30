@@ -3,6 +3,7 @@
 #################
 
 import strutils
+import terminal
 import times
 import os
 
@@ -28,6 +29,12 @@ proc bfmt(flt: float64): string =
     var str = flt.formatFloat(format = ffDecimal, precision = solPrecision)
     return spaces(max(0, solSpaces - str.len - 3)) & str
 
+proc headerEcho(s: string) =
+  styledEcho(fgYellow, "[sol] ", resetStyle, s)
+
+proc fieldEcho(a, b: string) =
+  styledEcho(fgYellow, styleDim, a, resetStyle, b)
+
 template bench(name: string; code: untyped) =
     for i in 0..solRuns:
         start = cpuTime()
@@ -38,17 +45,18 @@ template bench(name: string; code: untyped) =
         average += benches[i]
     average /= solRuns.float64
     echo ""
-    echo "[sol] Benchmark for: " & name
-    echo "-> Seconds:         " & average.bfmt
-    echo "-> Runs Per Second: " & (1 / average).bfmt
+    headerEcho("Benchmark for: " & name)
+    fieldEcho("-> Seconds:         ", average.bfmt)
+    fieldEcho("-> Runs Per Second: ", (1 / average).bfmt)
 
 ###################
 # Main Benchmarks #
 ###################
 
-echo "[sol] Starting benchmark @" & $solRuns & " runs per test."
-
-echo "[sol] Initializing test values..."
+echo ""
+headerEcho("Starting benchmark @" & $solRuns & " runs per test.")
+echo ""
+headerEcho("Initializing test values...")
 var b: bool = false
 
 var fa {.volatile.}: Float = 16.0
@@ -83,13 +91,13 @@ var m4b: Mat4 = mat4_initf(8)
 var m4c: Mat4 = mat4_zero()
 
 echo ""
-echo "[sol] Blank Benchmark"
+headerEcho "Blank Benchmark"
 
 bench "Blank":
   discard
 
 echo ""
-echo "[sol] Float Benchmarks"
+headerEcho "Float Benchmarks"
 
 bench "+":
     fc = fa + fb
@@ -119,7 +127,7 @@ bench "flt_acos":
     fc = flt_acos(fa)
 
 echo ""
-echo "[sol] Vec2 Benchmarks"
+headerEcho "Vec2 Benchmarks"
 
 bench "vec2_norm":
     v2c = norm(v2c)
@@ -155,7 +163,7 @@ bench "vec2_div":
     v2c = v2a / v2b
 
 echo ""
-echo "[sol] Vec3 Benchmarks"
+headerEcho "Vec3 Benchmarks"
 
 bench "vec3_norm":
     v3c = norm(v3c)
@@ -194,7 +202,7 @@ bench "vec3_div":
     v3c = v3a / v3b
 
 echo ""
-echo "[sol] Vec4 Benchmarks"
+headerEcho "Vec4 Benchmarks"
 
 bench "vec4_norm":
     v4c = norm(v4c)
@@ -224,7 +232,7 @@ bench "vec4_div":
     v4c = v4a / v4b
 
 echo ""
-echo "[sol] Mat2 Benchmarks"
+headerEcho "Mat2 Benchmarks"
 
 bench "mat2_dot":
     m2c = mat2_dot(m2a, m2b)
@@ -248,7 +256,7 @@ bench "mat2_avg":
     m2c = mat2_avg(m2a, m2b)
 
 echo ""
-echo "[sol] Mat3 Benchmarks"
+headerEcho "Mat3 Benchmarks"
 
 bench "mat3_dot":
     m3c = mat3_dot(m3a, m3b)
@@ -272,7 +280,7 @@ bench "mat3_avg":
     m3c = mat3_avg(m3a, m3b)
 
 echo ""
-echo "[sol] Mat4 Benchmarks"
+headerEcho "Mat4 Benchmarks"
 
 bench "mat4_dot":
     m4c = mat4_dot(m4a, m4b)
