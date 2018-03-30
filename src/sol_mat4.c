@@ -213,10 +213,10 @@ Mat4 mat4_dot(Mat4 a, Mat4 b) {
 
 _sol_
 Mat4 mat4_add(Mat4 a, Mat4 b) {
-  return mat4_initv(vec4_add(a.v[0], b.v[0]),
-                    vec4_add(a.v[1], b.v[1]),
-                    vec4_add(a.v[2], b.v[2]),
-                    vec4_add(a.v[3], b.v[3]));
+  return mat4_initv(a.v[0] + b.v[0],
+                    a.v[1] + b.v[1],
+                    a.v[2] + b.v[2],
+                    a.v[3] + b.v[3]);
 }
 
 /// mat4_addf ///
@@ -246,10 +246,10 @@ Mat4 mat4_addf(Mat4 m, Float f) {
 
 _sol_
 Mat4 mat4_sub(Mat4 a, Mat4 b) {
-  return mat4_initv(vec4_sub(a.v[0], b.v[0]),
-                    vec4_sub(a.v[1], b.v[1]),
-                    vec4_sub(a.v[2], b.v[2]),
-                    vec4_sub(a.v[3], b.v[3]));
+  return mat4_initv(a.v[0] - b.v[0],
+                    a.v[1] - b.v[1],
+                    a.v[2] - b.v[2],
+                    a.v[3] - b.v[3]);
 }
 
 /// mat4_subf ///
@@ -293,10 +293,10 @@ Mat4 mat4_fsub(Float f, Mat4 m) {
 
 _sol_
 Mat4 mat4_mul(Mat4 a, Mat4 b) {
-  return mat4_initv(vec4_mul(a.v[0], b.v[0]),
-                    vec4_mul(a.v[1], b.v[1]),
-                    vec4_mul(a.v[2], b.v[2]),
-                    vec4_mul(a.v[3], b.v[3]));
+  return mat4_initv(a.v[0] * b.v[0],
+                    a.v[1] * b.v[1],
+                    a.v[2] * b.v[2],
+                    a.v[3] * b.v[3]);
 }
 
 /// mat4_mulf ///
@@ -326,10 +326,10 @@ Mat4 mat4_mulf(Mat4 m, Float f) {
 
 _sol_
 Mat4 mat4_div(Mat4 a, Mat4 b) {
-  return mat4_initv(vec4_div(a.v[0], b.v[0]),
-                    vec4_div(a.v[1], b.v[1]),
-                    vec4_div(a.v[2], b.v[2]),
-                    vec4_div(a.v[3], b.v[3]));
+  return mat4_initv(a.v[0] / b.v[0],
+                    a.v[1] / b.v[1],
+                    a.v[2] / b.v[2],
+                    a.v[3] / b.v[3]);
 }
 
 /// mat4_divf ///

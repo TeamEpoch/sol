@@ -186,8 +186,14 @@ Mat2 mat2_dot(Mat2 a, Mat2 b) {
 
 _sol_
 Mat2 mat2_fma(Mat2 a, Mat2 b, Mat2 c) {
-  return mat2_initv(vec2_fma(a.v[0], b.v[0], c.v[0]),
-                    vec2_fma(a.v[1], b.v[1], c.v[1]));
+  #if defined(__clang__)
+    return mat2_initv((a.v[0] * b.v[0]) + c.v[0],
+                      (a.v[1] * b.v[1]) + c.v[1]);
+  #else
+    Mat2 out;
+    out.v4 = (a.v4 * b.v4) + c.v4;
+    return out;
+  #endif
 }
 
 /// mat2_add ///
@@ -238,8 +244,14 @@ Mat2 mat2_addf(Mat2 m, Float f) {
 
 _sol_
 Mat2 mat2_sub(Mat2 a, Mat2 b) {
-  return mat2_initv(vec2_sub(a.v[0], b.v[0]),
-                    vec2_sub(a.v[1], b.v[1]));
+  #if defined(__clang__)
+    return mat2_initv(a.v[0] - b.v[0],
+                      a.v[1] - b.v[1]);
+  #else
+    Mat2 out;
+    out.v4 = a.v4 - b.v4;
+    return out;
+  #endif
 }
 
 /// mat2_subf ///
@@ -283,8 +295,14 @@ Mat2 mat2_fsub(Float f, Mat2 m) {
 
 _sol_
 Mat2 mat2_mul(Mat2 a, Mat2 b) {
-  return mat2_initv(vec2_mul(a.v[0], b.v[0]),
-                    vec2_mul(a.v[1], b.v[1]));
+  #if defined(__clang__)
+    return mat2_initv(a.v[0] * b.v[0],
+                      a.v[1] * b.v[1]);
+  #else
+    Mat2 out;
+    out.v4 = a.v4 * b.v4;
+    return out;
+  #endif
 }
 
 /// mat2_mulf ///
@@ -313,8 +331,14 @@ Mat2 mat2_mulf(Mat2 m, Float f) {
 
 _sol_
 Mat2 mat2_div(Mat2 a, Mat2 b) {
-  return mat2_initv(vec2_mul(a.v[0], b.v[0]),
-                    vec2_mul(a.v[1], b.v[1]));
+  #if defined(__clang__)
+    return mat2_initv(a.v[0] / b.v[0],
+                      a.v[1] / b.v[1]);
+  #else
+    Mat2 out;
+    out.v4 = a.v4 / b.v4;
+    return out;
+  #endif
 }
 
 /// mat2_divf ///
