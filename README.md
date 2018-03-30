@@ -32,7 +32,6 @@ echo f # The Nim bindings have a type-generic echo proc.
 ```
 
 # How Sol Works
-
 Sol takes advantage of the [vector extensions](https://gcc.gnu.org/onlinedocs/gcc/Vector-Extensions.html) present in modern C compilers such as GCC and Clang.
 This enables the use of [SIMD instructions](https://en.wikipedia.org/wiki/SIMD) in simple C or Nim programs without the use of intrinsics, and also works on platforms which don't support SIMD. ([GCC will complain](https://stackoverflow.com/a/39392154/6411165), but it will work as you would expect; you simply need to use fastcall instead of vectorcall if you're not using Sol directly via C or Nim. This shouldn't be a problem since this is the default calling convention.)
 
@@ -46,16 +45,31 @@ Documentation is currently WIP. It will be linked here as soon as it is no longe
 
 # Installation
 ## C
-Installation is fairly simplistic for C so far.
+Installation is fairly simplistic for C:
 ```Bash
 git clone https://github.com/davidgarland/sol && cd sol
 sudo make install
 ```
 Note that you may also do `install_avx2`, `install_avx`, or `install_neon` to generate libraries with SIMD instructions instead of scalar ones.
 
-It should also be noted that installation is not a necessity to use Sol-- it could be bundled into another project easily using git submodules or subtrees. This is the reccomended way of using Sol in large projects, as you avoid forcing your end user to install Sol to their machine.
+This will allow you to include Sol as `<sol/sol.h>` and link it via either `-lsol-a` for a static library or `-lsol-so` for a shared library.
+
+It should also be noted that installation is not a necessity to use Sol-- it could be bundled into another project easily using git submodules or subtrees. 
+This may be preferable to requiring the user to install it on their machine.
+Simply have your Makefile compile `sol/src/*.c` as well and it should work properly.
 
 ## Nim
-Proper installation is not yet possible for Nim. Bunding should work as expected.
+Installation for Nim is done via the Nimble package manager, like so:
+```Bash
+nimble refresh
+nimble install sol
+```
+This will install Sol to your ~/.nimble file and allow it to be included from anywhere.
+Because it is a source code version of Sol, no special steps are needed to enable AVX2, AVX, etc.
+When compiling your project, simply pass `-d:avx2`, `-d:avx`, or `-d:neon` to `nim c`, and they will be enaled.
 
-Sol may be added to Nimble in the future to facilitate simple installation and dependency management.
+Additionally, you can use a .nimble file in your project to require Sol as a dependency:
+```nimble
+# .nimble
+foreignDep "sol"
+```
