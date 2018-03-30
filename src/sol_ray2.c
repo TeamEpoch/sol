@@ -112,7 +112,7 @@ Float ray2_mag(Ray2 r) {
 _sol_
 bool ray2_eq(Ray2 a, Ray2 b, Float ep) {
   if (vec2_eq(a.pos, b.pos, ep)){
-    vec2_eq(a.vec, b.vec, ep);
+    return vec2_eq(a.vec, b.vec, ep);
   }
   return false;
 }

@@ -12,7 +12,7 @@ import ../sol
 # Settings #
 ############
 
-const solRuns = 1_000_000 # How many runs to average.
+const solRuns = 5_000_000 # How many runs to average.
 const solPrecision = 10 # Benchmark float accuracy.
 const solSpaces = 15
 
@@ -39,7 +39,7 @@ template bench(name: string; code: untyped) =
     average /= solRuns.float64
     echo ""
     echo "[sol] Benchmark for: " & name
-    echo "-> Speed:           " & average.bfmt
+    echo "-> Seconds:         " & average.bfmt
     echo "-> Runs Per Second: " & (1 / average).bfmt
 
 ###################
@@ -51,24 +51,24 @@ echo "[sol] Starting benchmark @" & $solRuns & " runs per test."
 echo "[sol] Initializing test values..."
 var b: bool = false
 
-var fa: Float = 16.0
-var fb: Float = 8.0
-var fc: Float = 0.0
+var fa {.volatile.}: Float = 16.0
+var fb {.volatile.}: Float = 8.0
+var fc {.volatile.}: Float = 0.0
 
-var v2a: Vec2 = vec2_initf(16)
-var v2b: Vec2 = vec2_initf(8)
-var v2c: Vec2 = vec2_zero()
-var deg: Float = 90
+var v2a {.volatile.}: Vec2 = vec2_initf(16)
+var v2b {.volatile.}: Vec2 = vec2_initf(8)
+var v2c {.volatile.}: Vec2 = vec2_zero()
+var deg {.volatile.}: Float = 90
 
-var v3a: Vec3 = vec3_initf(16)
-var v3b: Vec3 = vec3_initf(8)
-var v3c: Vec3 = vec3_zero()
-var axis: Vec4 = vec4_init(0, 1, 0, 90)
-var quat: Vec4 = cv_axis_quat(axis)
+var v3a {.volatile.}: Vec3 = vec3_initf(16)
+var v3b {.volatile.}: Vec3 = vec3_initf(8)
+var v3c {.volatile.}: Vec3 = vec3_zero()
+var axis {.volatile.}: Vec4 = vec4_init(0, 1, 0, 90)
+var quat {.volatile.}: Vec4 = cv_axis_quat(axis)
 
-var v4a: Vec4 = vec4_initf(16)
-var v4b: Vec4 = vec4_initf(8)
-var v4c: Vec4 = vec4_zero()
+var v4a {.volatile.}: Vec4 = vec4_initf(16)
+var v4b {.volatile.}: Vec4 = vec4_initf(8)
+var v4c {.volatile.}: Vec4 = vec4_zero()
 
 var m2a: Mat2 = mat2_initf(16)
 var m2b: Mat2 = mat2_initf(8)

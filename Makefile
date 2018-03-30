@@ -3,8 +3,8 @@
 # C Compiler Settings #
 
 CC=clang
-CFLAGS=-Ofast -pipe -flto
-LDFLAGS=-lm
+CFLAGS=-Ofast -pipe -flto -Wno-psabi
+LDFLAGS=
 
 # Nim Compiler Settings #
 
@@ -48,7 +48,7 @@ ifeq ($(CC), gcc)
 	LDFLAGS += -pipe -flto=8
 else ifeq ($(CC), clang)
 	SOLSRC += $(SOLHDR)
-	LDFLAGS += -pipe -Weverything -Wno-shadow
+	LDFLAGS += -pipe -Weverything
 else
 	# ...
 endif

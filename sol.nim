@@ -171,18 +171,19 @@ proc vec2_angle*(a, b: Vec2): Float {.importc: "vec2_angle", header: "sol.h".}
 proc vec2_cross*(a, b: Vec2): Float {.importc: "vec2_cross", header: "sol.h".}
 proc vec2_dot*(a, b: Vec2): Float   {.importc: "vec2_dot",   header: "sol.h".}
 
-proc vec2_sum*(v: Vec2): Float           {.importc: "vec2_sum",  header: "sol.h".}
-proc vec2_fma*(a, b, c: Vec2): Vec2      {.importc: "vec2_fma",  header: "sol.h".}
-proc vec2_add*(a, b: Vec2): Vec2         {.importc: "vec2_add",  header: "sol.h".}
-proc vec2_addf*(v: Vec2, f: Float): Vec2 {.importc: "vec2_addf", header: "sol.h".}
-proc vec2_sub*(a, b: Vec2): Vec2         {.importc: "vec2_sub",  header: "sol.h".}
-proc vec2_subf*(v: Vec2, f: Float): Vec2 {.importc: "vec2_subf", header: "sol.h".}
-proc vec2_fsub*(f: Float, v: Vec2): Vec2 {.importc: "vec2_fsub", header: "sol.h".}
-proc vec2_mul*(a, b: Vec2): Vec2         {.importc: "vec2_mul",  header: "sol.h".}
-proc vec2_mulf*(v: Vec2, f: Float): Vec2 {.importc: "vec2_mulf", header: "sol.h".}
-proc vec2_div*(a, b: Vec2): Vec2         {.importc: "vec2_div",  header: "sol.h".}
-proc vec2_divf*(v: Vec2, f: Float): Vec2 {.importc: "vec2_divf", header: "sol.h".}
-proc vec2_fdiv*(f: Float, v: Vec2): Vec2 {.importc: "vec2_fdiv", header: "sol.h".}
+proc vec2_sum*(v: Vec2): Float      {.importc: "vec2_sum", header: "sol.h".}
+proc vec2_fma*(a, b, c: Vec2): Vec2 {.importc: "vec2_fma", header: "sol.h".}
+
+proc vec2_add*(a, b: Vec2): Vec2         {.inline.} = {.emit: [result, " = ", a, " + ", b, ";"].}
+proc vec2_addf*(v: Vec2, f: Float): Vec2 {.inline.} = {.emit: [result, " = ", v, " + ", f, ";"].}
+proc vec2_sub*(a, b: Vec2): Vec2         {.inline.} = {.emit: [result, " = ", a, " - ", b, ";"].}
+proc vec2_subf*(v: Vec2, f: Float): Vec2 {.inline.} = {.emit: [result, " = ", v, " - ", f, ";"].}
+proc vec2_fsub*(f: Float, v: Vec2): Vec2 {.inline.} = {.emit: [result, " = ", f, " - ", v, ";"].}
+proc vec2_mul*(a, b: Vec2): Vec2         {.inline.} = {.emit: [result, " = ", a, " * ", b, ";"].}
+proc vec2_mulf*(v: Vec2, f: Float): Vec2 {.inline.} = {.emit: [result, " = ", v, " * ", f, ";"].}
+proc vec2_div*(a, b: Vec2): Vec2         {.inline.} = {.emit: [result, " = ", a, " / ", b, ";"].}
+proc vec2_divf*(v: Vec2, f: Float): Vec2 {.inline.} = {.emit: [result, " = ", v, " / ", f, ";"].}
+proc vec2_fdiv*(f: Float, v: Vec2): Vec2 {.inline.} = {.emit: [result, " = ", f, " / ", v, ";"].}
 proc vec2_avg*(a, b: Vec2): Vec2         {.importc: "vec2_avg",  header: "sol.h".}
 proc vec2_avgf*(v: Vec2, f: Float): Vec2 {.importc: "vec2_avgf", header: "sol.h".}
 
@@ -271,18 +272,19 @@ proc vec3_angle*(a, b: Vec3): Float {.importc: "vec3_angle", header: "sol.h".}
 proc vec3_cross*(a, b: Vec3): Vec3  {.importc: "vec3_cross", header: "sol.h".}
 proc vec3_dot*(a, b: Vec3): Float   {.importc: "vec3_dot",   header: "sol.h".}
 
-proc vec3_sum*(v: Vec3): Float           {.importc: "vec3_sum",  header: "sol.h".}
-proc vec3_fma*(a, b, c: Vec3): Vec3      {.importc: "vec3_fma",  header: "sol.h".}
-proc vec3_add*(a, b: Vec3): Vec3         {.importc: "vec3_add",  header: "sol.h".}
-proc vec3_addf*(v: Vec3, f: Float): Vec3 {.importc: "vec3_addf", header: "sol.h".}
-proc vec3_sub*(a, b: Vec3): Vec3         {.importc: "vec3_sub",  header: "sol.h".}
-proc vec3_subf*(v: Vec3, f: Float): Vec3 {.importc: "vec3_subf", header: "sol.h".}
-proc vec3_fsub*(f: Float, v: Vec3): Vec3 {.importc: "vec3_fsub", header: "sol.h".}
-proc vec3_mul*(a, b: Vec3): Vec3         {.importc: "vec3_mul",  header: "sol.h".}
-proc vec3_mulf*(v: Vec3, f: Float): Vec3 {.importc: "vec3_mulf", header: "sol.h".}
-proc vec3_div*(a, b: Vec3): Vec3         {.importc: "vec3_div",  header: "sol.h".}
-proc vec3_divf*(v: Vec3, f: Float): Vec3 {.importc: "vec3_divf", header: "sol.h".}
-proc vec3_fdiv*(f: Float, v: Vec3): Vec3 {.importc: "vec3_fdiv", header: "sol.h".}
+proc vec3_sum*(v: Vec3): Float      {.importc: "vec3_sum",  header: "sol.h".}
+proc vec3_fma*(a, b, c: Vec3): Vec3 {.importc: "vec3_fma",  header: "sol.h".}
+
+proc vec3_add*(a, b: Vec3): Vec3         {.inline.} = {.emit: [result, " = ", a, " + ", b, ";"].}
+proc vec3_addf*(v: Vec3, f: Float): Vec3 {.inline.} = {.emit: [result, " = ", v, " + ", f, ";"].}
+proc vec3_sub*(a, b: Vec3): Vec3         {.inline.} = {.emit: [result, " = ", a, " - ", b, ";"].}
+proc vec3_subf*(v: Vec3, f: Float): Vec3 {.inline.} = {.emit: [result, " = ", v, " - ", f, ";"].}
+proc vec3_fsub*(f: Float, v: Vec3): Vec3 {.inline.} = {.emit: [result, " = ", f, " - ", v, ";"].}
+proc vec3_mul*(a, b: Vec3): Vec3         {.inline.} = {.emit: [result, " = ", a, " * ", b, ";"].}
+proc vec3_mulf*(v: Vec3, f: Float): Vec3 {.inline.} = {.emit: [result, " = ", v, " * ", f, ";"].}
+proc vec3_div*(a, b: Vec3): Vec3         {.inline.} = {.emit: [result, " = ", a, " / ", b, ";"].}
+proc vec3_divf*(v: Vec3, f: Float): Vec3 {.inline.} = {.emit: [result, " = ", v, " / ", f, ";"].}
+proc vec3_fdiv*(f: Float, v: Vec3): Vec3 {.inline.} = {.emit: [result, " = ", f, " / ", v, ";"].}
 proc vec3_avg*(a, b: Vec3): Vec3         {.importc: "vec3_avg",  header: "sol.h".}
 proc vec3_avgf*(v: Vec3, f: Float): Vec3 {.importc: "vec3_avgf", header: "sol.h".}
 
@@ -365,18 +367,19 @@ proc vec4_eq*(a, b: Vec4; ep: Float): bool {.importc: "vec4_eq",   header: "sol.
 
 proc vec4_dot*(a, b: Vec4): Float {.importc: "vec4_dot", header: "sol.h".}
 
-proc vec4_sum*(v: Vec4): Float           {.importc: "vec4_sum",  header: "sol.h".}
-proc vec4_fma*(a, b, c: Vec4): Vec4      {.importc: "vec4_fma",  header: "sol.h".}
-proc vec4_add*(a, b: Vec4): Vec4         {.importc: "vec4_add",  header: "sol.h".}
-proc vec4_addf*(v: Vec4; f: Float): Vec4 {.importc: "vec4_addf", header: "sol.h".}
-proc vec4_sub*(a, b: Vec4): Vec4         {.importc: "vec4_sub",  header: "sol.h".}
-proc vec4_subf*(v: Vec4; f: Float): Vec4 {.importc: "vec4_subf", header: "sol.h".}
-proc vec4_fsub*(f: Float; v: Vec4): Vec4 {.importc: "vec4_fsub", header: "sol.h".}
-proc vec4_mul*(a, b: Vec4): Vec4         {.importc: "vec4_mul",  header: "sol.h".}
-proc vec4_mulf*(v: Vec4; f: Float): Vec4 {.importc: "vec4_mulf", header: "sol.h".}
-proc vec4_div*(a, b: Vec4): Vec4         {.importc: "vec4_div",  header: "sol.h".}
-proc vec4_divf*(v: Vec4; f: Float): Vec4 {.importc: "vec4_divf", header: "sol.h".}
-proc vec4_fdiv*(f: Float; v: Vec4): Vec4 {.importc: "vec4_fdiv", header: "sol.h".}
+proc vec4_sum*(v: Vec4): Float      {.importc: "vec4_sum",  header: "sol.h".}
+proc vec4_fma*(a, b, c: Vec4): Vec4 {.importc: "vec4_fma",  header: "sol.h".}
+
+proc vec4_add*(a, b: Vec4): Vec4         {.inline.} = {.emit: [result, " = ", a, " + ", b, ";"].}
+proc vec4_addf*(v: Vec4; f: Float): Vec4 {.inline.} = {.emit: [result, " = ", v, " + ", f, ";"].}
+proc vec4_sub*(a, b: Vec4): Vec4         {.inline.} = {.emit: [result, " = ", a, " - ", b, ";"].}
+proc vec4_subf*(v: Vec4; f: Float): Vec4 {.inline.} = {.emit: [result, " = ", v, " - ", f, ";"].}
+proc vec4_fsub*(f: Float; v: Vec4): Vec4 {.inline.} = {.emit: [result, " = ", f, " - ", v, ";"].}
+proc vec4_mul*(a, b: Vec4): Vec4         {.inline.} = {.emit: [result, " = ", a, " * ", b, ";"].}
+proc vec4_mulf*(v: Vec4; f: Float): Vec4 {.inline.} = {.emit: [result, " = ", v, " * ", f, ";"].}
+proc vec4_div*(a, b: Vec4): Vec4         {.inline.} = {.emit: [result, " = ", a, " / ", b, ";"].}
+proc vec4_divf*(v: Vec4; f: Float): Vec4 {.inline.} = {.emit: [result, " = ", v, " / ", f, ";"].}
+proc vec4_fdiv*(f: Float; v: Vec4): Vec4 {.inline.} = {.emit: [result, " = ", f, " / ", v, ";"].}
 proc vec4_avg*(a, b: Vec4): Vec4         {.importc: "vec4_avg",  header: "sol.h".}
 proc vec4_avgf*(v: Vec4, f: Float): Vec4 {.importc: "vec4_avgf", header: "sol.h".}
 
