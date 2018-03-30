@@ -73,13 +73,16 @@ type Seg2* {.importc: "Seg2", header: "sol.h".} = object
 type Seg3* {.importc: "Seg3", header: "sol.h".} = object
     orig*, dest*: Vec3
 
-type Mat2* {.importc: "Mat2", header: "sol.h".} = object
+type Mat2* {.importc: "Mat2", header: "sol.h", union, packed.} = object
+    v*: array[2, Vec2]
 
-type Mat3* {.importc: "Mat3", header: "sol.h".} = object
+type Mat3* {.importc: "Mat3", header: "sol.h", union, packed.} = object
+    v*: array[4, Vec3]
 
-type Mat4* {.importc: "Mat4", header: "sol.h".} = object
+type Mat4* {.importc: "Mat4", header: "sol.h", union, packed.} = object
+    v*: array[4, Vec4]
 
-type Box2* {.importc: "Box2", header: "sol.h".} = object
+type Box2* {.importc: "Box2", header: "sol.h", unchecked, packed.} = object
     lower*, upper*: Vec2
 
 type Box3* {.importc: "Box3", header: "sol.h".} = object
@@ -141,8 +144,12 @@ proc cv_rad_deg*(rad: Float): Float {.importc: "cv_rad_deg", header: "sol.h".}
 # Vec2 Functions ###############################################################
 ################################################################################
 
-proc x*(v: Vec2): Float {.inline.} = {.emit: [result, " = ", v, "[0];"].}
-proc y*(v: Vec2): Float {.inline.} = {.emit: [result, " = ", v, "[1];"].}
+proc `[]`*(v: Vec2; i: int): Float     {.inline.} = {.emit: [result, " =  ", v, "[", i, "];"].}
+
+proc `[]=`*(v: var Vec2; i: int; f: Float) {.inline.} = {.emit: [v, "[0][", i, "] = ", f, ";"].}
+
+proc x*(v: Vec2): Float         {.inline.} = {.emit: [result, " = ", v, "[0];"      ].}
+proc y*(v: Vec2): Float         {.inline.} = {.emit: [result, " = ", v, "[1];"      ].}
 
 proc `x=`*(v: var Vec2; f: Float) {.inline.} = {.emit: [v, "[0][0] = ", f, ";"].}
 proc `y=`*(v: var Vec2; f: Float) {.inline.} = {.emit: [v, "[0][1] = ", f, ";"].}
@@ -233,6 +240,10 @@ template vec2_opt_fma*{vec2_add(vec2_mul(a, b), c)}(a, b, c: Vec2): Vec2 =
 ################################################################################
 # Vec3 Functions ###############################################################
 ################################################################################
+
+proc `[]`*(v: Vec3; i: int): Float {.inline.} = {.emit: [result, " = ", v, "[", i, "];"].}
+
+proc `[]=`*(v: var Vec3; i: int; f: Float) {.inline.} = {.emit: [v, "[0][", i, "] = ", f, ";"].}
 
 proc x*(v: Vec3): Float {.inline.} = {.emit: [result, " = ", v, "[0];"].}
 proc y*(v: Vec3): Float {.inline.} = {.emit: [result, " = ", v, "[1];"].}
@@ -329,6 +340,10 @@ template vec3_opt_fma*{vec3_add(vec3_mul(a, b), c)}(a, b, c: Vec3): Vec3 =
 ################################################################################
 # Vec4 Functions ###############################################################
 ################################################################################
+
+proc `[]`*(v: Vec4; i: int): Float {.inline.} = {.emit: [result, " = ", v, "[", i, "];"].}
+
+proc `[]=`*(v: var Vec4; i: int; f: Float) {.inline.} = {.emit: [v, "[0][", i, "] = ", f, ";"].}
 
 proc x*(v: Vec4): Float {.inline.} = {.emit: [result, " = ", v, "[0];"].}
 proc y*(v: Vec4): Float {.inline.} = {.emit: [result, " = ", v, "[1];"].}
@@ -700,6 +715,10 @@ template `/=`*(s: var Seg3; f: Float) = s = seg3_divf(s, f)
 # Mat2 Functions ###############################################################
 ################################################################################
 
+proc `[]`*(m: var Mat2; row, col: int): Float {.inline.} = m.v[row][col]
+
+proc `[]=`*(m: var Mat2; row, col: int; f: Float) {.inline.} = m.v[row][col] = f
+
 proc mat2_init*(f11, f12, f21, f22: Float): Mat2 {.importc: "mat2_init",  header: "sol.h".}
 proc mat2_initv*(v1, v2: Vec2): Mat2             {.importc: "mat2_initv", header: "sol.h".}
 proc mat2_initf*(f: Float): Mat2                 {.importc: "mat2_initf", header: "sol.h".}
@@ -766,6 +785,10 @@ template `/=`*(v: var Mat2; f: Float) = v = mat2_divf(v, f)
 # Mat3 Functions ###############################################################
 ################################################################################
 
+proc `[]`*(m: Mat3; row, col: int): Float {.inline.} = m.v[row][col]
+
+proc `[]=`*(m: var Mat3; row, col: int; f: Float) {.inline.} = m.v[row][col] = f
+
 proc mat3_init*(f11, f12, f13, f21, f22, f23, f31, f32, f33: Float): Mat3 {.importc: "mat3_init",  header: "sol.h".}
 proc mat3_initv*(v1, v2, v3: Vec3): Mat3                                  {.importc: "mat3_initv", header: "sol.h".}
 proc mat3_initf*(f: Float): Mat3                                          {.importc: "mat3_initf", header: "sol.h".}
@@ -831,6 +854,10 @@ template `/=`*(m: var Mat3; f: Float) = m = mat3_divf(m, f)
 ################################################################################
 # Mat4 Functions ###############################################################
 ################################################################################
+
+proc `[]`*(m: Mat4; row, col: int): Float {.inline.} = m.v[row][col]
+
+proc `[]=`*(m: var Mat4; row, col: int; f: Float) {.inline.} = m.v[row][col] = f
 
 proc mat4_init*(f11, f12, f13, f14, f21, f22, f23, f24, f31, f32, f33, f34, f41, f42, f43, f44: Float): Mat4 {.importc: "mat4_init",  header: "sol.h".}
 proc mat4_initv*(v1, v2, v3, v4: Vec4): Mat4                                                                 {.importc: "mat4_initv", header: "sol.h".}

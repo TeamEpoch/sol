@@ -201,8 +201,14 @@ Mat2 mat2_fma(Mat2 a, Mat2 b, Mat2 c) {
 
 _sol_
 Mat2 mat2_add(Mat2 a, Mat2 b) {
-  return mat2_initv(vec2_add(a.v[0], b.v[0]),
-                    vec2_add(a.v[1], b.v[1]));
+  #if defined(__clang__)
+    return mat2_initv(a.v[0] + b.v[0],
+                      a.v[1] + b.v[1]);
+  #else
+    Mat2 out;
+    out.v4 = a.v4 + b.v4;
+    return out;
+  #endif
 }
 
 /// mat2_addf ///

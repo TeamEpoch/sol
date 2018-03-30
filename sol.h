@@ -196,6 +196,7 @@ typedef struct {
 //   f: Float Matrix (Float[2][2])
 
 typedef union {
+  Vec4 v4;
   Vec2 v[2];
   Float f[2][2];
 } Mat2;
@@ -209,8 +210,8 @@ typedef union {
 //   f: Float Matrix (Float[3][3])
 
 typedef union {
-  Vec3 v[3];
-  Float f[3][3];
+  Vec3 v[4];
+  Float f[4][4];
 } Mat3;
 
 /// Mat4 ///

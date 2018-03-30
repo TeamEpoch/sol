@@ -130,8 +130,8 @@ Vec3 mat3_row(Mat3 m, size_t row) {
 
 _sol_
 Vec3 mat3_col(Mat3 m, size_t col) {
-  return vec3_init(m.f[0][col],
-                   m.f[1][col],
+  return vec3_init(m.f[0][col], 
+                   m.f[1][col], 
                    m.f[2][col]);
 }
 
@@ -198,9 +198,9 @@ Mat3 mat3_dot(Mat3 a, Mat3 b) {
 
 _sol_
 Mat3 mat3_add(Mat3 a, Mat3 b) {
-  return mat3_initv(vec3_add(a.v[0], b.v[0]),
-                    vec3_add(a.v[1], b.v[1]),
-                    vec3_add(a.v[2], b.v[2]));
+  return mat3_initv(a.v[0] + b.v[0],
+                    a.v[1] + b.v[1],
+                    a.v[2] + b.v[2]);
 }
 
 /// mat3_addf ///
@@ -230,9 +230,9 @@ Mat3 mat3_addf(Mat3 m, Float f) {
 
 _sol_
 Mat3 mat3_sub(Mat3 a, Mat3 b) {
-  return mat3_initv(vec3_sub(a.v[0], b.v[0]),
-                    vec3_sub(a.v[1], b.v[1]),
-                    vec3_sub(a.v[2], b.v[2]));
+  return mat3_initv(a.v[0] - b.v[0],
+                    a.v[1] - b.v[1],
+                    a.v[2] - b.v[2]);
 }
 
 /// mat3_subf ///
@@ -276,9 +276,9 @@ Mat3 mat3_fsub(Float f, Mat3 m) {
 
 _sol_
 Mat3 mat3_mul(Mat3 a, Mat3 b) {
-  return mat3_initv(vec3_mul(a.v[0], b.v[0]),
-                    vec3_mul(a.v[1], b.v[1]),
-                    vec3_mul(a.v[2], b.v[2]));
+  return mat3_initv(a.v[0] * b.v[0],
+                    a.v[1] * b.v[1],
+                    a.v[2] * b.v[2]);
 }
 
 /// mat3_mulf ///
@@ -308,9 +308,9 @@ Mat3 mat3_mulf(Mat3 m, Float f) {
 
 _sol_
 Mat3 mat3_div(Mat3 a, Mat3 b) {
-  return mat3_initv(vec3_div(a.v[0], b.v[0]),
-                    vec3_div(a.v[1], b.v[1]),
-                    vec3_div(a.v[2], b.v[2]));
+  return mat3_initv(a.v[0] / b.v[0],
+                    a.v[1] / b.v[1],
+                    a.v[2] / b.v[2]);
 }
 
 /// mat3_divf ///

@@ -32,6 +32,10 @@ suite "Vec2":
     require:
       a == vec2_init(2, 2)
       a.x == 2
+    a[0] = 3
+    require:
+      a == vec2_init(3, 2)
+      a[0] == 3
   test "Addition":
     require:
       a + b == vec2_init(a.x + b.x, a.y + b.y)
@@ -67,6 +71,10 @@ suite "Vec3":
     require:
       a == vec3_init(2, 2, 3)
       a.x == 2
+    a[0] = 3
+    require:
+      a == vec3_init(3, 2, 3)
+      a[0] == 3
   test "Addition":
     require:
       a + b == vec3_init(a.x + b.x, a.y + b.y, a.z + b.z)
@@ -99,6 +107,10 @@ suite "Vec4":
     require:
       a == vec4_init(2, 2, 3, 4)
       a.x == 2
+    a[0] = 3
+    require:
+      a == vec4_init(3, 2, 3, 4)
+      a[0] == 3
   test "Addition":
     require:
       a + b == vec4_init(a.x + b.x, a.y + b.y, a.z + b.z, a.w + b.w)
