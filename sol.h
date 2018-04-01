@@ -137,9 +137,14 @@
 //////////////////////////////////////////////////////////////////////////////
 
 
-typedef Float Vec2 __attribute__((vector_size(2 * sizeof(Float))));
-typedef Float Vec3 __attribute__((vector_size(4 * sizeof(Float))));
 typedef Float Vec4 __attribute__((vector_size(4 * sizeof(Float))));
+typedef Vec4 Vec3;
+
+#if SOL_FSIZE > 32
+  typedef Float Vec2 __attribute__((vector_size(2 * sizeof(Float))));
+#else
+  typedef Float Vec2 __attribute__((vector_size(4 * sizeof(Float))));
+#endif
 
 /// Ray2 ///
 // Description
@@ -354,6 +359,8 @@ _solh_ Float vec2_dot(Vec2 a, Vec2 b);
 
 _solh_ Float vec2_sum(Vec2 v);
 _solh_ Vec2 vec2_fma(Vec2 a, Vec2 b, Vec2 c);
+_solh_ Vec2 vec2_fms(Vec2 a, Vec2 b, Vec2 c);
+
 _solh_ Vec2 vec2_add(Vec2 a, Vec2 b);
 _solh_ Vec2 vec2_addf(Vec2 v, Float f);
 _solh_ Vec2 vec2_sub(Vec2 a, Vec2 b);
@@ -393,6 +400,8 @@ _solh_ Float vec3_dot(Vec3 a, Vec3 b);
 
 _solh_ Float vec3_sum(Vec3 v);
 _solh_ Vec3 vec3_fma(Vec3 a, Vec3 b, Vec3 c);
+_solh_ Vec3 vec3_fms(Vec3 a, Vec3 b, Vec3 c);
+
 _solh_ Vec3 vec3_add(Vec3 a, Vec3 b);
 _solh_ Vec3 vec3_addf(Vec3 v, Float f);
 _solh_ Vec3 vec3_sub(Vec3 a, Vec3 b);
@@ -423,6 +432,8 @@ _solh_ Float vec4_dot(Vec4 a, Vec4 b);
 
 _solh_ Float vec4_sum(Vec4 v);
 _solh_ Vec4 vec4_fma(Vec4 a, Vec4 b, Vec4 c);
+_solh_ Vec4 vec4_fms(Vec4 a, Vec4 b, Vec4 c);
+
 _solh_ Vec4 vec4_add(Vec4 a, Vec4 b);
 _solh_ Vec4 vec4_addf(Vec4 v, Float f);
 _solh_ Vec4 vec4_sub(Vec4 a, Vec4 b);
@@ -522,6 +533,10 @@ _solh_ Seg2 seg2_init(Vec2 orig, Vec2 dest);
 _solh_ Seg2 seg2_initv(Vec2 v);
 _solh_ Seg2 seg2_initf(Float f);
 _solh_ Seg2 seg2_zero(void);
+
+_solh_ bool seg2_on(Seg2 s, Vec2 v, Float ep);
+_solh_ bool seg2_left(Seg2 s, Vec2 v);
+_solh_ bool seg2_right(Seg2 s, Vec2 v);
 
 _solh_ Seg2 seg2_add(Seg2 a, Seg2 b);
 _solh_ Seg2 seg2_addv(Seg2 s, Vec2 v);
@@ -738,6 +753,24 @@ _solh_ Box3 box3_divv(Box3 b, Vec3 v);
 _solh_ Box3 box3_vdiv(Vec3 v, Box3 b);
 _solh_ Box3 box3_divf(Box3 b, Float f);
 _solh_ Box3 box3_fdiv(Float f, Box3 b);
+
+  //////////////////////////////////////////////////////////////////////////////
+ // Sph2 Function Declarations ////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+
+_solh_ Sph2 sph2_init(Vec2 pos, Float rad);
+_solh_ Sph2 sph2_zero(void);
+
+_solh_ bool sph2_pip(Sph2 s, Vec2 p);
+
+  //////////////////////////////////////////////////////////////////////////////
+ // Sph3 Function Declarations ////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+
+_solh_ Sph3 sph3_init(Vec3 pos, Float rad);
+_solh_ Sph3 sph3_zero(void);
+
+_solh_ bool sph3_pip(Sph3 s, Vec3 p);
 
 #ifdef __cplusplus
   } // extern "C"

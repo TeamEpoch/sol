@@ -13,7 +13,7 @@ import ../sol
 # Settings #
 ############
 
-const solRuns = 5_000_000 # How many runs to average.
+const solRuns = 1_000_000 # How many runs to average.
 const solPrecision = 10 # Benchmark float accuracy.
 const solSpaces = 15
 
@@ -302,3 +302,5 @@ bench "mat4_div":
 
 bench "mat4_avg":
     m4c = mat4_avg(m4a, m4b)
+
+echo ""

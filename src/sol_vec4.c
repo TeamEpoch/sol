@@ -157,6 +157,22 @@ Vec4 vec4_fma(Vec4 a, Vec4 b, Vec4 c) {
   return (a * b) + c;
 }
 
+/// vec4_fms ///
+// Description
+//   Multiplies the elements of two vectors
+//   then subtracts the elements of a third.
+// Arguments
+//   a: Vector (Vec4)
+//   b: Vector (Vec4)
+//   c: Vector (Vec4)
+// Returns
+//   Vector (Vec4) = {(a.xyzw * b.xyzw) - c.xyzw}
+
+_sol_
+Vec4 vec4_fms(Vec4 a, Vec4 b, Vec4 c) {
+  return (a * b) - c;
+}
+
 /// vec4_add ///
 // Description
 //   Adds the elements of two vectors.

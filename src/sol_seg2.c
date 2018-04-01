@@ -70,6 +70,61 @@ Seg2 seg2_zero(void) {
   return seg2_initf((Float) 0);
 }
 
+  /////////////////////////////
+ // Seg2 Advanced Functions //
+/////////////////////////////
+
+/// seg2_on ///
+// Description
+//   Checks if a point is on a line segment
+//   within a given epsilon.
+// Arguments
+//   s: Segment (Seg2)
+//   p: Point (Vec2)
+// Returns
+//   Point On Segment (bool)
+
+_sol_
+bool seg2_on(Seg2 s, Vec2 p, Float ep) {
+  const Vec2 st = s.dest - s.orig;
+  const Vec2 pt = p - s.orig;
+  return flt_abs(vec2_cross(st, pt)) < ep;
+}
+
+/// seg2_left ///
+// Description
+//   Checks if a point is to the left of
+//   a line segment.
+// Arguments
+//   s: Segment (Seg2)
+//   p: Point (Vec2)
+// Returns
+//   Point Left of Segment (bool)
+
+_sol_
+bool seg2_left(Seg2 s, Vec2 p) {
+  const Vec2 st = s.dest - s.orig;
+  const Vec2 pt = p - s.orig;
+  return vec2_cross(st, pt) > 0;
+}
+
+/// seg2_right ///
+// Description
+//   Checks if a point is to the right of
+//   a line segment.
+// Arguments
+//   s: Segment (Seg2)
+//   p: Point (Vec20
+// Returns
+//   Point Right of Segment (bool)
+
+_sol_
+bool seg2_right(Seg2 s, Vec2 p) {
+  const Vec2 st = vec2_sub(s.dest, s.orig);
+  const Vec2 pt = p - s.orig;
+  return vec2_cross(st, pt) < 0;
+}
+
   /////////////////////
  // Seg2 Basic Math //
 /////////////////////

@@ -234,7 +234,8 @@ Float vec2_sum(Vec2 v) {
 
 /// vec2_fma ///
 // Description
-//   Multiplies the elements of two vectors then adds the elements of a third.
+//   Multiplies the elements of two vectors 
+//   then adds the elements of a third.
 // Arguments
 //   a: Vector (Vec2)
 //   b: Vector (Vec2)
@@ -244,8 +245,23 @@ Float vec2_sum(Vec2 v) {
 
 _sol_
 Vec2 vec2_fma(Vec2 a, Vec2 b, Vec2 c) {
-  const Vec2 out = (a * b) + c;
-  return out;
+  return (a * b) + c;
+}
+
+/// vec2_fms ///
+// Description
+//   Multiplies the elements of two vectors
+//   then subtracts the elements of a third.
+// Arguments
+//   a: Vector (Vec2)
+//   b: Vector (Vec2)
+//   c: Vector (Vec2)
+// Returns
+//   Vector (Vec2) = {(a.xy * b.xy) - c.xy}
+
+_sol_
+Vec2 vec2_fms(Vec2 a, Vec2 b, Vec2 c) {
+  return (a * b) - c;
 }
 
 /// vec2_add ///

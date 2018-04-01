@@ -36,24 +36,45 @@ suite "Vec2":
     require:
       a == vec2_init(3, 2)
       a[0] == 3
+  test "Summation":
+    require:
+      vec2_sum(a) == a.x + a.y
+  test "Fused Multiply Add":
+    require:
+      a * b + c == vec2_init((a.x * b.x) + c.x,
+                             (a.y * b.y) + c.y)
+  test "Fused Multiply Subtract":
+    require:
+      a * b - c == vec2_init((a.x * b.x) - c.x,
+                             (a.y * b.y) - c.y)
   test "Addition":
     require:
-      a + b == vec2_init(a.x + b.x, a.y + b.y)
-      a + f == vec2_init(a.x + f,   a.y + f  )
+      a + b == vec2_init(a.x + b.x,
+                         a.y + b.y)
+      a + f == vec2_init(a.x + f,
+                         a.y + f)
   test "Subtraction":
     require:
-      a - b == vec2_init(a.x - b.x, a.y - b.y)
-      a - f == vec2_init(a.x - f,   a.y - f  )
-      f - a == vec2_init(f   - a.x, f   - a.y)
+      a - b == vec2_init(a.x - b.x,
+                         a.y - b.y)
+      a - f == vec2_init(a.x - f,
+                         a.y - f)
+      f - a == vec2_init(f - a.x,
+                         f - a.y)
   test "Multiplication":
     require:
-      a * b == vec2_init(a.x * b.x, a.y * b.y)
-      a * f == vec2_init(a.x * f,   a.y * f  )
+      a * b == vec2_init(a.x * b.x,
+                         a.y * b.y)
+      a * f == vec2_init(a.x * f,
+                         a.y * f)
   test "Division":
     require:
-      a / b == vec2_init(a.x / b.x, a.y / b.y)
-      a / f == vec2_init(a.x / f  , a.y / f  )
-      f / a == vec2_init(f   / a.x, f   / a.y)
+      a / b == vec2_init(a.x / b.x,
+                         a.y / b.y)
+      a / f == vec2_init(a.x / f,
+                         a.y / f)
+      f / a == vec2_init(f / a.x,
+                         f / a.y)
 
 suite "Vec3":
   var axis, quat: Vec4
@@ -75,24 +96,57 @@ suite "Vec3":
     require:
       a == vec3_init(3, 2, 3)
       a[0] == 3
+  test "Summation":
+    require:
+      vec3_sum(a) == a.x + a.y + a.z
+  test "Fused Multiply Add":
+    require:
+      a * b + c == vec3_init((a.x * b.x) + c.x,
+                             (a.y * b.y) + c.y,
+                             (a.z * b.z) + c.z)
+  test "Fused Multiply Subtract":
+    require:
+      a * b - c == vec3_init((a.x * b.x) - c.x,
+                             (a.y * b.y) - c.y,
+                             (a.z * b.z) - c.z)
   test "Addition":
     require:
-      a + b == vec3_init(a.x + b.x, a.y + b.y, a.z + b.z)
-      a + f == vec3_init(a.x + f,   a.y + f,   a.z + f  )
+      a + b == vec3_init(a.x + b.x,
+                         a.y + b.y,
+                         a.z + b.z)
+      a + f == vec3_init(a.x + f,
+                         a.y + f,
+                         a.z + f)
   test "Subtraction":
     require:
-      a - b == vec3_init(a.x - b.x, a.y - b.y, a.z - b.z)
-      a - f == vec3_init(a.x - f,   a.y - f,   a.z - f)
-      f - a == vec3_init(f   - a.x, f   - a.y, f - a.z)
+      a - b == vec3_init(a.x - b.x,
+                         a.y - b.y,
+                         a.z - b.z)
+      a - f == vec3_init(a.x - f,
+                         a.y - f,
+                         a.z - f)
+      f - a == vec3_init(f - a.x,
+                         f - a.y,
+                         f - a.z)
   test "Multiplication":
     require:
-      a * b == vec3_init(a.x * b.x, a.y * b.y, a.z * b.z)
-      a * f == vec3_init(a.x * f,   a.y * f,   a.z * f  )
+      a * b == vec3_init(a.x * b.x,
+                         a.y * b.y,
+                         a.z * b.z)
+      a * f == vec3_init(a.x * f,
+                         a.y * f,
+                         a.z * f)
   test "Division":
     require:
-      a / b == vec3_init(a.x / b.x, a.y / b.y, a.z / b.z)
-      a / f == vec3_init(a.x / f,   a.y / f,   a.z / f  )
-      f / a == vec3_init(f   / a.x, f   / a.y, f   / a.z)
+      a / b == vec3_init(a.x / b.x,
+                         a.y / b.y,
+                         a.z / b.z)
+      a / f == vec3_init(a.x / f,
+                         a.y / f,
+                         a.z / f)
+      f / a == vec3_init(f / a.x,
+                         f / a.y,
+                         f / a.z)
 
 suite "Vec4":
   var a, b, c: Vec4
@@ -111,21 +165,66 @@ suite "Vec4":
     require:
       a == vec4_init(3, 2, 3, 4)
       a[0] == 3
+  test "Summation":
+    require:
+      vec4_sum(a) == a.x + a.y + a.z + a.w
+  test "Fused Multiply Add":
+    require:
+      a * b + c == vec4_init((a.x * b.x) + c.x,
+                             (a.y * b.y) + c.y,
+                             (a.z * b.z) + c.z,
+                             (a.w * b.w) + c.w)
+  test "Fused Multiply Subtract":
+    require:
+      a * b - c == vec4_init((a.x * b.x) - c.x,
+                             (a.y * b.y) - c.y,
+                             (a.z * b.z) - c.z,
+                             (a.w * b.w) - c.w)
   test "Addition":
     require:
-      a + b == vec4_init(a.x + b.x, a.y + b.y, a.z + b.z, a.w + b.w)
-      a + f == vec4_init(a.x + f,   a.y + f,   a.z + f,   a.w + f  )
+      a + b == vec4_init(a.x + b.x,
+                         a.y + b.y,
+                         a.z + b.z,
+                         a.w + b.w)
+      a + f == vec4_init(a.x + f,
+                         a.y + f,
+                         a.z + f,
+                         a.w + f)
   test "Subtraction":
     require:
-      a - b == vec4_init(a.x - b.x, a.y - b.y, a.z - b.z, a.w - b.w)
-      a - f == vec4_init(a.x - f,   a.y - f,   a.z - f,   a.w - f  )
-      f - a == vec4_init(f   - a.x, f   - a.y,   f - a.z, f   - a.w)
+      a - b == vec4_init(a.x - b.x,
+                         a.y - b.y,
+                         a.z - b.z,
+                         a.w - b.w)
+      a - f == vec4_init(a.x - f,
+                         a.y - f,
+                         a.z - f,
+                         a.w - f)
+      f - a == vec4_init(f - a.x,
+                         f - a.y,
+                         f - a.z,
+                         f - a.w)
   test "Multiplication":
     require:
-      a * b == vec4_init(a.x * b.x, a.y * b.y, a.z * b.z, a.w * b.w)
-      a * f == vec4_init(a.x * f,   a.y * f,   a.z * f,   a.w * f  )
+      a * b == vec4_init(a.x * b.x,
+                         a.y * b.y,
+                         a.z * b.z,
+                         a.w * b.w)
+      a * f == vec4_init(a.x * f,
+                         a.y * f,
+                         a.z * f,
+                         a.w * f)
   test "Division":
     require:
-      a / b == vec4_init(a.x / b.x, a.y / b.y, a.z / b.z, a.w / b.w)
-      a / f == vec4_init(a.x / f,   a.y / f,   a.z / f,   a.w / f  )
-      f / a == vec4_init(f   / a.x, f   / a.y, f   / a.z, f   / a.w)
+      a / b == vec4_init(a.x / b.x,
+                         a.y / b.y,
+                         a.z / b.z,
+                         a.w / b.w)
+      a / f == vec4_init(a.x / f,
+                         a.y / f,
+                         a.z / f,
+                         a.w / f)
+      f / a == vec4_init(f / a.x,
+                         f / a.y,
+                         f / a.z,
+                         f / a.w)

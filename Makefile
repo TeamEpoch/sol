@@ -3,14 +3,14 @@
 # C Compiler Settings #
 
 CC=clang
-CFLAGS=-Ofast -pipe -flto -Wno-psabi
+CFLAGS=-Ofast -pipe -flto
 LDFLAGS=
 
 # Nim Compiler Settings #
 
 NIMC=nim
 NIMLANG=c
-NIMFLAGS=--cc:$(CC)
+NIMFLAGS=--cc:$(CC) -d:fsize=32
 
 # Sol Shared Library Settings #
 
@@ -45,9 +45,11 @@ MUTE=>/dev/null 2>/dev/null || true
 
 ifeq ($(CC), gcc)
 	SOLSRC += *.h
+	CFLAGS+= -Wno-psabi
 	LDFLAGS += -pipe -flto=8
 else ifeq ($(CC), clang)
 	SOLSRC += $(SOLHDR)
+	CFLAGS += 
 	LDFLAGS += -pipe -Weverything
 else
 	# ...

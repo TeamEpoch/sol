@@ -82,7 +82,7 @@ type Mat3* {.importc: "Mat3", header: "sol.h", union, packed.} = object
 type Mat4* {.importc: "Mat4", header: "sol.h", union, packed.} = object
     v*: array[4, Vec4]
 
-type Box2* {.importc: "Box2", header: "sol.h", unchecked, packed.} = object
+type Box2* {.importc: "Box2", header: "sol.h".} = object
     lower*, upper*: Vec2
 
 type Box3* {.importc: "Box3", header: "sol.h".} = object
@@ -178,6 +178,7 @@ proc vec2_dot*(a, b: Vec2): Float   {.importc: "vec2_dot",   header: "sol.h".}
 
 proc vec2_sum*(v: Vec2): Float      {.importc: "vec2_sum", header: "sol.h".}
 proc vec2_fma*(a, b, c: Vec2): Vec2 {.importc: "vec2_fma", header: "sol.h".}
+proc vec2_fms*(a, b, c: Vec2): Vec2 {.importc: "vec2_fms", header: "sol.h".}
 
 proc vec2_add*(a, b: Vec2): Vec2         {.inline.} = {.emit: [result, " = ", a, " + ", b, ";"].}
 proc vec2_addf*(v: Vec2, f: Float): Vec2 {.inline.} = {.emit: [result, " = ", v, " + ", f, ";"].}
@@ -243,6 +244,9 @@ template `/=`*(v: var Vec2; f: Float) = v = vec2_divf(v, f)
 template vec2_opt_fma*{vec2_add(vec2_mul(a, b), c)}(a, b, c: Vec2): Vec2 =
   vec2_fma(a, b, c)
 
+template vec2_opt_fms*{vec2_sub(vec2_mul(a, b), c)}(a, b, c: Vec2): Vec2 =
+  vec2_fms(a, b, c)
+
 ################################################################################
 # Vec3 Functions ###############################################################
 ################################################################################
@@ -277,8 +281,9 @@ proc vec3_angle*(a, b: Vec3): Float {.importc: "vec3_angle", header: "sol.h".}
 proc vec3_cross*(a, b: Vec3): Vec3  {.importc: "vec3_cross", header: "sol.h".}
 proc vec3_dot*(a, b: Vec3): Float   {.importc: "vec3_dot",   header: "sol.h".}
 
-proc vec3_sum*(v: Vec3): Float      {.importc: "vec3_sum",  header: "sol.h".}
-proc vec3_fma*(a, b, c: Vec3): Vec3 {.importc: "vec3_fma",  header: "sol.h".}
+proc vec3_sum*(v: Vec3): Float      {.importc: "vec3_sum", header: "sol.h".}
+proc vec3_fma*(a, b, c: Vec3): Vec3 {.importc: "vec3_fma", header: "sol.h".}
+proc vec3_fms*(a, b, c: Vec3): Vec3 {.importc: "vec3_fms", header: "sol.h".}
 
 proc vec3_add*(a, b: Vec3): Vec3         {.inline.} = {.emit: [result, " = ", a, " + ", b, ";"].}
 proc vec3_addf*(v: Vec3, f: Float): Vec3 {.inline.} = {.emit: [result, " = ", v, " + ", f, ";"].}
@@ -344,6 +349,9 @@ template `/=`*(v: var Vec3; f: Float) = v = vec3_divf(v, f)
 template vec3_opt_fma*{vec3_add(vec3_mul(a, b), c)}(a, b, c: Vec3): Vec3 =
   vec3_fma(a, b, c)
 
+template vec3_opt_fms*{vec3_sub(vec3_mul(a, b), c)}(a, b, c: Vec3): Vec3 =
+  vec3_fms(a, b, c)
+
 ################################################################################
 # Vec4 Functions ###############################################################
 ################################################################################
@@ -372,8 +380,9 @@ proc vec4_eq*(a, b: Vec4; ep: Float): bool {.importc: "vec4_eq",   header: "sol.
 
 proc vec4_dot*(a, b: Vec4): Float {.importc: "vec4_dot", header: "sol.h".}
 
-proc vec4_sum*(v: Vec4): Float      {.importc: "vec4_sum",  header: "sol.h".}
-proc vec4_fma*(a, b, c: Vec4): Vec4 {.importc: "vec4_fma",  header: "sol.h".}
+proc vec4_sum*(v: Vec4): Float      {.importc: "vec4_sum", header: "sol.h".}
+proc vec4_fma*(a, b, c: Vec4): Vec4 {.importc: "vec4_fma", header: "sol.h".}
+proc vec4_fms*(a, b, c: Vec4): Vec4 {.importc: "vec4_fms", header: "sol.h".}
 
 proc vec4_add*(a, b: Vec4): Vec4         {.inline.} = {.emit: [result, " = ", a, " + ", b, ";"].}
 proc vec4_addf*(v: Vec4; f: Float): Vec4 {.inline.} = {.emit: [result, " = ", v, " + ", f, ";"].}
@@ -432,6 +441,9 @@ template `/=`*(v: var Vec4; f: Float) = v = vec4_divf(v, f)
 
 template vec4_opt_fma*{vec4_add(vec4_mul(a, b), c)}(a, b, c: Vec4): Vec4 =
   vec4_fma(a, b, c)
+
+template vec4_opt_fms*{vec4_sub(vec4_mul(a, b), c)}(a, b, c: Vec4): Vec4 =
+  vec4_fms(a, b, c)
 
 ################################################################################
 # Ray2 Functions ###############################################################
@@ -1071,3 +1083,21 @@ template `*=`*(b: var Box3; f: Float) = b = box3_mulf(b, f)
 template `/=`*(a: var Box3; b: Box3)  = a = box3_div(a, b)
 template `/=`*(b: var Box3; v: Vec3)  = b = box3_divv(b, v)
 template `/=`*(b: var Box3; f: Float) = b = box3_divf(b, f)
+
+################################################################################
+# Sph2 Functions ###############################################################
+################################################################################
+
+proc sph2_init*(pos: Vec2; rad: Float): Sph2 {.importc: "sph2_init", header: "sol.h".}
+proc sph2_zero*(): Sph2                      {.importc: "sph2_zero", header: "sol.h".}
+
+proc sph2_pip*(s: Sph2; p: Vec2): bool {.importc: "sph2_pip", header: "sol.h".}
+
+################################################################################
+# Sph3 Functions ###############################################################
+################################################################################
+
+proc sph3_init*(pos: Vec3; rad: Float): Sph3 {.importc: "sph3_init", header: "sol.h".}
+proc sph3_zero*(): Sph3                      {.importc: "sph3_zero", header: "sol.h".}
+
+proc sph3_pip*(s: Sph2; p: Vec2): bool {.importc: "sph3_pip", header: "sol.h".}

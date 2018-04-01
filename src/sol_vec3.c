@@ -253,7 +253,8 @@ Float vec3_sum(Vec3 v) {
 
 /// vec3_fma ///
 // Description
-//   Multiplies the elements of two vectors then adds the elements of a third.
+//   Multiplies the elements of two vectors 
+//   then adds the elements of a third.
 // Arguments
 //   a: Vector (Vec3)
 //   b: Vector (Vec3)
@@ -264,6 +265,22 @@ Float vec3_sum(Vec3 v) {
 _sol_
 Vec3 vec3_fma(Vec3 a, Vec3 b, Vec3 c) {
   return (a * b) + c;
+}
+
+/// vec3_fms ///
+// Description
+//   Multiplies the elements of two vectors
+//   then subtracts the elements of a third.
+// Arguments
+//   a: Vector (Vec3)
+//   b: Vector (Vec3)
+//   c: Vector (Vec3)
+// Returns
+//   Vector (Vec3) = {(a.xyz * b.xyz) - c.xyz}
+
+_sol_
+Vec3 vec3_fms(Vec3 a, Vec3 b, Vec3 c) {
+  return (a * b) - c;
 }
 
 /// vec3_add ///
