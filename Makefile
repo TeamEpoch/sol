@@ -2,7 +2,7 @@
 
 # C Compiler Settings #
 
-CC=clang
+CC=gcc
 CFLAGS=-Ofast -pipe -flto
 LDFLAGS=
 
