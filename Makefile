@@ -46,10 +46,10 @@ MUTE=>/dev/null 2>/dev/null || true
 ifeq ($(CC), gcc)
 	SOLSRC += *.h
 	CFLAGS+= -Wno-psabi
-	LDFLAGS += -pipe -flto=8
+	LDFLAGS += -pipe -flto=16
 else ifeq ($(CC), clang)
 	SOLSRC += $(SOLHDR)
-	CFLAGS += 
+	CFLAGS += -Wno-padded -Wno-unused-macros
 	LDFLAGS += -pipe -Weverything
 else
 	# ...
@@ -58,7 +58,7 @@ endif
 # Default #
 
 default:
-	-@make -B build >/dev/null
+	-@$(MAKE) -B build >/dev/null
 
 # Build Rules #
 
