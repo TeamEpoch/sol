@@ -59,6 +59,7 @@ This may be preferable to requiring the user to install it on their machine.
 Simply have your Makefile compile `sol/src/*.c` as well and it should work properly.
 
 ## Nim
+### NOTE: Broken at the moment due to invalid package structure.
 Installation for Nim is done via the Nimble package manager, like so:
 ```Bash
 nimble refresh
