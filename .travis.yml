@@ -1,0 +1,11 @@
+language: c
+
+script:
+ - make test
+ - make test_avx
+ - make test_avx2
+ - ./test
+ - ./test_avx
+ - ./test_avx2
+
+
