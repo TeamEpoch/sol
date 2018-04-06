@@ -7,7 +7,7 @@ import terminal
 import times
 import os
 
-import ../sol
+import ../src/sol
 
 ############
 # Settings #

@@ -28,7 +28,7 @@ SOLNEON=-mfpu=neon
 
 # Convenience Strings #
 
-SOLSRC=src/*.c
+SOLSRC=src/c/*.c
 SOLHDR=*.h
 
 SOLCACHE=bench test nimcache *.gch *~ src/*~ tests/*~ tests/nimcache
@@ -103,22 +103,22 @@ static_neon: build_neon
 # Dynamic Library Rules #
 
 dynamic:
-	-@$(CC) $(SHARED) src/*.c -o sol-so.so
+	-@$(CC) $(SHARED) src/c/*.c -o sol-so.so
 	-@mv $(SOLGEN) $(SOLOUT) out $(MUTE)
 	-@rm $(SOLEXE) $(MUTE)
 
 dynamic_avx2:
-	-@$(CC) $(SHARED) $(SOLAVX2) src/*.c -o sol-so.so
+	-@$(CC) $(SHARED) $(SOLAVX2) src/c/*.c -o sol-so.so
 	-@mv $(SOLGEN) out $(MUTE)
 	-@rm $(SOLEXE) $(MUTE)
 
 dynamic_avx:
-	-@$(CC) $(SHARED) $(SOLAVX) src/*.c -o sol-so.so
+	-@$(CC) $(SHARED) $(SOLAVX) src/c/*.c -o sol-so.so
 	-@mv $(SOLGEN) out $(MUTE)
 	-@rm $(SOLEXE) $(MUTE)
 
 dynamic_neon:
-	-@$(CC) $(SHARED) $(SOLNEON) src/*.c -o sol-so.so
+	-@$(CC) $(SHARED) $(SOLNEON) src/c/*.c -o sol-so.so
 	-@mv $(SOLGEN) out $(MUTE)
 	-@rm $(SOLEXE) $(MUTE)
 
