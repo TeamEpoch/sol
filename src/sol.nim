@@ -57,11 +57,11 @@ else:
   type Float* {.importc: "Float", header: "sol.h".} = cfloat
   {.passc: "-DSOL_FSIZE=32".}
 
-type Vec2* {.importc: "Vec2", header: "sol.h", unchecked, packed.} = object
+type Vec2* {.importc: "Vec2", header: "sol.h", packed, noDecl.} = object
 
-type Vec3* {.importc: "Vec3", header: "sol.h", unchecked, packed.} = object
+type Vec3* {.importc: "Vec3", header: "sol.h", packed, noDecl.} = object
 
-type Vec4* {.importc: "Vec4", header: "sol.h", unchecked, packed.} = object
+type Vec4* {.importc: "Vec4", header: "sol.h", packed, noDecl.} = object
 
 type Ray2* {.importc: "Ray2", header: "sol.h".} = object
     pos*, vec*: Vec2
