@@ -22,6 +22,8 @@
   passc: "-DSOL_NO_FAM"
 .}
 
+{.emit:"""#include "sol.h"""".}
+
 ##########
 # Config #
 ##########

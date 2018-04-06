@@ -9,7 +9,7 @@
 
 import unittest
 
-import ../sol
+import ../src/sol
 
 echo "Test Epsilon: " & $sol_epsilon
 
