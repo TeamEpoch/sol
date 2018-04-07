@@ -5,7 +5,6 @@
 ##################################################################
 
 {.
-  passc: "-I."
   compile: "c/sol_flt.c"
   compile: "c/sol_conv.c"
   compile: "c/sol_vec2.c"
@@ -22,8 +21,6 @@
   passc: "-DSOL_NO_FAM"
 .}
 
-{.emit:"""#include "sol.h"""".}
-
 ##########
 # Config #
 ##########
@@ -32,6 +29,11 @@ const sol_epsilon* = 0.000001
 
 when not defined(sol_fsize):
   const sol_fsize*   = 64
+
+when defined(sol_bundled):
+  {.passc: "-I.".}
+else:
+  {.passc: "-I~/.nimble/pkgs/sol-0.1.0".}
 
 ################################################################################
 # Command-Line Options #########################################################
