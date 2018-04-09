@@ -81,44 +81,44 @@ build_neon:
 # Static Library Rules #
 
 static: build
-	-@ar rcs sol-a.a out/*.o $(MUTE)
+	-@ar rcs libsol-a.a out/*.o $(MUTE)
 	-@mv $(SOLGEN) out $(MUTE)
 	-@rm $(SOLEXE) $(MUTE)
 
 static_avx2: build_avx2
-	-@ar rcs sol-a.a out/*.o $(MUTE)
+	-@ar rcs libsol-a.a out/*.o $(MUTE)
 	-@mv $(SOLGEN) out $(MUTE)
 	-@rm $(SOLEXE) $(MUTE)
 
 static_avx: build_avx
-	-@ar rcs sol-a.a out/*.o $(MUTE)
+	-@ar rcs libsol-a.a out/*.o $(MUTE)
 	-@mv $(SOLGEN) out $(MUTE)
 	-@rm $(SOLEXE) $(MUTE)
 
 static_neon: build_neon
-	-@ar rcs sol-a.a out/*.o $(MUTE)
+	-@ar rcs libsol-a.a out/*.o $(MUTE)
 	-@mv $(SOLGEN) out $(MUTE)
 	-@rm $(SOLEXE) $(MUTE)
 
 # Dynamic Library Rules #
 
 dynamic:
-	-@$(CC) $(SHARED) src/c/*.c -o sol-so.so
+	-@$(CC) $(SHARED) src/c/*.c -o libsol-so.so
 	-@mv $(SOLGEN) $(SOLOUT) out $(MUTE)
 	-@rm $(SOLEXE) $(MUTE)
 
 dynamic_avx2:
-	-@$(CC) $(SHARED) $(SOLAVX2) src/c/*.c -o sol-so.so
+	-@$(CC) $(SHARED) $(SOLAVX2) src/c/*.c -o libsol-so.so
 	-@mv $(SOLGEN) out $(MUTE)
 	-@rm $(SOLEXE) $(MUTE)
 
 dynamic_avx:
-	-@$(CC) $(SHARED) $(SOLAVX) src/c/*.c -o sol-so.so
+	-@$(CC) $(SHARED) $(SOLAVX) src/c/*.c -o libsol-so.so
 	-@mv $(SOLGEN) out $(MUTE)
 	-@rm $(SOLEXE) $(MUTE)
 
 dynamic_neon:
-	-@$(CC) $(SHARED) $(SOLNEON) src/c/*.c -o sol-so.so
+	-@$(CC) $(SHARED) $(SOLNEON) src/c/*.c -o libsol-so.so
 	-@mv $(SOLGEN) out $(MUTE)
 	-@rm $(SOLEXE) $(MUTE)
 
@@ -144,17 +144,11 @@ install_neon: static_neon dynamic_neon
 	-@mv $(SOLOUT) $(LIBPATH) $(MUTE)
 	-@cp -r . $(CPATH)/sol $(MUTE)
 
-# Nim Installation Rules #
-
-install_nim:
-	-@echo "This won't work currently. :L"
-	#-@cp -r . $(NIMPATH)/sol $(MUTE)
-
 # Uninstallation Rules #
 
 uninstall:
-	-@rm -rf $(LIBPATH)/sol-so.so $(MUTE)
-	-@rm -rf $(LIBPATH)/sol-a.a $(MUTE)
+	-@rm -rf $(LIBPATH)/libsol-so.so $(MUTE)
+	-@rm -rf $(LIBPATH)/libsol-a.a $(MUTE)
 	-@rm -rf $(CPATH)/sol $(MUTE)
 
 # Nim Uninstallation Rules #
