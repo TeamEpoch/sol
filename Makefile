@@ -10,7 +10,7 @@ LDFLAGS=
 
 NIMC=nim
 NIMLANG=c
-NIMFLAGS=--cc:$(CC) -d:fsize=32
+NIMFLAGS=--cc:$(CC) -d:sol_bundled
 
 # Sol Shared Library Settings #
 

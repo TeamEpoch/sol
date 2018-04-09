@@ -33,7 +33,7 @@ when not defined(sol_fsize):
 when defined(sol_bundled):
   {.passc: "-I.".}
 else:
-  {.passc: "-I~/.nimble/pkgs/sol-0.1.0".}
+  {.passc: "-I~/.nimble/pkgs/sol-0.1.0/src".}
 
 ################################################################################
 # Command-Line Options #########################################################
