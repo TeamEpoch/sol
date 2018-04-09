@@ -34,7 +34,10 @@ when defined(sol_bundled):
   {.passc: "-I.".}
   {.pragma: sol, header: "sol.h".}
 else:
-  {.passl: "-lsol-a".}
+  when defined(sol_shared):
+    {.passl: "-lsol-so".}
+  else:
+    {.passl: "-lsol-a".}
   {.pragma: sol, header: "<sol/sol.h>".}
 
 
