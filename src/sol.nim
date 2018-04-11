@@ -21,6 +21,12 @@
   passc: "-DSOL_NO_FAM"
 .}
 
+################
+# Dependencies #
+################
+
+import strutils
+
 ##########
 # Config #
 ##########
@@ -159,15 +165,26 @@ proc cv_rad_deg*(rad: Float): Float {.importc: "cv_rad_deg", sol.}
 # Vec2 Functions ###############################################################
 ################################################################################
 
-proc `[]`*(v: Vec2; i: int): Float     {.inline.} = {.emit: [result, " =  ", v, "[", i, "];"].}
+proc `[]`*(v: Vec2; i: int): Float {.inline.} =
+  {.emit: [result, " =  ", v, "[", i, "];"].}
 
-proc `[]=`*(v: var Vec2; i: int; f: Float) {.inline.} = {.emit: [v, "[0][", i, "] = ", f, ";"].}
+proc `[]=`*(v: var Vec2; i: int; f: Float) {.inline.} =
+  {.emit: [v, "[0][", i, "] = ", f, ";"].}
 
-proc x*(v: Vec2): Float         {.inline.} = {.emit: [result, " = ", v, "[0];"      ].}
-proc y*(v: Vec2): Float         {.inline.} = {.emit: [result, " = ", v, "[1];"      ].}
+proc `$`*(v: Vec2): string {.inline.} =
+  result = "(" & v[0].formatFloat & ", " & v[1].formatFloat & ")"
 
-proc `x=`*(v: var Vec2; f: Float) {.inline.} = {.emit: [v, "[0][0] = ", f, ";"].}
-proc `y=`*(v: var Vec2; f: Float) {.inline.} = {.emit: [v, "[0][1] = ", f, ";"].}
+proc x*(v: Vec2): Float {.inline.} =
+  {.emit: [result, " = ", v, "[0];"].}
+
+proc y*(v: Vec2): Float {.inline.} =
+  {.emit: [result, " = ", v, "[1];"].}
+
+proc `x=`*(v: var Vec2; f: Float) {.inline.} =
+  {.emit: [v, "[0][0] = ", f, ";"].}
+
+proc `y=`*(v: var Vec2; f: Float) {.inline.} =
+  {.emit: [v, "[0][1] = ", f, ";"].}
 
 proc vec2_init*(x, y: Float): Vec2 {.importc: "vec2_init",  sol.}
 proc vec2_initf*(f: Float): Vec2   {.importc: "vec2_initf", sol.}
@@ -190,20 +207,41 @@ proc vec2_sum*(v: Vec2): Float      {.importc: "vec2_sum", sol.}
 proc vec2_fma*(a, b, c: Vec2): Vec2 {.importc: "vec2_fma", sol.}
 proc vec2_fms*(a, b, c: Vec2): Vec2 {.importc: "vec2_fms", sol.}
 
-proc vec2_add*(a, b: Vec2): Vec2         {.inline.} = {.emit: [result, " = ", a, " + ", b, ";"].}
-proc vec2_addf*(v: Vec2, f: Float): Vec2 {.inline.} = {.emit: [result, " = ", v, " + ", f, ";"].}
-proc vec2_sub*(a, b: Vec2): Vec2         {.inline.} = {.emit: [result, " = ", a, " - ", b, ";"].}
-proc vec2_subf*(v: Vec2, f: Float): Vec2 {.inline.} = {.emit: [result, " = ", v, " - ", f, ";"].}
-proc vec2_fsub*(f: Float, v: Vec2): Vec2 {.inline.} = {.emit: [result, " = ", f, " - ", v, ";"].}
-proc vec2_mul*(a, b: Vec2): Vec2         {.inline.} = {.emit: [result, " = ", a, " * ", b, ";"].}
-proc vec2_mulf*(v: Vec2, f: Float): Vec2 {.inline.} = {.emit: [result, " = ", v, " * ", f, ";"].}
-proc vec2_div*(a, b: Vec2): Vec2         {.inline.} = {.emit: [result, " = ", a, " / ", b, ";"].}
-proc vec2_divf*(v: Vec2, f: Float): Vec2 {.inline.} = {.emit: [result, " = ", v, " / ", f, ";"].}
-proc vec2_fdiv*(f: Float, v: Vec2): Vec2 {.inline.} = {.emit: [result, " = ", f, " / ", v, ";"].}
+proc vec2_add*(a, b: Vec2): Vec2 {.inline.} =
+  {.emit: [result, " = ", a, " + ", b, ";"].}
+
+proc vec2_addf*(v: Vec2, f: Float): Vec2 {.inline.} =
+  {.emit: [result, " = ", v, " + ", f, ";"].}
+
+proc vec2_sub*(a, b: Vec2): Vec2 {.inline.} =
+  {.emit: [result, " = ", a, " - ", b, ";"].}
+
+proc vec2_subf*(v: Vec2, f: Float): Vec2 {.inline.} =
+  {.emit: [result, " = ", v, " - ", f, ";"].}
+
+proc vec2_fsub*(f: Float, v: Vec2): Vec2 {.inline.} =
+  {.emit: [result, " = ", f, " - ", v, ";"].}
+
+proc vec2_mul*(a, b: Vec2): Vec2 {.inline.} =
+  {.emit: [result, " = ", a, " * ", b, ";"].}
+
+proc vec2_mulf*(v: Vec2, f: Float): Vec2 {.inline.} =
+  {.emit: [result, " = ", v, " * ", f, ";"].}
+
+proc vec2_div*(a, b: Vec2): Vec2 {.inline.} =
+  {.emit: [result, " = ", a, " / ", b, ";"].}
+
+proc vec2_divf*(v: Vec2, f: Float): Vec2 {.inline.} =
+  {.emit: [result, " = ", v, " / ", f, ";"].}
+
+proc vec2_fdiv*(f: Float, v: Vec2): Vec2 {.inline.} =
+  {.emit: [result, " = ", f, " / ", v, ";"].}
+
 proc vec2_avg*(a, b: Vec2): Vec2         {.importc: "vec2_avg",  sol.}
+
 proc vec2_avgf*(v: Vec2, f: Float): Vec2 {.importc: "vec2_avgf", sol.}
 
-proc vec2_print*(v: Vec2): void {.importc: "vec2_print", sol.}
+proc vec2_print*(v: Vec2): void          {.importc: "vec2_print", sol.}
 
 ################################################################################
 # Vec2 Operators ###############################################################
@@ -261,17 +299,32 @@ template vec2_opt_fms*{vec2_sub(vec2_mul(a, b), c)}(a, b, c: Vec2): Vec2 =
 # Vec3 Functions ###############################################################
 ################################################################################
 
-proc `[]`*(v: Vec3; i: int): Float {.inline.} = {.emit: [result, " = ", v, "[", i, "];"].}
+proc `[]`*(v: Vec3; i: int): Float {.inline.} =
+  {.emit: [result, " = ", v, "[", i, "];"].}
 
-proc `[]=`*(v: var Vec3; i: int; f: Float) {.inline.} = {.emit: [v, "[0][", i, "] = ", f, ";"].}
+proc `[]=`*(v: var Vec3; i: int; f: Float) {.inline.} =
+  {.emit: [v, "[0][", i, "] = ", f, ";"].}
 
-proc x*(v: Vec3): Float {.inline.} = {.emit: [result, " = ", v, "[0];"].}
-proc y*(v: Vec3): Float {.inline.} = {.emit: [result, " = ", v, "[1];"].}
-proc z*(v: Vec3): Float {.inline.} = {.emit: [result, " = ", v, "[2];"].}
+proc `$`(v: Vec3): string {.inline.} =
+  result = "(" & v[0].formatFloat & ", " & v[1].formatFloat & ", " & v[2].formatFloat & ")"
 
-proc `x=`*(v: var Vec3; f: Float) {.inline.} = {.emit: [v, "[0][0] = ", f, ";"].}
-proc `y=`*(v: var Vec3; f: Float) {.inline.} = {.emit: [v, "[0][1] = ", f, ";"].}
-proc `z=`*(v: var Vec3; f: Float) {.inline.} = {.emit: [v, "[0][2] = ", f, ";"].}
+proc x*(v: Vec3): Float {.inline.} =
+  {.emit: [result, " = ", v, "[0];"].}
+
+proc y*(v: Vec3): Float {.inline.} =
+  {.emit: [result, " = ", v, "[1];"].}
+
+proc z*(v: Vec3): Float {.inline.} =
+  {.emit: [result, " = ", v, "[2];"].}
+
+proc `x=`*(v: var Vec3; f: Float) {.inline.} =
+  {.emit: [v, "[0][0] = ", f, ";"].}
+
+proc `y=`*(v: var Vec3; f: Float) {.inline.} =
+  {.emit: [v, "[0][1] = ", f, ";"].}
+
+proc `z=`*(v: var Vec3; f: Float) {.inline.} =
+  {.emit: [v, "[0][2] = ", f, ";"].}
 
 proc vec3_init*(x, y, z: Float): Vec3 {.importc: "vec3_init",  sol.}
 proc vec3_initf*(f: Float): Vec3      {.importc: "vec3_initf", sol.}
@@ -295,17 +348,39 @@ proc vec3_sum*(v: Vec3): Float      {.importc: "vec3_sum", sol.}
 proc vec3_fma*(a, b, c: Vec3): Vec3 {.importc: "vec3_fma", sol.}
 proc vec3_fms*(a, b, c: Vec3): Vec3 {.importc: "vec3_fms", sol.}
 
-proc vec3_add*(a, b: Vec3): Vec3         {.inline.} = {.emit: [result, " = ", a, " + ", b, ";"].}
-proc vec3_addf*(v: Vec3, f: Float): Vec3 {.inline.} = {.emit: [result, " = ", v, " + ", f, ";"].}
-proc vec3_sub*(a, b: Vec3): Vec3         {.inline.} = {.emit: [result, " = ", a, " - ", b, ";"].}
-proc vec3_subf*(v: Vec3, f: Float): Vec3 {.inline.} = {.emit: [result, " = ", v, " - ", f, ";"].}
-proc vec3_fsub*(f: Float, v: Vec3): Vec3 {.inline.} = {.emit: [result, " = ", f, " - ", v, ";"].}
-proc vec3_mul*(a, b: Vec3): Vec3         {.inline.} = {.emit: [result, " = ", a, " * ", b, ";"].}
-proc vec3_mulf*(v: Vec3, f: Float): Vec3 {.inline.} = {.emit: [result, " = ", v, " * ", f, ";"].}
-proc vec3_div*(a, b: Vec3): Vec3         {.inline.} = {.emit: [result, " = ", a, " / ", b, ";"].}
-proc vec3_divf*(v: Vec3, f: Float): Vec3 {.inline.} = {.emit: [result, " = ", v, " / ", f, ";"].}
-proc vec3_fdiv*(f: Float, v: Vec3): Vec3 {.inline.} = {.emit: [result, " = ", f, " / ", v, ";"].}
-proc vec3_avg*(a, b: Vec3): Vec3         {.importc: "vec3_avg",  sol.}
+
+proc vec3_add*(a, b: Vec3): Vec3 {.inline.} =
+  {.emit: [result, " = ", a, " + ", b, ";"].}
+
+proc vec3_addf*(v: Vec3, f: Float): Vec3 {.inline.} =
+  {.emit: [result, " = ", v, " + ", f, ";"].}
+
+proc vec3_sub*(a, b: Vec3): Vec3 {.inline.} =
+  {.emit: [result, " = ", a, " - ", b, ";"].}
+
+proc vec3_subf*(v: Vec3, f: Float): Vec3 {.inline.} =
+  {.emit: [result, " = ", v, " - ", f, ";"].}
+
+proc vec3_fsub*(f: Float, v: Vec3): Vec3 {.inline.} =
+  {.emit: [result, " = ", f, " - ", v, ";"].}
+
+proc vec3_mul*(a, b: Vec3): Vec3 {.inline.} =
+  {.emit: [result, " = ", a, " * ", b, ";"].}
+
+proc vec3_mulf*(v: Vec3, f: Float): Vec3 {.inline.} =
+  {.emit: [result, " = ", v, " * ", f, ";"].}
+
+proc vec3_div*(a, b: Vec3): Vec3 {.inline.} =
+  {.emit: [result, " = ", a, " / ", b, ";"].}
+
+proc vec3_divf*(v: Vec3, f: Float): Vec3 {.inline.} =
+  {.emit: [result, " = ", v, " / ", f, ";"].}
+
+proc vec3_fdiv*(f: Float, v: Vec3): Vec3 {.inline.} =
+  {.emit: [result, " = ", f, " / ", v, ";"].}
+
+proc vec3_avg*(a, b: Vec3): Vec3 {.importc: "vec3_avg",  sol.}
+
 proc vec3_avgf*(v: Vec3, f: Float): Vec3 {.importc: "vec3_avgf", sol.}
 
 proc vec3_print*(v: Vec3): void {.importc: "vec3_print", sol.}
@@ -366,19 +441,38 @@ template vec3_opt_fms*{vec3_sub(vec3_mul(a, b), c)}(a, b, c: Vec3): Vec3 =
 # Vec4 Functions ###############################################################
 ################################################################################
 
-proc `[]`*(v: Vec4; i: int): Float {.inline.} = {.emit: [result, " = ", v, "[", i, "];"].}
+proc `[]`*(v: Vec4; i: int): Float {.inline.} =
+  {.emit: [result, " = ", v, "[", i, "];"].}
 
-proc `[]=`*(v: var Vec4; i: int; f: Float) {.inline.} = {.emit: [v, "[0][", i, "] = ", f, ";"].}
+proc `[]=`*(v: var Vec4; i: int; f: Float) {.inline.} =
+  {.emit: [v, "[0][", i, "] = ", f, ";"].}
 
-proc x*(v: Vec4): Float {.inline.} = {.emit: [result, " = ", v, "[0];"].}
-proc y*(v: Vec4): Float {.inline.} = {.emit: [result, " = ", v, "[1];"].}
-proc z*(v: Vec4): Float {.inline.} = {.emit: [result, " = ", v, "[2];"].}
-proc w*(v: Vec4): Float {.inline.} = {.emit: [result, " = ", v, "[3];"].}
+proc `$`*(v: Vec4): string {.inline.} =
+  result = "(" & v[0].formatFloat & ", " & v[1].formatFloat & ", " & v[2].formatFloat & ", " & v[3].formatFloat & ")"
 
-proc `x=`*(v: var Vec4; f: Float) {.inline.} = {.emit: [v, "[0][0] = ", f, ";"].}
-proc `y=`*(v: var Vec4; f: Float) {.inline.} = {.emit: [v, "[0][1] = ", f, ";"].}
-proc `z=`*(v: var Vec4; f: Float) {.inline.} = {.emit: [v, "[0][2] = ", f, ";"].}
-proc `w=`*(v: var Vec4; f: Float) {.inline.} = {.emit: [v, "[0][3] = ", f, ";"].}
+proc x*(v: Vec4): Float {.inline.} =
+  {.emit: [result, " = ", v, "[0];"].}
+
+proc y*(v: Vec4): Float {.inline.} =
+  {.emit: [result, " = ", v, "[1];"].}
+
+proc z*(v: Vec4): Float {.inline.} =
+  {.emit: [result, " = ", v, "[2];"].}
+
+proc w*(v: Vec4): Float {.inline.} =
+  {.emit: [result, " = ", v, "[3];"].}
+
+proc `x=`*(v: var Vec4; f: Float) {.inline.} =
+  {.emit: [v, "[0][0] = ", f, ";"].}
+
+proc `y=`*(v: var Vec4; f: Float) {.inline.} =
+  {.emit: [v, "[0][1] = ", f, ";"].}
+
+proc `z=`*(v: var Vec4; f: Float) {.inline.} =
+  {.emit: [v, "[0][2] = ", f, ";"].}
+
+proc `w=`*(v: var Vec4; f: Float) {.inline.} =
+  {.emit: [v, "[0][3] = ", f, ";"].}
 
 proc vec4_init*(x, y, z, w: Float): Vec4 {.importc: "vec4_init",  sol.}
 proc vec4_initf*(f: Float): Vec4         {.importc: "vec4_initf", sol.}
@@ -394,17 +488,38 @@ proc vec4_sum*(v: Vec4): Float      {.importc: "vec4_sum", sol.}
 proc vec4_fma*(a, b, c: Vec4): Vec4 {.importc: "vec4_fma", sol.}
 proc vec4_fms*(a, b, c: Vec4): Vec4 {.importc: "vec4_fms", sol.}
 
-proc vec4_add*(a, b: Vec4): Vec4         {.inline.} = {.emit: [result, " = ", a, " + ", b, ";"].}
-proc vec4_addf*(v: Vec4; f: Float): Vec4 {.inline.} = {.emit: [result, " = ", v, " + ", f, ";"].}
-proc vec4_sub*(a, b: Vec4): Vec4         {.inline.} = {.emit: [result, " = ", a, " - ", b, ";"].}
-proc vec4_subf*(v: Vec4; f: Float): Vec4 {.inline.} = {.emit: [result, " = ", v, " - ", f, ";"].}
-proc vec4_fsub*(f: Float; v: Vec4): Vec4 {.inline.} = {.emit: [result, " = ", f, " - ", v, ";"].}
-proc vec4_mul*(a, b: Vec4): Vec4         {.inline.} = {.emit: [result, " = ", a, " * ", b, ";"].}
-proc vec4_mulf*(v: Vec4; f: Float): Vec4 {.inline.} = {.emit: [result, " = ", v, " * ", f, ";"].}
-proc vec4_div*(a, b: Vec4): Vec4         {.inline.} = {.emit: [result, " = ", a, " / ", b, ";"].}
-proc vec4_divf*(v: Vec4; f: Float): Vec4 {.inline.} = {.emit: [result, " = ", v, " / ", f, ";"].}
-proc vec4_fdiv*(f: Float; v: Vec4): Vec4 {.inline.} = {.emit: [result, " = ", f, " / ", v, ";"].}
-proc vec4_avg*(a, b: Vec4): Vec4         {.importc: "vec4_avg",  sol.}
+proc vec4_add*(a, b: Vec4): Vec4 {.inline.} =
+  {.emit: [result, " = ", a, " + ", b, ";"].}
+
+proc vec4_addf*(v: Vec4; f: Float): Vec4 {.inline.} =
+  {.emit: [result, " = ", v, " + ", f, ";"].}
+
+proc vec4_sub*(a, b: Vec4): Vec4 {.inline.} =
+  {.emit: [result, " = ", a, " - ", b, ";"].}
+
+proc vec4_subf*(v: Vec4; f: Float): Vec4 {.inline.}
+  = {.emit: [result, " = ", v, " - ", f, ";"].}
+
+proc vec4_fsub*(f: Float; v: Vec4): Vec4 {.inline.} =
+  {.emit: [result, " = ", f, " - ", v, ";"].}
+
+proc vec4_mul*(a, b: Vec4): Vec4 {.inline.} =
+  {.emit: [result, " = ", a, " * ", b, ";"].}
+
+proc vec4_mulf*(v: Vec4; f: Float): Vec4 {.inline.} =
+  {.emit: [result, " = ", v, " * ", f, ";"].}
+
+proc vec4_div*(a, b: Vec4): Vec4 {.inline.} =
+  {.emit: [result, " = ", a, " / ", b, ";"].}
+
+proc vec4_divf*(v: Vec4; f: Float): Vec4 {.inline.} =
+  {.emit: [result, " = ", v, " / ", f, ";"].}
+
+proc vec4_fdiv*(f: Float; v: Vec4): Vec4 {.inline.} =
+  {.emit: [result, " = ", f, " / ", v, ";"].}
+
+proc vec4_avg*(a, b: Vec4): Vec4 {.importc: "vec4_avg",  sol.}
+
 proc vec4_avgf*(v: Vec4, f: Float): Vec4 {.importc: "vec4_avgf", sol.}
 
 proc vec4_print*(v: Vec4): void {.importc: "vec4_print", sol.}
@@ -415,8 +530,8 @@ proc vec4_print*(v: Vec4): void {.importc: "vec4_print", sol.}
 
 template vec*(x, y, z, w: Float): Vec4 = vec4_init(x, y, z, w)
 
-template norm*(v: Vec4): Vec4             = vec4_norm(v)
-template mag*(v: Vec4): Float             = vec4_mag(v)
+template norm*(v: Vec4): Vec4 = vec4_norm(v)
+template mag*(v: Vec4): Float = vec4_mag(v)
 template eq*(a, b: Vec4; ep: Float): bool = vec4_eq(a, b, ep)
 
 template sum*(v: Vec4): Float = vec4_sum(v)
