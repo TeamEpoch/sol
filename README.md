@@ -59,15 +59,13 @@ This may be preferable to requiring the user to install it on their machine.
 Simply have your Makefile compile `sol/src/*.c` as well and it should work properly.
 
 ## Nim
-### NOTE: Broken at the moment due to invalid package structure.
 Installation for Nim is done via the Nimble package manager, like so:
 ```Bash
 nimble refresh
 nimble install sol
 ```
 This will install Sol to your ~/.nimble file and allow it to be included from anywhere.
-Because it is a source code version of Sol, no special steps are needed to enable AVX2, AVX, etc.
-When compiling your project, simply pass `-d:avx2`, `-d:avx`, or `-d:neon` to `nim c`, and they will be enaled.
+Note that the C version of Sol must be installed to make use of the Nim bindings, at present. This may be changed later if possible.
 
 Additionally, you can use a .nimble file in your project to require Sol as a dependency:
 ```nimble
