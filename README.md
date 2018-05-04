@@ -28,7 +28,7 @@ a.x = 1 # The Nim bindings have UFCS scalar accessors.
 var c = a + b # The Nim bindings have operator overloading.
 echo $c # The Nim bindings have a "stringify" operator $ for vectors.
 var f = c.x
-echo f # The Nim bindings have a type-generic echo proc.
+echo f # Nim has a type-generic echo proc.
 ```
 
 # How Sol Works
