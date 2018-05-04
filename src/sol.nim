@@ -305,7 +305,7 @@ proc `[]`*(v: Vec3; i: int): Float {.inline.} =
 proc `[]=`*(v: var Vec3; i: int; f: Float) {.inline.} =
   {.emit: [v, "[0][", i, "] = ", f, ";"].}
 
-proc `$`(v: Vec3): string {.inline.} =
+proc `$`*(v: Vec3): string {.inline.} =
   result = "(" & v[0].formatFloat & ", " & v[1].formatFloat & ", " & v[2].formatFloat & ")"
 
 proc x*(v: Vec3): Float {.inline.} =
