@@ -1,32 +1,44 @@
-# Sol's Makefile #
+#######################################################
+# Makefile | The makefile for the Sol vector library. #
+# Source: https://github.com/davidgarland/sol #########
+#######################################################
 
+#######################
 # C Compiler Settings #
+#######################
 
 CC=gcc
 CFLAGS=-Ofast -pipe -flto
 LDFLAGS=
 
+#########################
 # Nim Compiler Settings #
+#########################
 
 NIMC=nim
 NIMLANG=c
 NIMFLAGS=--cc:$(CC) -d:sol_bundled
 
+###############################
 # Sol Shared Library Settings #
-
+###############################
 
 CPATH=/usr/include
 NIMPATH=~/.nimble/pkgs
 LIBPATH=/usr/lib
 SHARED=-fpic -shared
 
+#####################
 # Sol SIMD Settings #
+#####################
 
 SOLAVX2=-mavx2 -mavx -mfma
 SOLAVX=-mavx
 SOLNEON=-mfpu=neon
 
+#######################
 # Convenience Strings #
+#######################
 
 SOLSRC=src/c/*.c
 SOLHDR=*.h
@@ -41,7 +53,9 @@ SOLLIB=*.a *.so out/*.a out/*.so
 
 MUTE=>/dev/null 2>/dev/null || true
 
+##################
 # Compiler Logic #
+##################
 
 ifeq ($(CC), gcc)
 	SOLSRC += *.h
@@ -55,12 +69,12 @@ else
 	# ...
 endif
 
-# Default #
+################################################################################
+# Build Rules ##################################################################
+################################################################################
 
 default:
 	-@$(MAKE) -B build >/dev/null
-
-# Build Rules #
 
 build:
 	-@$(CC) -c $(CFLAGS) $(SOLSRC) $(LDFLAGS)
@@ -78,7 +92,9 @@ build_neon:
 	-@$(CC) -c $(CFLAGS) $(SOLNEON) $(SOLSRC) $(LDFLAGS)
 	-@mv $(SOLGEN) out $(MUTE)
 
+########################
 # Static Library Rules #
+########################
 
 static: build
 	-@ar rcs libsol-a.a out/*.o $(MUTE)
@@ -100,7 +116,9 @@ static_neon: build_neon
 	-@mv $(SOLGEN) out $(MUTE)
 	-@rm $(SOLEXE) $(MUTE)
 
+#########################
 # Dynamic Library Rules #
+#########################
 
 dynamic:
 	-@$(CC) $(SHARED) src/c/*.c -o libsol-so.so
@@ -122,7 +140,9 @@ dynamic_neon:
 	-@mv $(SOLGEN) out $(MUTE)
 	-@rm $(SOLEXE) $(MUTE)
 
+######################
 # Installation Rules #
+######################
 
 install: static dynamic
 	-@rm -rf $(SOLEXE) $(SOLCACHE) $(MUTE)
@@ -144,20 +164,18 @@ install_neon: static_neon dynamic_neon
 	-@mv $(SOLOUT) $(LIBPATH) $(MUTE)
 	-@cp -r . $(CPATH)/sol $(MUTE)
 
+########################
 # Uninstallation Rules #
+########################
 
 uninstall:
 	-@rm -rf $(LIBPATH)/libsol-so.so $(MUTE)
 	-@rm -rf $(LIBPATH)/libsol-a.a $(MUTE)
 	-@rm -rf $(CPATH)/sol $(MUTE)
 
-# Nim Uninstallation Rules #
-
-uninstall_nim:
-	-@echo "This won't work currently. :L"
-	#-@rm -rf $(NIMPATH)/sol $(MUTE)
-
+#####################
 # Disassembly Rules #
+#####################
 
 disas:
 	-@$(CC) $(CFLAGS) $(SOLSRC) $(LDFLAGS) -S -masm=intel
@@ -175,7 +193,9 @@ disas_neon:
 	-@$(CC) $(CFLAGS) $(SOLNEON) $(SOLSRC) $(LDFLAGS) -S masm=intel
 	-@mv $(SOLGEN) out $(MUTE)
 
+##############
 # Test Rules #
+##############
 
 test:
 	-@$(NIMC) $(NIMLANG) $(NIMFLAGS) -d:none tests/test.nim
@@ -193,7 +213,9 @@ test_neon:
 	-@$(NIMC) $(NIMLANG) $(NIMFLAGS) -d:neon tests/test.nim
 	-@mv tests/test . $(MUTE)
 
+###################
 # Benchmark Rules #
+###################
 
 bench:
 	-@$(NIMC) $(NIMLANG) $(NIMFLAGS) -d:release -d:none --opt:speed tests/bench.nim
@@ -211,7 +233,9 @@ bench_neon:
 	-@$(NIMC) $(NIMLANG) $(NIMFLAGS) -d:release -d:neon --opt:speed tests/bench.nim
 	-@mv tests/bench . $(MUTE)
 
+#################
 # Cleanup Rules #
+#################
 
 clean:
 	-@rm -rf $(SOLCACHE) $(MUTE)
