@@ -397,7 +397,7 @@ template eq*(a, b: Vec3; ep: Float): bool = vec3_eq(a, b, ep)
 
 template proj*(a, b: Vec3): Vec3  = vec3_proj(a, b)
 template rej*(a, b: Vec3): Vec3   = vec3_rej(a, b)
-template angle*(a, b: Vec3): Vec3 = vec3_angle(a, b)
+template angle*(a, b: Vec3): Float = vec3_angle(a, b)
 template cross*(a, b: Vec3): Vec3 = vec3_cross(a, b)
 template dot*(a, b: Vec3): Float  = vec3_dot(a, b)
 
