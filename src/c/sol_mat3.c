@@ -204,6 +204,24 @@ Mat3 mat3_fma(Mat3 a, Mat3 b, Mat3 c) {
                     a.v[2] * b.v[2] + c.v[2]);
 }
 
+/// mat3_fms //
+// Descrption
+//   Performs fused multiply sub on
+//   two matrices.
+// Arguments
+//   a: Matrix (Mat3)
+//   b: Matrix (Mat3)
+//   c: Matrix (Mat3)
+// Returns
+//   Matrix (Mat3)
+
+_sol_
+Mat3 mat3_fms(Mat3 a, Mat3 b, Mat3 c) {
+  return mat3_initv(a.v[0] * b.v[0] + c.v[0],
+                    a.v[1] * b.v[1] + c.v[1],
+                    a.v[2] * b.v[2] + c.v[2]);
+}
+
 /// mat3_add ///
 // Description
 //   Adds two 3x3 matrices together

@@ -877,6 +877,7 @@ proc mat2_f*(m: Mat2; row, col: csize): Float {.importc: "mat2_f",   sol.}
 proc mat2_dot*(a, b: Mat2): Mat2 {.importc: "mat2_dot", sol.}
 
 proc mat2_fma*(a, b, c: Mat2): Mat2      {.importc: "mat2_fma",  sol.}
+proc mat2_fms*(a, b, c: Mat2): Mat2      {.importc: "mat2_fms",  sol.}
 proc mat2_add*(a, b: Mat2): Mat2         {.importc: "mat2_add",  sol.}
 proc mat2_addf*(m: Mat2; f: Float): Mat2 {.importc: "mat2_addf", sol.}
 proc mat2_sub*(a, b: Mat2): Mat2         {.importc: "mat2_sub",  sol.}
@@ -934,6 +935,9 @@ template `/=`*(v: var Mat2; f: Float) = v = mat2_divf(v, f)
 template mat2_opt_fma*{mat2_add(mat2_mul(a, b), c)}(a, b, c: Mat2): Mat2 =
   mat2_fma(a, b, c)
 
+template mat2_opt_fms*{mat2_sub(mat2_mul(a, b), c)}(a, b, c: Mat2): Mat2 =
+  mat2_fms(a, b, c)
+
 ################################################################################
 # Mat3 Functions ###############################################################
 ################################################################################
@@ -955,6 +959,7 @@ proc mat3_f*(m: Mat3; row, col: csize): Float {.importc: "mat3_f",   sol.}
 proc mat3_dot*(a, b: Mat3): Mat3 {.importc: "mat3_dot", sol.}
 
 proc mat3_fma*(a, b, c: Mat3): Mat3      {.importc: "mat3_fma",  sol.}
+proc mat3_fms*(a, b, c: Mat3): Mat3      {.importc: "mat3_fms",  sol.}
 proc mat3_add*(a, b: Mat3): Mat3         {.importc: "mat3_add",  sol.}
 proc mat3_addf*(m: Mat3; f: Float): Mat3 {.importc: "mat3_addf", sol.}
 proc mat3_sub*(a, b: Mat3): Mat3         {.importc: "mat3_sub",  sol.}
@@ -1012,6 +1017,9 @@ template `/=`*(m: var Mat3; f: Float) = m = mat3_divf(m, f)
 template mat3_opt_fma*{mat3_add(mat3_mul(a, b), c)}(a, b, c: Mat3): Mat3 =
   mat3_fma(a, b, c)
 
+template mat3_opt_fms*{mat3_sub(mat3_mul(a, b), c)}(a, b, c: Mat3): Mat3 =
+  mat3_fms(a, b, c)
+
 ################################################################################
 # Mat4 Functions ###############################################################
 ################################################################################
@@ -1033,6 +1041,7 @@ proc mat4_f*(m: Mat4; row, col: csize): Float {.importc: "mat4_f", sol.}
 proc mat4_dot*(a, b: Mat4): Mat4 {.importc: "mat4_dot", sol.}
 
 proc mat4_fma*(a, b, c: Mat4): Mat4      {.importc: "mat4_fma",  sol.}
+proc mat4_fms*(a, b, c: Mat4): Mat4      {.importc: "mat4_fms",  sol.}
 proc mat4_add*(a, b: Mat4): Mat4         {.importc: "mat4_add",  sol.}
 proc mat4_addf*(m: Mat4; f: Float): Mat4 {.importc: "mat4_addf", sol.}
 proc mat4_sub*(a, b: Mat4): Mat4         {.importc: "mat4_sub",  sol.}
@@ -1089,6 +1098,9 @@ template `/=`*(m: var Mat4; f: Float) = m = mat4_divf(m, f)
 
 template mat4_opt_fma*{mat4_add(mat4_mul(a, b), c)}(a, b, c: Mat4): Mat4 =
   mat4_fma(a, b, c)
+
+template mat4_opt_fms*{mat4_sub(mat4_mul(a, b), c)}(a, b, c: Mat4): Mat4 =
+  mat4_fms(a, b, c)
 
 ################################################################################
 # Box2 Functions ###############################################################

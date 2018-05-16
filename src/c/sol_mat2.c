@@ -187,11 +187,34 @@ Mat2 mat2_dot(Mat2 a, Mat2 b) {
 _sol_
 Mat2 mat2_fma(Mat2 a, Mat2 b, Mat2 c) {
   #if defined(__clang__)
-    return mat2_initv((a.v[0] * b.v[0]) + c.v[0],
-                      (a.v[1] * b.v[1]) + c.v[1]);
+    return mat2_initv(a.v[0] * b.v[0] + c.v[0],
+                      a.v[1] * b.v[1] + c.v[1]);
   #else
     Mat2 out;
-    out.v4 = (a.v4 * b.v4) + c.v4;
+    out.v4 = a.v4 * b.v4 + c.v4;
+    return out;
+  #endif
+}
+
+/// mat2_fms ///
+// Description
+//   Performs fused multiply sub on two
+//   matrices.
+// Arguments
+//   a: Matrix (Mat2)
+//   b: Matrix (Mat2)
+//   c: Matrix (Mat2)
+// Returns
+//   Matrix (Mat2)
+
+_sol_
+Mat2 mat2_fms(Mat2 a, Mat2 b, Mat2 c) {
+  #if defined(__clang__)
+    return mat2_initv(a.v[0] * b.v[0] - c.v[0],
+                      a.v[1] * b.v[1] - c.v[1]);
+  #else
+    Mat2 out;
+    out.v4 = a.v4 * b.v4 + c.v4;
     return out;
   #endif
 }

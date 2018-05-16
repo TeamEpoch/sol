@@ -221,6 +221,25 @@ Mat4 mat4_fma(Mat4 a, Mat4 b, Mat4 c) {
                     a.v[3] * b.v[3] + c.v[3]);
 }
 
+/// mat4_fms ///
+// Description
+//   Performs fused multiply sub on
+//   two matrices.
+// Arguments
+//   a: Matrix (Mat4)
+//   b: Matrix (Mat4)
+//   c: Matrix (Mat4)
+// Returns
+//   Matrix (Mat4)
+
+_sol_
+Mat4 mat4_fms(Mat4 a, Mat4 b, Mat4 c) {
+  return mat4_initv(a.v[0] * b.v[0] - c.v[0],
+                    a.v[1] * b.v[1] - c.v[1],
+                    a.v[2] * b.v[2] - c.v[2],
+                    a.v[3] * b.v[3] - c.v[3]);
+}
+
 /// mat4_add ///
 // Description
 //   Adds two matrices element-wise.

@@ -610,6 +610,7 @@ _solh_ Float mat2_f(Mat2 m, size_t row, size_t col);
 _solh_ Mat2 mat2_dot(Mat2 a, Mat2 b);
 
 _solh_ Mat2 mat2_fma(Mat2 a, Mat2 b, Mat2 c);
+_solh_ Mat2 mat2_fms(Mat2 a, Mat2 b, Mat2 c);
 _solh_ Mat2 mat2_add(Mat2 a, Mat2 b);
 _solh_ Mat2 mat2_addf(Mat2 m, Float f);
 _solh_ Mat2 mat2_sub(Mat2 a, Mat2 b);
@@ -642,6 +643,7 @@ _solh_ Float mat3_f(Mat3 m, size_t row, size_t col);
 _solh_ Mat3 mat3_dot(Mat3 a, Mat3 b);
 
 _solh_ Mat3 mat3_fma(Mat3 a, Mat3 b, Mat3 c);
+_solh_ Mat3 mat3_fms(Mat3 a, Mat3 b, Mat3 c);
 _solh_ Mat3 mat3_add(Mat3 a, Mat3 b);
 _solh_ Mat3 mat3_addf(Mat3 m, Float f);
 _solh_ Mat3 mat3_sub(Mat3 a, Mat3 b);
@@ -674,6 +676,7 @@ _solh_ Float mat4_f(Mat4 m, size_t col, size_t row);
 _solh_ Mat4 mat4_dot(Mat4 a, Mat4 b);
 
 _solh_ Mat4 mat4_fma(Mat4 a, Mat4 b, Mat4 c);
+_solh_ Mat4 mat4_fms(Mat4 a, Mat4 b, Mat4 c);
 _solh_ Mat4 mat4_add(Mat4 a, Mat4 b);
 _solh_ Mat4 mat4_addf(Mat4 m, Float f);
 _solh_ Mat4 mat4_sub(Mat4 a, Mat4 b);
