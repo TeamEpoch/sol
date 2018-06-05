@@ -43,7 +43,7 @@ SOLNEON=-mfpu=neon
 SOLSRC=src/c/*.c
 SOLHDR=*.h
 
-SOLCACHE=bench test nimcache *.gch *~ src/*~ tests/*~ tests/nimcache
+SOLCACHE=bench test nimcache *.gch tests/nimcache
 
 SOLGEN=*.o *.out *.a *.so *.s
 SOLOUT=out/*.o out/*.out out/*.a out/*.so out/*.s
@@ -238,7 +238,4 @@ bench_neon:
 #################
 
 clean:
-	-@rm -rf $(SOLCACHE) $(MUTE)
-
-reset: clean
 	-@rm -rf $(SOLEXE) $(SOLLIB) $(SOLCACHE) $(MUTE)
