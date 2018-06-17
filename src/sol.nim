@@ -159,6 +159,17 @@ proc cv_vec3_vec4*(v: Vec3; w: Float): Vec4    {.importc: "cv_vec3_vec4", sol.}
 proc cv_deg_rad*(deg: Float): Float {.importc: "cv_deg_rad", sol.}
 proc cv_rad_deg*(rad: Float): Float {.importc: "cv_rad_deg", sol.}
 
+#            ###################################################################
+# Converters ###################################################################
+#            ###################################################################
+
+converter vec3_to_vec2(v: Vec3): Vec2 {.inline.} = result = cv_vec3_vec2(v)
+converter vec4_to_vec2(v: Vec4): Vec2 {.inline.} = result = cv_vec4_vec2(v)
+converter vec2_to_vec3(v: Vec2): Vec3 {.inline.} = result = cv_vec2_vec3(v, 0)
+converter vec4_to_vec3(v: Vec4): Vec3 {.inline.} = result = cv_vec4_vec3(v)
+converter vec2_to_vec4(v: Vec2): Vec4 {.inline.} = result = cv_vec2_vec4(v, 0, 0)
+converter vec3_to_vec4(v: Vec3): Vec4 {.inline.} = result = cv_vec3_vec4(v, 0)
+
 #                ###############################################################
 # Vec2 Functions ###############################################################
 #                ###############################################################
