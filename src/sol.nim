@@ -30,58 +30,33 @@ import strutils
 # Config #######################################################################
 #        #######################################################################
 
-when not defined(sol_fsize):
-  const sol_fsize* = 64
-  static:
-    echo "sol: Running with float size " & $sol_fsize & ". (default)"
-else:
-  static:
-    echo "sol: Running with float size " & $sol_fsize & ". (-d:sol_fsize)"
+const sol_epsilon* = 0.000001
 
-when not defined(sol_epsilon):
-  const sol_epsilon* = 0.000001
-  static:
-    echo "sol: Defaulting to float epsilon " & $sol_epsilon & ". (default)"
-else:
-  static:
-    echo "sol: Running with float epsilon " & $sol_epsilon & ". (-d:sol_epsilon)"
+when not defined(sol_fsize):
+  const sol_fsize*   = 64
 
 #                 ##############################################################
 # Config Handling ##############################################################
 #                 ##############################################################
 
-when defined(sol_shared):
-  {.passl: "-lsol-so".}
-  {.pragma: sol, header: "<sol/sol.h>".}
-  static:
-    echo "sol: Running in shared mode. (-d:sol_shared)"
-elif defined(sol_static):
-  {.passl: "-lsol-a".}
-  {.pragma: sol, header: "<sol/sol.h>".}
-  static:
-    echo "sol: Running in static mode. (-d:sol_static)"
-else:
+when defined(sol_bundled):
   {.passc: "-I.".}
   {.pragma: sol, header: "sol.h".}
-  static:
-    echo "sol: Running in bundled mode. (default)"
+else:
+  when defined(sol_shared):
+    {.passl: "-lsol-so".}
+  else:
+    {.passl: "-lsol-a".}
+  {.pragma: sol, header: "<sol/sol.h>".}
 
-when defined(avx2):
-  {.passc: "-mavx2 -mfma -DSOL_AVX -DSOL_AVX2"}
-  static:
-    echo "sol: AVX2 enabled. (-d:avx2)"
-elif defined(avx):
+when defined(avx):
   {.passc: "-mavx -mfma -DSOL_AVX".}
-  static:
-    echo "sol: AVX enabled. (-d:avx)"
+elif defined(avx2):
+  {.passc: "-mavx2 -mfma -DSOL_AVX -DSOL_AVX2"}
 elif defined(neon):
   {.passc: "-mfpu=neon -DSOL_NEON".}
-  static:
-    echo "sol: NEON enabled. (-d:neon)"
 else:
   {.passc: "-DSOL_NO_SIMD".}
-  static:
-    echo "sol: No SIMD enabled. (default)"
 
 #                  #############################################################
 # Type Definitions #############################################################
