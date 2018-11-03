@@ -105,4 +105,23 @@ typedef uint64_t u64;
   #define w(V) V.w
 #endif
 
+/*
+** Header Inclusion
+*/
+
+#include "h/fx1.h"
+#include "h/fx2.h"
+#include "h/fx3.h"
+#include "h/fx4.h"
+
+#include "h/ix1.h"
+#include "h/ix2.h"
+#include "h/ix3.h"
+#include "h/ix4.h"
+
+#include "h/ux1.h"
+#include "h/ux2.h"
+#include "h/ux3.h"
+#include "h/ux4.h"
+
 #endif /* SOL_H */
