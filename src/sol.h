@@ -97,6 +97,28 @@ typedef uint64_t u64;
 #endif
 
 /*
+** Prototypes
+*/
+
+#define _sol_ static inline
+
+#define FX2(T, V) \
+_sol_ V V##_set(T x, T y); \
+_sol_ V V##_setf(T f);     \
+_sol_ V V##_zero(void);    \
+\
+_sol_ V V##_add(V a, V b);  \
+_sol_ V V##_addf(V v, T f); \
+_sol_ V V##_sub(V a, V b);  \
+_sol_ V V##_subf(V v, T f); \
+_sol_ V V##_fsub(T f, V v);
+
+FX2(f32, f32x2);
+FX2(f64, f64x2);
+
+#undef FX2
+
+/*
 ** Header Inclusion
 */
 
