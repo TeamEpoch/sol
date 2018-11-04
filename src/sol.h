@@ -7,16 +7,7 @@
 #define SOL_H
 
 #include <stdint.h>
-
-/*
-** Config Defaults
-*/
-
-#define SOL_D_FSIZE 64
-
-/*
-** Config Application
-*/
+#include <math.h>
 
 /*
 ** Scalar Types
