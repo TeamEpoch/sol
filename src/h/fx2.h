@@ -6,15 +6,25 @@
 #ifndef SOL_FX2_H
 #define SOL_FX2_H
 
+/*
+** Convenience Macros
+*/
+
 #ifdef __GNUC__
   #define FX2_OP(A, OP, B) A OP B
   #define FX2_OPF(V, OP, F) V OP F
   #define FX2_FOP(F, OP, V) F OP V
+  #define FX2_OP2(A, AB, B, BC, C) (A AB B) BC C
 #else
   #define FX2_OP(A, OP, B) {x(A) OP x(B), y(A) OP y(B)}
   #define FX2_OPF(V, OP, F) {x(V) OP F, y(V) OP F}
   #define FX2_FOP(F, OP, V) {F OP x(V), F OP y(V)}
+  #define FX2_OP2(A, AB, B, BC, C) {(x(A) AB x(B)) BC x(C), (y(A) AB y(B)) BC y(C)}
 #endif
+
+/*
+** Definer Macros
+*/
 
 #define FX2(T, V) \
 \
@@ -58,10 +68,45 @@ V V##_subf(V v, T f) {            \
 V V##_fsub(T f, V v) {            \
   const V out = FX2_FOP(f, -, v); \
   return out;                     \
+}                                 \
+\
+V V##_mul(V a, V b) {            \
+  const V out = FX2_OP(a, *, b); \
+  return out;                    \
+}                                \
+\
+V V##_mulf(V v, T f) {            \
+  const V out = FX2_OPF(v, *, f); \
+  return out;                     \
+}                                 \
+\
+V V##_div(V a, V b) {            \
+  const V out = FX2_OP(a, /, b); \
+  return out;                    \
+}                                \
+\
+V V##_divf(V v, T f) {            \
+  const V out = FX2_OPF(v, /, f); \
+  return out;                     \
+}                                 \
+\
+V V##_fdiv(T f, V v) {            \
+  const V out = FX2_FOP(f, /, v); \
+  return out;                     \
+}                                 \
+\
+V V##_fma(V a, V b, V c) {              \
+  const V out = FX2_OP2(a, *, b, +, c); \
+  return out;                           \
+}                                       \
+\
+V V##_fms(V a, V b, V c) {              \
+  const V out = FX2_OP2(a, *, b, -, c); \
+  return out;                           \
 }
 
-FX2(f32, f32x2);
-FX2(f64, f64x2);
+FX2(f32, f32x2)
+FX2(f64, f64x2)
 
 #undef FX2
 #undef FX2_OP
