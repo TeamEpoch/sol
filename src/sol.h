@@ -102,6 +102,21 @@ typedef uint64_t u64;
 
 #define _sol_ static inline
 
+#define FX1(T) \
+\
+_sol_ T T##_sin(T f);  \
+_sol_ T T##_cos(T f);  \
+_sol_ T T##_tan(T f);  \
+_sol_ T T##_asin(T f); \
+_sol_ T T##_acos(T f); \
+_sol_ T T##_atan(T f); \
+_sol_ T T##_atan2(T y, T x);
+
+FX1(f32)
+FX1(f64)
+
+#undef FX1
+
 #define FX2(T, V) \
 \
 _sol_ V V##_set(T x, T y); \
