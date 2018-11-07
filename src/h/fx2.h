@@ -46,7 +46,66 @@ V V##_zero(void) {      \
   return V##_setf(0);   \
 }                       \
 \
+/* Vector Transformations */\
+\
+_sol_ \
+V V##_rot(V v, T rad) {                  \
+  const T cs = T##_cos(rad);             \
+  const T sn = T##_sin(rad);             \
+  return V##_set(x(v) * cs - y(v) * sn,  \
+                 x(v) * sn + y(v) * cs); \
+} \
+\
+_sol_ \
+V V##_scale(V v, T f) {            \
+  return V##_mulf(V##_norm(v), f); \
+}                                  \
+\
+/* Vector Math */ \
+\
+_sol_ \
+V V##_norm(V v) {                 \
+  return V##_divf(v, V##_mag(v)); \
+}                                 \
+\
+_sol_ \
+T V##_mag(V v) {                  \
+  return T##_sqrt(V##_dot(v, v)); \
+}                                 \
+\
+_sol_ \
+V V##_proj(V a, V b) {                               \
+  const T f = V##_mag(a) * T##_cos(V##_angle(a, b)); \
+  return V##_mulf(b, f);                             \
+} \
+\
+_sol_ \
+V V##_rej(V a, V b) {                \
+  return V##_sub(a, V##_proj(a, b)); \
+}                                    \
+\
+_sol_ \
+T V##_angle(V a, V b) {                             \
+  return T##_atan2(V##_cross(a, b), V##_dot(a, b)); \
+}                                                   \
+\
+_sol_ \
+T V##_cross(V a, V b) { \
+  return x(a) * y(b)    \
+       - x(b) * y(a);   \
+}                       \
+\
+_sol_ \
+T V##_dot(V a, V b) {            \
+  return V##_sum(V##_mul(a, b)); \
+}                                \
+\
 /* Basic Math */ \
+\
+_sol_ \
+T V##_sum(V v) {      \
+  return x(v) + y(v); \
+}                     \
 \
 _sol_ \
 V V##_add(V a, V b) {            \

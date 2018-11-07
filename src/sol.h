@@ -104,6 +104,8 @@ typedef uint64_t u64;
 
 #define FX1(T) \
 \
+_sol_ T T##_sqrt(T f); \
+\
 _sol_ T T##_sin(T f);  \
 _sol_ T T##_cos(T f);  \
 _sol_ T T##_tan(T f);  \
@@ -123,6 +125,18 @@ _sol_ V V##_set(T x, T y); \
 _sol_ V V##_setf(T f);     \
 _sol_ V V##_zero(void);    \
 \
+_sol_ V V##_rot(V v, T rad); \
+_sol_ V V##_scale(V v, T f); \
+\
+_sol_ V V##_norm(V v);       \
+_sol_ T V##_mag(V v);        \
+_sol_ V V##_proj(V a, V b);  \
+_sol_ V V##_rej(V a, V b);   \
+_sol_ T V##_angle(V a, V b); \
+_sol_ T V##_cross(V a, V b); \
+_sol_ T V##_dot(V a, V b);   \
+\
+_sol_ T V##_sum(V v);           \
 _sol_ V V##_add(V a, V b);      \
 _sol_ V V##_addf(V v, T f);     \
 _sol_ V V##_sub(V a, V b);      \
@@ -140,6 +154,35 @@ FX2(f32, f32x2)
 FX2(f64, f64x2)
 
 #undef FX2
+
+#define FX3(T, V) \
+\
+_sol_ V V##_set(T x, T y, T z); \
+_sol_ V V##_setf(T f); \
+_sol_ V V##_zero(void); \
+\
+_sol_ T V##_sum(V v);           \
+_sol_ V V##_add(V a, V b);      \
+_sol_ V V##_addf(V v, T f);     \
+_sol_ V V##_sub(V a, V b);      \
+_sol_ V V##_subf(V v, T f);     \
+_sol_ V V##_mul(V a, V b);      \
+_sol_ V V##_mulf(V v, T f);     \
+_sol_ V V##_div(V a, V b);      \
+_sol_ V V##_divf(V v, T f);     \
+_sol_ V V##_fdiv(T f, V v);     \
+_sol_ V V##_fma(V a, V b, V c); \
+_sol_ V V##_fms(V a, V b, V c); \
+
+FX3(f32, f32x3)
+FX3(f64, f64x3)
+
+#undef FX3
+
+#define FX4(T, V) \
+\
+_sol_ V V##_set(T x, T y, T z, T w); \
+_sol_ V V##_setf(T f);
 
 /*
 ** Header Inclusion

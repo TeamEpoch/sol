@@ -74,6 +74,3 @@ template FX2*(T, V: untyped) =
 
 FX2(f32, f32x2)
 FX2(f64, f64x4)
-
-
-
