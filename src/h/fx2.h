@@ -186,5 +186,6 @@ FX2(f64, f64x2)
 #undef FX2_OP
 #undef FX2_OPF
 #undef FX2_FOP
+#undef FX2_OP2
 
 #endif /* SOL_FX2_H */

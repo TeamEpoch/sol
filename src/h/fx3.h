@@ -116,4 +116,9 @@ V V##_fms(V a, V b, V c) {              \
 FX3(f32, f32x3)
 FX3(f64, f64x3)
 
+#undef FX3
+#undef FX3_OPF
+#undef FX3_FOP
+#undef FX3_OP2
+
 #endif /* SOL_FX3_H */

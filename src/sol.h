@@ -202,7 +202,32 @@ FX3(f64, f64x3)
 #define FX4(T, V) \
 \
 _sol_ V V##_set(T x, T y, T z, T w); \
-_sol_ V V##_setf(T f);
+_sol_ V V##_setf(T f);               \
+_sol_ V V##_zero(void);              \
+\
+_sol_ V V##_scale(V v, T f); \
+\
+_sol_ V V##_norm(V v); \
+_sol_ T V##_mag(V v); \
+\
+_sol_ T V##_sum(V v);           \
+_sol_ V V##_add(V a, V b);      \
+_sol_ V V##_addf(V v, T f);     \
+_sol_ V V##_sub(V a, V b);      \
+_sol_ V V##_subf(V v, T f);     \
+_sol_ V V##_fsub(T f, V v);     \
+_sol_ V V##_mul(V a, V b);      \
+_sol_ V V##_mulf(V v, T f);     \
+_sol_ V V##_div(V a, V b);      \
+_sol_ V V##_divf(V v, T f);     \
+_sol_ V V##_fdiv(T f, V v);     \
+_sol_ V V##_fma(V a, V b, V c); \
+_sol_ V V##_fms(V a, V b, V c); \
+
+FX4(f32, f32x4)
+FX4(f64, f64x4)
+
+#undef FX4
 
 /*
 ** Header Inclusion
