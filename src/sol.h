@@ -6,8 +6,25 @@
 #ifndef SOL_H
 #define SOL_H
 
+#include <stdbool.h>
 #include <stdint.h>
 #include <math.h>
+
+/*
+** Config Defaults
+*/
+
+#define SOL_D_GNU true
+
+/*
+** Config Handling
+*/
+
+#if !defined(SOL_GNU) && !defined(SOL_N_GNU) && SOL_D_GNU
+  #define SOL_GNU
+#elif defined(SOL_GNU) && defined(SOL_N_GNU)
+  #undef SOL_GNU
+#endif
 
 /*
 ** Scalar Types
@@ -24,7 +41,7 @@ typedef uint64_t u64;
 ** Vector Types
 */
 
-#ifdef __GNUC__ /* SIMD Execution */
+#ifdef SOL_GNU /* SIMD Execution */
   #define vectype(T, S) __attribute__((vector_size(S * sizeof(T))))
   
   /* f32 */
@@ -84,7 +101,7 @@ typedef uint64_t u64;
 ** Vector Scalar Accessors
 */
 
-#ifdef __GNUC__
+#ifdef SOL_GNU
   #define x(V) V[0]
   #define y(V) V[1]
   #define z(V) V[2]

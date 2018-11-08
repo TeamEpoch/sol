@@ -6,7 +6,7 @@
 #ifndef SOL_FX3_H
 #define SOL_FX3_H
 
-#ifdef __GNUC__
+#ifdef SOL_GNU
   #define FX3_OP(A, OP, B) A OP B
   #define FX3_OPF(V, OP, F) V OP F
   #define FX3_FOP(F, OP, V) F OP V
@@ -15,7 +15,7 @@
   #define FX3_OP(A, OP, B) {x(A) OP x(B), y(A) OP y(B), z(A) OP z(B)}
   #define FX3_OPF(V, OP, F) {x(V) OP F, y(V) OP F, z(V) OP F}
   #define FX3_FOP(F, OP, V) {F OP x(V), F OP y(V), F OP z(V)}
-  #define FX3_OP2(A, AB, B, BC, C) {(x(A) OP x(B)) OP x(C), (y(A) OP y(B)) OP y(C), (z(A) OP z(B)) OP z(C)}
+  #define FX3_OP2(A, AB, B, BC, C) {(x(A) AB x(B)) BC x(C), (y(A) AB y(B)) BC y(C), (z(A) AB z(B)) BC z(C)}
 #endif
 
 #define FX3(T, V) \

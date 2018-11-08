@@ -6,7 +6,7 @@
 #ifndef SOL_FX4_H
 #define SOL_FX4_H
 
-#ifdef __GNUC__
+#ifdef SOL_GNU
   #define FX4_OP(A, OP, B) A OP B
   #define FX4_OPF(V, OP, F) V OP F
   #define FX4_FOP(F, OP, V) F OP V

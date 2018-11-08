@@ -10,7 +10,7 @@
 ** Convenience Macros
 */
 
-#ifdef __GNUC__
+#ifdef SOL_GNU
   #define FX2_OP(A, OP, B) A OP B
   #define FX2_OPF(V, OP, F) V OP F
   #define FX2_FOP(F, OP, V) F OP V
