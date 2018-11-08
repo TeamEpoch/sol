@@ -97,6 +97,15 @@ typedef uint64_t u64;
 #endif
 
 /*
+** Warning Suppression
+*/
+
+#if defined(__GNUC__) && !defined(__clang__)
+  #pragma GCC diagnostic push
+  #pragma GCC diagnostic ignored "-Wpsabi"
+#endif
+
+/*
 ** Prototypes
 */
 
@@ -213,5 +222,13 @@ _sol_ V V##_setf(T f);
 #include "h/ux2.h"
 #include "h/ux3.h"
 #include "h/ux4.h"
+
+/*
+** Warning Suppression
+*/
+
+#if defined(__GNUC__) && !defined(__clang__)
+  #pragma GCC diagnostic pop /* -Wpsabi */
+#endif
 
 #endif /* SOL_H */
