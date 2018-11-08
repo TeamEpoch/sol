@@ -161,6 +161,17 @@ _sol_ V V##_set(T x, T y, T z); \
 _sol_ V V##_setf(T f); \
 _sol_ V V##_zero(void); \
 \
+_sol_ V V##_rot(V v, T##x4 q);  \
+_sol_ V V##_scale(V v, T f); \
+\
+_sol_ V V##_norm(V v);       \
+_sol_ T V##_mag(V v);        \
+_sol_ V V##_proj(V a, V b);  \
+_sol_ V V##_rej(V a, V b);   \
+_sol_ T V##_angle(V a, V b); \
+_sol_ V V##_cross(V a, V b); \
+_sol_ T V##_dot(V a, V b);   \
+\
 _sol_ T V##_sum(V v);           \
 _sol_ V V##_add(V a, V b);      \
 _sol_ V V##_addf(V v, T f);     \
