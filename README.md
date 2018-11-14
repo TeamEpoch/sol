@@ -1,7 +1,7 @@
 # Sol
 ## A vector library for C and Nim.
 
-## NOTE: This project is currently undergoing a rewrite, available in the devel branch. I wouldn't reccomend using this for anything important at the moment.
+## NOTE: This project is currently undergoing a rewrite, available in the devel branch. I wouldn't recommend using this for anything important at the moment.
 
 Sol is an experimental vector math library written in C99, with a goal of being fast, simple, and portable without compromise.
 
