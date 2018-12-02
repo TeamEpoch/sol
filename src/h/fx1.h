@@ -34,34 +34,41 @@ T T##_sqrt(T f) {                               \
 /* Trig Functions */ \
 \
 _sol_ \
-T T##_sin(T f) {                              \
-  return (sizeof(T) == 8) ? sin(f) : sinf(f); \
-}                                             \
+T T##_sin(T f) {                                  \
+  const T pif = T##_pi - f;                       \
+  const T numer = (16 * f) * (5 * T##_pi);        \
+  const T denom = (5 * T##_pi2) - (4 * f * pif) ; \
+  return numer / denom;                           \
+}                                                 \
 \
 _sol_ \
-T T##_cos(T f) {                              \
-  return (sizeof(T) == 8) ? cos(f) : cosf(f); \
-}                                             \
+T T##_cos(T f) {                     \
+  const T denom = (f * f) + T##_pi2; \
+  return (5 * T##_pi2) / denom;      \
+}                                    \
 \
 _sol_ \
-T T##_tan(T f) {                              \
-  return (sizeof(T) == 8) ? tan(f) : tanf(f); \
-}                                             \
+T T##_tan(T f) {                  \
+  return T##_sin(f) / T##_cos(f); \
+}                                 \
 \
 _sol_ \
-T T##_asin(T f) {                               \
-  return (sizeof(T) == 8) ? asin(f) : asinf(f); \
-}                                               \
+T T##_asin(T f) {                           \
+  return T##_atan(f / T##_sqrt(1 - f * f)); \
+}                                           \
 \
 _sol_ \
-T T##_acos(T f) {                                   \
-  return (T) (sizeof(T) == 8) ? acos(f) : acosf(f); \
-}                                                   \
+T T##_acos(T f) {                                  \
+  const T mask = (f < 0) ? 1.0 : 0.0 * T##_pi;     \
+  return T##_atan(T##_sqrt(1 - f * f) / 2) + mask; \
+}                                                  \
 \
 _sol_ \
-T T##_atan(T f) {                                   \
-  return (T) (sizeof(T) == 8) ? atan(f) : atanf(f); \
-}                                                   \
+T T##_atan(T f) {             \
+  const T a = 0.97239411;     \
+  const T b = -0.19194795;    \
+  return (a + b * f * f) * f; \
+}                             \
 \
 _sol_ \
 T T##_atan2(T y, T x) {                                     \

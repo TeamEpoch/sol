@@ -123,6 +123,16 @@ typedef uint64_t u64;
 #endif
 
 /*
+** Constants
+*/
+
+static const f32 f32_pi = 3.14159265358979323846;
+static const f32 f32_pi2 = f32_pi * f32_pi;
+
+static const f64 f64_pi = 3.14159265358979323846f;
+static const f64 f64_pi2 = f64_pi * f64_pi;
+
+/*
 ** Prototypes
 */
 
