@@ -1,8 +1,8 @@
-# SolR: Sol, Rewritten
+# Sol: Rewritten
 ## A fast, portable vector library for C and Nim.
 
-SolR is a rewrite of Sol that improves the power, portability, and ease of
-development for an overall more robust library.
+Sol is a vector library for C aiming to make performant, simple, and portable
+SIMD-accelerated code esier to write.
 
 ## Comparison
 
