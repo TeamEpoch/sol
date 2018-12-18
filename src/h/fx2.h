@@ -108,6 +108,11 @@ T V##_sum(V v) {      \
 }                     \
 \
 _sol_ \
+V V##_sq(V v) {         \
+  return V##_mul(v, v); \
+}                       \
+\
+_sol_ \
 V V##_add(V a, V b) {            \
   const V out = FX2_OP(a, +, b); \
   return out;                    \

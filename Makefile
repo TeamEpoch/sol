@@ -1,5 +1,6 @@
-CC=cc
+CC=clang
 CFLAGS=
+WFLAGS=-Weverything
 LDFLAGS=-lm
 
 default: build
@@ -10,8 +11,9 @@ update:
 	git subtree pull --prefix lib/snow snow master
 
 build:
-	$(CC) src/sol.h
-	$(CC) -DSOL_N_GNU src/sol.h
+	$(CC) $(WFLAGS) -DSOL_N_GNU src/sol.h
+	$(CC) $(WFLAGS) -DSOL_GNU src/sol.h
+	$(CC) $(WFLAGS) -DSOL_GNU -mavx src/sol.h
 
 clean:
 	-@rm -rf *.gch *.o src/*.gch src/*.o

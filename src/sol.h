@@ -6,6 +6,14 @@
 #ifndef SOL_H
 #define SOL_H
 
+/*
+** Dependencies
+*/
+
+#ifdef __AVX__
+  #include <x86intrin.h>
+#endif
+
 #include <stdbool.h>
 #include <stdint.h>
 #include <math.h>
@@ -102,11 +110,13 @@ typedef uint64_t u64;
 */
 
 #ifdef SOL_GNU
+  #define vec(V) V
   #define x(V) V[0]
   #define y(V) V[1]
   #define z(V) V[2]
   #define w(V) V[3]
 #else
+  #define vec(V) (&V.x)
   #define x(V) V.x
   #define y(V) V.y
   #define z(V) V.z
@@ -126,10 +136,10 @@ typedef uint64_t u64;
 ** Constants
 */
 
-static const f32 f32_pi = 3.14159265358979323846;
+static const f32 f32_pi = 3.14159265358979323846f;
 static const f32 f32_pi2 = f32_pi * f32_pi;
 
-static const f64 f64_pi = 3.14159265358979323846f;
+static const f64 f64_pi = 3.14159265358979323846;
 static const f64 f64_pi2 = f64_pi * f64_pi;
 
 /*
@@ -140,6 +150,8 @@ static const f64 f64_pi2 = f64_pi * f64_pi;
 
 #define FX1(T) \
 \
+_sol_ T T##_abs(T f);  \
+_sol_ T T##_sq(T f);   \
 _sol_ T T##_sqrt(T f); \
 \
 _sol_ T T##_sin(T f);  \
@@ -173,6 +185,7 @@ _sol_ T V##_cross(V a, V b); \
 _sol_ T V##_dot(V a, V b);   \
 \
 _sol_ T V##_sum(V v);           \
+_sol_ V V##_sq(V v);            \
 _sol_ V V##_add(V a, V b);      \
 _sol_ V V##_addf(V v, T f);     \
 _sol_ V V##_sub(V a, V b);      \
@@ -209,6 +222,8 @@ _sol_ V V##_cross(V a, V b); \
 _sol_ T V##_dot(V a, V b);   \
 \
 _sol_ T V##_sum(V v);           \
+_sol_ V V##_sq(V v);            \
+\
 _sol_ V V##_add(V a, V b);      \
 _sol_ V V##_addf(V v, T f);     \
 _sol_ V V##_sub(V a, V b);      \
@@ -220,6 +235,8 @@ _sol_ V V##_divf(V v, T f);     \
 _sol_ V V##_fdiv(T f, V v);     \
 _sol_ V V##_fma(V a, V b, V c); \
 _sol_ V V##_fms(V a, V b, V c); \
+\
+_sol_ V V##_yzx(V v);
 
 FX3(f32, f32x3)
 FX3(f64, f64x3)
@@ -238,6 +255,7 @@ _sol_ V V##_norm(V v); \
 _sol_ T V##_mag(V v); \
 \
 _sol_ T V##_sum(V v);           \
+_sol_ V V##_sq(V v);            \
 _sol_ V V##_add(V a, V b);      \
 _sol_ V V##_addf(V v, T f);     \
 _sol_ V V##_sub(V a, V b);      \
