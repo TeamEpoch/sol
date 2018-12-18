@@ -6,4 +6,17 @@
 #ifndef SOL_UX4_H
 #define SOL_UX4_H
 
+#define UX4(T, V) \
+\
+_sol_ \
+V V##_set(T x, T y, T z, T w) { \
+  const V out = {x, y, z, w};   \
+  return out;                   \
+}                               \
+\
+_sol_ \
+V V##_setf(T f) {              \
+  return V##_setf(f, f, f, f); \
+}
+
 #endif /* SOL_UX4_H */

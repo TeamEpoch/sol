@@ -42,6 +42,7 @@ typedef float    f32;
 typedef double   f64;
 typedef int32_t  i32;
 typedef int64_t  i64;
+typedef uint8_t   u8;
 typedef uint32_t u32;
 typedef uint64_t u64;
 
@@ -68,6 +69,10 @@ typedef uint64_t u64;
   typedef i64 i64x2 vectype(i64, 2);
   typedef i64 i64x3 vectype(i64, 4);
   typedef i64 i64x4 vectype(i64, 4);
+  /* u8 */
+  typedef u8 u8x2 vectype(u8, 2);
+  typedef u8 u8x3 vectype(u8, 3);
+  typedef u8 u8x4 vectype(u8, 4);
   /* u32 */
   typedef u32 u32x2 vectype(u32, 2);
   typedef u32 u32x3 vectype(u32, 4);
@@ -95,6 +100,10 @@ typedef uint64_t u64;
   typedef struct { i64 x, y; }       i64x2;
   typedef struct { i64 x, y, z; }    i64x3;
   typedef struct { i64 x, y, z, w; } i64x4;
+  /* u8 */
+  typedef struct { u8 x, y; }        u8x2;
+  typedef struct { u8 x, y, z; }     u8x3;
+  typedef struct { u8 x, y, z, w; }  u8x4;
   /* u32 */
   typedef struct { u32 x, y; }       u32x2;
   typedef struct { u32 x, y, z; }    u32x3;
@@ -243,6 +252,9 @@ FX3(f64, f64x3)
 
 #undef FX3
 
+static inline f32x3 f32x3_swiz(f32x3 v, u32x3 m);
+static inline f64x3 f64x3_swiz(f64x3 v, u64x3 m);
+
 #define FX4(T, V) \
 \
 _sol_ V V##_set(T x, T y, T z, T w); \
@@ -273,6 +285,36 @@ FX4(f32, f32x4)
 FX4(f64, f64x4)
 
 #undef FX4
+
+#define UX2(T, V) \
+_sol_ V V##_set(T x, T y); \
+_sol_ V V##_setf(T f);
+
+UX2(u8,   u8x2)
+UX2(u32, u32x2)
+UX2(u64, u64x2)
+
+#undef UX2
+
+#define UX3(T, V) \
+_sol_ V V##_set(T x, T y, T z); \
+_sol_ V V##_setf(T f);
+
+UX3(u8,   u8x3)
+UX3(u32, u32x3)
+UX3(u64, u64x3)
+
+#undef UX3
+ 
+#define UX4(T, V) \
+_sol_ V V##_set(T x, T y, T z, T w); \
+_sol_ V V##_setf(T f);
+
+UX4(u8,   u8x4)
+UX4(u32, u32x4)
+UX4(u64, u64x4)
+
+#undef UX4
 
 /*
 ** Header Inclusion

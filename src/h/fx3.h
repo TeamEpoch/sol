@@ -18,7 +18,7 @@
   #define FX3_OP2(A, AB, B, BC, C) {(x(A) AB x(B)) BC x(C), (y(A) AB y(B)) BC y(C), (z(A) AB z(B)) BC z(C)}
 #endif
 
-#define FX3(T, V, Q) \
+#define FX3(T, V, M, Q) \
 \
 _sol_ \
 V V##_set(T x, T y, T z) { \
@@ -37,10 +37,13 @@ V V##_zero(void) {        \
 }                         \
 \
 /* Vector Transformations */\
+\
 _sol_ \
-V V##_rot(V v, Q q) { \
-  return V##_zero(); \
-} \
+V V##_rot(V v, Q q) {                                              \
+  const V qv = {x(q), y(q), z(q)};                                 \
+  const V t = V##_mulf(V##_cross(qv, v), 2);                       \
+  return V##_add(v, V##_add(V##_mulf(t, w(q)), V##_cross(qv, t))); \
+}                                                                  \
 \
 _sol_ \
 V V##_scale(V v, T f) { \
@@ -171,12 +174,12 @@ V V##_fms(V a, V b, V c) {              \
 }                                       \
 \
 _sol_ \
-V V##_yzx(V v) { \
-  return V##_zero(); /* TODO */ \
+V V##_yzx(V v) {                        \
+  return V##_swiz(v, M##_set(1, 2, 0)); \
 }
 
-FX3(f32, f32x3, f32x4)
-FX3(f64, f64x3, f64x4)
+FX3(f32, f32x3, u32x3, f32x4)
+FX3(f64, f64x3, u64x3, f64x4)
 
 #undef FX3
 #undef FX3_OPF
@@ -184,7 +187,7 @@ FX3(f64, f64x3, f64x4)
 #undef FX3_OP2
 
 _sol_
-f32x3 f32x2_swiz(f32x3 v, i32x3 m) {
+f32x3 f32x2_swiz(f32x3 v, u32x3 m) {
   #if defined(SOL_GNU) && defined(__AVX__)
     return (f32x4) _mm_blendv_ps(v, v, (f32x4) m);
   #else
@@ -197,7 +200,7 @@ f32x3 f32x2_swiz(f32x3 v, i32x3 m) {
 }
 
 _sol_
-f64x3 f64x3_swiz(f64x3 v, i64x3 m) {
+f64x3 f64x3_swiz(f64x3 v, u64x3 m) {
   #if defined(SOL_GNU) && defined(__AVX__)  
     return (f64x4) _mm256_blendv_pd(v, v, (f64x4) m);
   #else
