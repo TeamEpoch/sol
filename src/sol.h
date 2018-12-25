@@ -71,7 +71,7 @@ typedef uint64_t u64;
   typedef i64 i64x4 vectype(i64, 4);
   /* u8 */
   typedef u8 u8x2 vectype(u8, 2);
-  typedef u8 u8x3 vectype(u8, 3);
+  typedef u8 u8x3 vectype(u8, 4);
   typedef u8 u8x4 vectype(u8, 4);
   /* u32 */
   typedef u32 u32x2 vectype(u32, 2);
