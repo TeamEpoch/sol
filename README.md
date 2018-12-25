@@ -35,6 +35,28 @@ int main() {
 }
 ```
 
+```Nim
+# Old Nim
+
+import sol
+
+let a = vec3_init(0, 1, 2)
+let b = vec3_init(2, 1, 0)
+let c = a + b
+echo c
+```
+
+```Nim
+# New Nim
+
+import sol
+
+let a = f32x3(0, 1, 2)
+let b = f32x3(2, 1, 0)
+let c = a + b
+echo c
+```
+
 ## Better Types
 
 Types have been changed to more concrete variants that explicitly specify the
@@ -52,6 +74,10 @@ such as masking and more flexible shuffles.
 | i64    | i64x2 | i64x3 | i64x4 |
 | u32    | u32x2 | u32x3 | u32x4 |
 | u64    | u64x2 | u64x3 | u64x4 |
+
+Note that in Nim the types are instead of the form `float32x3` and such to be
+more in-line with the language. The names `f32x3` etc. are used instead as
+initializers.
 
 ## Portability
 

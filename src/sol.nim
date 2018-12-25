@@ -27,21 +27,21 @@ from os import splitPath
 # Vector Types
 #
 
-type float32x2* {.sol, noDecl.} = object
-type float32x3* {.sol, noDecl.} = object
-type float32x4* {.sol, noDecl.} = object
+type float32x2* {.solh, importc: "f32x2".} = object
+type float32x3* {.solh, importc: "f32x3".} = object
+type float32x4* {.solh, importc: "f32x4".} = object
 
-type float64x2* {.sol, noDecl.} = object
-type float64x3* {.sol, noDecl.} = object
-type float64x4* {.sol, noDecl.} = object
+type float64x2* {.solh, importc: "f64x2".} = object
+type float64x3* {.solh, importc: "f64x3".} = object
+type float64x4* {.solh, importc: "f64x4".} = object
 
-type uint32x2* {.sol.} = object
-type uint32x3* {.sol.} = object
-type uint32x4* {.sol.} = object
+type uint32x2* {.solh, importc: "u32x2".} = object
+type uint32x3* {.solh, importc: "u32x3".} = object
+type uint32x4* {.solh, importc: "u32x4".} = object
 
-type uint64x2* {.sol.} = object
-type uint64x3* {.sol.} = object
-type uint64x4* {.sol.} = object
+type uint64x2* {.solh, importc: "u64x2".} = object
+type uint64x3* {.solh, importc: "u64x3".} = object
+type uint64x4* {.solh, importc: "u64x4".} = object
 
 #
 # Concept Types
@@ -77,29 +77,96 @@ type
     type T = v.x.type
     v.w is T
 
+template  SOL_FNAME*(T: untyped; F: string): string =
+  astToStr(T) & "_" & F
+
 #
-# Prototypes
+# FX2
 #
 
-template FNAME(T: untyped; fn: static[string]): untyped =
-  astToStr(T) & "_" & fn
+template SOL_FX2*(N, T, V: untyped) =
+  func x*(v: V): T {.inline.} = {.emit: [result, " = x(", v, ");"].}
+  func y*(v: V): T {.inline.} = {.emit: [result, " = y(", v, ");"].}
 
-template FEMIT(e: static[string]): untyped =
-  macro payload: untyped {.gensym.} =
-    result = parseStmt(e)
-  payload()
+  func `x=`*(v: var V; f: T) {.inline.} = {.emit: ["x(", v, "[0]) = ", f, ";"].}
+  func `y=`*(v: var V; f: T) {.inline.} = {.emit: ["y(", v, "[0]) = ", f, ";"].}
 
-template FX1*(T: untyped) {.dirty.} =
-  func sqrt*(f: T): T {.solh, importc: FNAME(T, "sqrt").}
+  func `$`*(v: V): string {.inline.} = "(" & $v.x & ", " & $v.y & ")" 
+
+  func `N`*(x, y: T): V    {.solh, importc: SOL_FNAME(N, "set").}
   
-  func sin*(f: T): T      {.solh, importc: FNAME(T, "sin").}
-  func cos*(f: T): T      {.solh, importc: FNAME(T, "cos").}
-  func tan*(f: T): T      {.solh, importc: FNAME(T, "tan").}
-  func asin*(f: T): T     {.solh, importc: FNAME(T, "asin").}
-  func acos*(f: T): T     {.solh, importc: FNAME(T, "acos").}
-  func atan*(f: T): T     {.solh, importc: FNAME(T, "atan").}
-  func atan2*(y, x: T): T {.solh, importc: FNAME(T, "atan2").}
+  func `+`*(a, b: V): V    {.solh, importc: SOL_FNAME(N, "add").}
+  func `+`*(v: V; f: T): V {.solh, importc: SOL_FNAME(N, "addf").}
+  func `+`*(f: T; v: V): V {.inline.} = v + f
+  func `-`*(a, b: V): V    {.solh, importc: SOL_FNAME(N, "sub").}
+  func `-`*(v: V; f: T): V {.solh, importc: SOL_FNAME(N, "subf").}
+  func `-`*(f: T; v: V): V {.solh, importc: SOL_FNAME(N, "fsub").}
+  func `*`*(a, b: V): V    {.solh, importc: SOL_FNAME(N, "mul").}
+  func `*`*(v: V; f: T): V {.solh, importc: SOL_FNAME(N, "mulf").}
+  func `*`*(f: T; v: V): V {.inline.} = v * f
+  func `/`*(a, b: V): V    {.solh, importc: SOL_FNAME(N, "div").}
+  func `/`*(v: V; f: T): V {.solh, importc: SOL_FNAME(N, "divf").}
+  func `/`*(f: T; v: V): V {.solh, importc: SOL_FNAME(N, "fdiv").}
 
-FX1(float32)
-FX1(float64)
+SOL_FX2(f32x2, float32, float32x2)
+SOL_FX2(f64x2, float64, float64x2)
 
+template SOL_FX3*(N, T, V: untyped) =
+  func x*(v: V): T {.inline.} = {.emit: [result, " = x(", v, ");"].}
+  func y*(v: V): T {.inline.} = {.emit: [result, " = y(", v, ");"].}
+  func z*(v: V): T {.inline.} = {.emit: [result, " = z(", v, ");"].}
+
+  func `x=`*(v: var V; f: T) {.inline.} = {.emit: ["x(", v, "[0]) = ", f, ";"].}
+  func `y=`*(v: var V; f: T) {.inline.} = {.emit: ["y(", v, "[0]) = ", f, ";"].}
+  func `z=`*(v: var V; f: T) {.inline.} = {.emit: ["z(", v, "[0]) = ", f, ";"].}
+
+  func `$`*(v: V): string {.inline.} = "(" & $v.x & ", " & $v.y & "," & $v.z & ")"
+
+  func `N`*(x, y, z: T): V {.solh, importc: SOL_FNAME(N, "set").}
+  
+  func `+`*(a, b: V): V    {.solh, importc: SOL_FNAME(N, "add").}
+  func `+`*(v: V; f: T): V {.solh, importc: SOL_FNAME(N, "addf").}
+  func `+`*(f: T; v: V): V {.inline.} = v + f
+  func `-`*(a, b: V): V    {.solh, importc: SOL_FNAME(N, "sub").}
+  func `-`*(v: V; f: T): V {.solh, importc: SOL_FNAME(N, "subf").}
+  func `-`*(f: T; v: V): V {.solh, importc: SOL_FNAME(N, "fsub").}
+  func `*`*(a, b: V): V    {.solh, importc: SOL_FNAME(N, "mul").}
+  func `*`*(v: V; f: T): V {.solh, importc: SOL_FNAME(N, "mulf").}
+  func `*`*(f: T; v: V): V {.inline.} = v * f
+  func `/`*(a, b: V): V    {.solh, importc: SOL_FNAME(N, "div").}
+  func `/`*(v: V; f: T): V {.solh, importc: SOL_FNAME(N, "divf").}
+  func `/`*(f: T; v: V): V {.solh, importc: SOL_FNAME(N, "fdiv").}
+
+SOL_FX3(f32x3, float32, float32x3)
+SOL_FX3(f64x3, float64, float64x3)
+
+template SOL_FX4*(N, T, V: untyped) =
+  func x*(v: V): T {.inline.} = {.emit: [result, " = x(", v, ");"].}
+  func y*(v: V): T {.inline.} = {.emit: [result, " = y(", v, ");"].}
+  func z*(v: V): T {.inline.} = {.emit: [result, " = z(", v, ");"].}
+  func w*(v: V): T {.inline.} = {.emit: [result, " = w(", v, ");"].}
+
+  func `x=`*(v: var V; f: T) {.inline.} = {.emit: ["x(", v, "[0]) = ", f, ";"].}
+  func `y=`*(v: var V; f: T) {.inline.} = {.emit: ["y(", v, "[0]) = ", f, ";"].}
+  func `z=`*(v: var V; f: T) {.inline.} = {.emit: ["z(", v, "[0]) = ", f, ";"].}
+  func `w=`*(v: var V; f: T) {.inline.} = {.emit: ["w(", v, "[0]) = ", f, ";"].}
+
+  func `$`*(v: V): string {.inline.} = "(" & $v.x & ", " & $v.y & ", " & $v.z & ", " & $v.w & ")"
+
+  func `N`*(x, y, z, w: T): V {.solh, importc: SOL_FNAME(N, "set").}
+
+  func `+`*(a, b: V): V    {.solh, importc: SOL_FNAME(N, "add").}
+  func `+`*(v: V; f: T): V {.solh, importc: SOL_FNAME(N, "addf").}
+  func `+`*(f: T; v: V): V {.inline.} = v + f
+  func `-`*(a, b: V): V    {.solh, importc: SOL_FNAME(N, "sub").}
+  func `-`*(v: V; f: T): V {.solh, importc: SOL_FNAME(N, "subf").}
+  func `-`*(f: T; v: V): V {.solh, importc: SOL_FNAME(N, "fsub").}
+  func `*`*(a, b: V): V    {.solh, importc: SOL_FNAME(N, "mul").}
+  func `*`*(v: V; f: T): V {.solh, importc: SOL_FNAME(N, "mulf").}
+  func `*`*(f: T; v: V): V {.inline.} = v * f
+  func `/`*(a, b: V): V    {.solh, importc: SOL_FNAME(N, "div").}
+  func `/`*(v: V; f: T): V {.solh, importc: SOL_FNAME(N, "divf").}
+  func `/`*(f: T; v: V): V {.solh, importc: SOL_FNAME(N, "fdiv").}
+
+SOL_FX4(f32x4, float32, float32x4)
+SOL_FX4(f64x4, float64, float64x4)
