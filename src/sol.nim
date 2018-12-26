@@ -56,6 +56,15 @@ type uint64x3*  {.solh, importc: "u64x3".} = object
 type uint64x4*  {.solh, importc: "u64x4".} = object
 
 #
+# Constants
+#
+
+const f32_pi*: float32    = 3.14159265358979323846'f32
+const f32_pi_sq*: float32 = f32_pi * f32_pi
+const f64_pi*: float64    = 3.14159265358979323846'f64
+const f64_pi_sq*: float64 = f64_pi * f64_pi
+
+#
 # Concept Types
 #
 

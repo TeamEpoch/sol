@@ -145,11 +145,15 @@ typedef uint64_t u64;
 ** Constants
 */
 
-static const f32 f32_pi = 3.14159265358979323846f;
-static const f32 f32_pi2 = f32_pi * f32_pi;
+static const f32 f32_pi    = 3.14159265358979323846f;
+static const f32 f32_tau   = f32_pi * 2;
+static const f32 f32_pi_2  = f32_pi / 2;
+static const f32 f32_pi_sq = f32_pi * f32_pi;
 
-static const f64 f64_pi = 3.14159265358979323846;
-static const f64 f64_pi2 = f64_pi * f64_pi;
+static const f64 f64_pi    = 3.14159265358979323846;
+static const f64 f64_tau   = f64_pi * 2;
+static const f64 f64_pi_2  = f64_pi / 2;
+static const f64 f64_pi_sq = f64_pi * f64_pi;
 
 /*
 ** Prototypes
@@ -195,6 +199,7 @@ _sol_ T V##_dot(V a, V b);   \
 \
 _sol_ T V##_sum(V v);           \
 _sol_ V V##_sq(V v);            \
+\
 _sol_ V V##_add(V a, V b);      \
 _sol_ V V##_addf(V v, T f);     \
 _sol_ V V##_sub(V a, V b);      \
@@ -268,6 +273,7 @@ _sol_ T V##_mag(V v); \
 \
 _sol_ T V##_sum(V v);           \
 _sol_ V V##_sq(V v);            \
+\
 _sol_ V V##_add(V a, V b);      \
 _sol_ V V##_addf(V v, T f);     \
 _sol_ V V##_sub(V a, V b);      \

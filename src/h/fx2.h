@@ -54,7 +54,7 @@ V V##_rot(V v, T rad) {                  \
   const T sn = T##_sin(rad);             \
   return V##_set(x(v) * cs - y(v) * sn,  \
                  x(v) * sn + y(v) * cs); \
-} \
+}                                        \
 \
 _sol_ \
 V V##_scale(V v, T f) {            \

@@ -22,7 +22,7 @@
   #pragma clang diagnostic ignored "-Wdouble-promotion"
 #endif
 
-#define FX1(T) \
+#define FX1(T, U) \
 \
 /* Math Functions */ \
 \
@@ -31,21 +31,65 @@ T T##_sqrt(T f) {                               \
   return (sizeof(T) == 8) ? sqrt(f) : sqrtf(f); \
 }                                               \
 \
+_sol_ \
+T T##_abs(T f) {                              \
+  U* u = ((U*) &f);                           \
+  *u &= (sizeof(T) == 8) ? 0x7fffffffffffffff \
+      : 0x7fffffff;                           \
+  return f;                                   \
+}                                             \
+\
+_sol_ \
+T T##_neg(T f) {                               \
+  U* u = ((U*) &f);                            \
+  *u |= (sizeof(T) == 8) ? ~0x7fffffffffffffff \
+      : ~0x7fffffff;                           \
+  return f;                                    \
+}                                              \
+\
+_sol_ \
+T T##_neg_if(T f, u64 cond) {                         \
+  if (cond)                                           \
+    cond |= (sizeof(T) == 8) ? ~0ull : ~0u;           \
+  U* u = ((U*) &f);                                   \
+  *u |= (sizeof(T) == 8) ? cond & ~0x7fffffffffffffff \
+      : cond & ~0x7fffffff;                           \
+  return f;                                           \
+}                                                     \
+\
+_sol_ \
+T T##_mod(T x, T y) { \
+  x = x / y;          \
+  if (sizeof(T) == 8) \
+    x -= (i64) x;     \
+  else                \
+    x -= (i32) x;     \
+  return x * y;       \
+}                     \
+\
 /* Trig Functions */ \
 \
 _sol_ \
-T T##_sin(T f) {                                  \
-  const T pif = T##_pi - f;                       \
-  const T numer = (16 * f) * (5 * T##_pi);        \
-  const T denom = (5 * T##_pi2) - (4 * f * pif) ; \
-  return numer / denom;                           \
-}                                                 \
+T T##_sin(T f) {                \
+  return T##_cos(f - T##_pi_2); \
+}                               \
 \
 _sol_ \
-T T##_cos(T f) {                     \
-  const T denom = (f * f) + T##_pi2; \
-  return (5 * T##_pi2) / denom;      \
-}                                    \
+T T##_cos_raw(T f) {                \
+  float f2 = f * f;                 \
+  float numer = T##_pi_sq - 4 * f2; \
+  return numer / (T##_pi_sq + f2);  \
+}                                   \
+\
+_sol_ \
+T T##_cos(T f) {                              \
+  float fp2 = f + T##_pi_2;                   \
+  float s = -T##_mod(fp2, T##_pi) + T##_pi_2; \
+  float o = T##_cos_raw(s);                   \
+  u64 cond = T##_mod(fp2, T##_tau) > T##_pi;  \
+  o = T##_neg_if(o, cond);                    \
+  return o;                                   \
+}                                             \
 \
 _sol_ \
 T T##_tan(T f) {                  \
@@ -75,8 +119,8 @@ T T##_atan2(T y, T x) {                                     \
   return (T) (sizeof(T) == 8) ? atan2(y, x) : atan2f(y, x); \
 }
 
-FX1(f32)
-FX1(f64)
+FX1(f32, u32)
+FX1(f64, u64)
 
 #ifdef __clang__
   #pragma clang diagnostic pop /* -Wdouble-promotion */
