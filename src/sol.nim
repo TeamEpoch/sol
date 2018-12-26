@@ -108,7 +108,21 @@ template FX2(N, T, V: untyped) =
   func `$`*(v: V): string {.inline.} = "(" & $v.x & ", " & $v.y & ")" 
 
   func `N`*(x, y: T): V    {.solh, importc: FNAME(N, "set").}
-  
+
+  func rot*(v: V; rad: T): V {.solh, importc: FNAME(N, "rot").}
+  func scale*(v: V; f: T): V {.solh, importc: FNAME(N, "scale").}
+
+  func norm*(v: V): V     {.solh, importc: FNAME(N, "norm").}
+  func mag*(v: V): T      {.solh, importc: FNAME(N, "mag").}
+  func proj*(a, b: V): V  {.solh, importc: FNAME(N, "proj").}
+  func rej*(a, b: V): V   {.solh, importc: FNAME(N, "rej").}
+  func angle*(a, b: V): T {.solh, importc: FNAME(N, "angle").}
+  func cross*(a, b: V): T {.solh, importc: FNAME(N, "cross").}
+  func dot*(a, b: V): T   {.solh, importc: FNAME(N, "dot").}
+
+  func sum*(v: V): T {.solh, importc: FNAME(N, "sum").}
+  func sq*(v: V): V  {.solh, importc: FNAME(N, "sq").}
+
   func `+`*(a, b: V): V    {.solh, importc: FNAME(N, "add").}
   func `+`*(v: V; f: T): V {.solh, importc: FNAME(N, "addf").}
   func `+`*(f: T; v: V): V {.inline.} = v + f
@@ -125,7 +139,7 @@ template FX2(N, T, V: untyped) =
 FX2(f32x2, float32, float32x2)
 FX2(f64x2, float64, float64x2)
 
-template FX3(N, T, V: untyped) =
+template FX3(N, T, V, Q: untyped) =
   func x*(v: V): T {.inline.} = {.emit: [result, " = x(", v, ");"].}
   func y*(v: V): T {.inline.} = {.emit: [result, " = y(", v, ");"].}
   func z*(v: V): T {.inline.} = {.emit: [result, " = z(", v, ");"].}
@@ -137,7 +151,21 @@ template FX3(N, T, V: untyped) =
   func `$`*(v: V): string {.inline.} = "(" & $v.x & ", " & $v.y & "," & $v.z & ")"
 
   func `N`*(x, y, z: T): V {.solh, importc: FNAME(N, "set").}
-  
+
+  func rot*(v: V; q: Q): V {.solh, importc: FNAME(N, "rot").}
+  func scale*(v: V; f: T): V {.solh, importc: FNAME(N, "scale").}
+
+  func norm*(v: V): V     {.solh, importc: FNAME(N, "norm").}
+  func mag*(v: V): T      {.solh, importc: FNAME(N, "mag").}
+  func proj*(a, b: V): V  {.solh, importc: FNAME(N, "proj").}
+  func rej*(a, b: V): V   {.solh, importc: FNAME(N, "rej").}
+  func angle*(a, b: V): T {.solh, importc: FNAME(N, "angle").}
+  func cross*(a, b: V): V {.solh, importc: FNAME(N, "cross").}
+  func dot*(a, b: V): T   {.solh, importc: FNAME(N, "dot").}
+
+  func sum*(v: V): T {.solh, importc: FNAME(N, "sum").}
+  func sq*(v: V): V  {.solh, importc: FNAME(N, "sq").}
+
   func `+`*(a, b: V): V    {.solh, importc: FNAME(N, "add").}
   func `+`*(v: V; f: T): V {.solh, importc: FNAME(N, "addf").}
   func `+`*(f: T; v: V): V {.inline.} = v + f
@@ -151,8 +179,8 @@ template FX3(N, T, V: untyped) =
   func `/`*(v: V; f: T): V {.solh, importc: FNAME(N, "divf").}
   func `/`*(f: T; v: V): V {.solh, importc: FNAME(N, "fdiv").}
 
-FX3(f32x3, float32, float32x3)
-FX3(f64x3, float64, float64x3)
+FX3(f32x3, float32, float32x3, float32x4)
+FX3(f64x3, float64, float64x3, float32x4)
 
 template FX4(N, T, V: untyped) =
   func x*(v: V): T {.inline.} = {.emit: [result, " = x(", v, ");"].}
@@ -168,6 +196,14 @@ template FX4(N, T, V: untyped) =
   func `$`*(v: V): string {.inline.} = "(" & $v.x & ", " & $v.y & ", " & $v.z & ", " & $v.w & ")"
 
   func `N`*(x, y, z, w: T): V {.solh, importc: FNAME(N, "set").}
+
+  func scale*(v: V; f: T): V {.solh, importc: FNAME(N, "scale").}
+  
+  func norm*(v: V): V {.solh, importc: FNAME(N, "norm").}
+  func mag*(v: V): T  {.solh, importc: FNAME(N, "mag").}
+
+  func sum*(v: V): T {.solh, importc: FNAME(N, "sum").}
+  func sq*(v: V): V  {.solh, importc: FNAME(N, "sq").}
 
   func `+`*(a, b: V): V    {.solh, importc: FNAME(N, "add").}
   func `+`*(v: V; f: T): V {.solh, importc: FNAME(N, "addf").}
