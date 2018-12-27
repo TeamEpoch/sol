@@ -111,8 +111,8 @@ template FX2(N, T, V: untyped) =
   func x*(v: V): T {.inline.} = {.emit: [result, " = x(", v, ");"].}
   func y*(v: V): T {.inline.} = {.emit: [result, " = y(", v, ");"].}
 
-  func `x=`*(v: var V; f: T) {.inline.} = {.emit: ["x(", v, "[0]) = ", f, ";"].}
-  func `y=`*(v: var V; f: T) {.inline.} = {.emit: ["y(", v, "[0]) = ", f, ";"].}
+  proc `x=`*(v: var V; f: T) {.inline.} = {.emit: ["x(", v, "[0]) = ", f, ";"].}
+  proc `y=`*(v: var V; f: T) {.inline.} = {.emit: ["y(", v, "[0]) = ", f, ";"].}
 
   func `$`*(v: V): string {.inline.} = "(" & $v.x & ", " & $v.y & ")" 
 
@@ -153,9 +153,9 @@ template FX3(N, T, V, Q: untyped) =
   func y*(v: V): T {.inline.} = {.emit: [result, " = y(", v, ");"].}
   func z*(v: V): T {.inline.} = {.emit: [result, " = z(", v, ");"].}
 
-  func `x=`*(v: var V; f: T) {.inline.} = {.emit: ["x(", v, "[0]) = ", f, ";"].}
-  func `y=`*(v: var V; f: T) {.inline.} = {.emit: ["y(", v, "[0]) = ", f, ";"].}
-  func `z=`*(v: var V; f: T) {.inline.} = {.emit: ["z(", v, "[0]) = ", f, ";"].}
+  proc `x=`*(v: var V; f: T) {.inline.} = {.emit: ["x(", v, "[0]) = ", f, ";"].}
+  proc `y=`*(v: var V; f: T) {.inline.} = {.emit: ["y(", v, "[0]) = ", f, ";"].}
+  proc `z=`*(v: var V; f: T) {.inline.} = {.emit: ["z(", v, "[0]) = ", f, ";"].}
 
   func `$`*(v: V): string {.inline.} = "(" & $v.x & ", " & $v.y & "," & $v.z & ")"
 
@@ -197,10 +197,10 @@ template FX4(N, T, V: untyped) =
   func z*(v: V): T {.inline.} = {.emit: [result, " = z(", v, ");"].}
   func w*(v: V): T {.inline.} = {.emit: [result, " = w(", v, ");"].}
 
-  func `x=`*(v: var V; f: T) {.inline.} = {.emit: ["x(", v, "[0]) = ", f, ";"].}
-  func `y=`*(v: var V; f: T) {.inline.} = {.emit: ["y(", v, "[0]) = ", f, ";"].}
-  func `z=`*(v: var V; f: T) {.inline.} = {.emit: ["z(", v, "[0]) = ", f, ";"].}
-  func `w=`*(v: var V; f: T) {.inline.} = {.emit: ["w(", v, "[0]) = ", f, ";"].}
+  proc `x=`*(v: var V; f: T) {.inline.} = {.emit: ["x(", v, "[0]) = ", f, ";"].}
+  proc `y=`*(v: var V; f: T) {.inline.} = {.emit: ["y(", v, "[0]) = ", f, ";"].}
+  proc `z=`*(v: var V; f: T) {.inline.} = {.emit: ["z(", v, "[0]) = ", f, ";"].}
+  proc `w=`*(v: var V; f: T) {.inline.} = {.emit: ["w(", v, "[0]) = ", f, ";"].}
 
   func `$`*(v: V): string {.inline.} = "(" & $v.x & ", " & $v.y & ", " & $v.z & ", " & $v.w & ")"
 
@@ -240,6 +240,13 @@ template IX2(N, T, V: untyped) =
   func x*(v: V): T {.inline.} = {.emit: [result, " = x(", v, ");"].}
   func y*(v: V): T {.inline.} = {.emit: [result, " = y(", v, ");"].}
 
+  proc `x=`*(v: var V; f: T) {.inline.} = {.emit: ["x(", v, "[0]) = ", f, ";"].}
+  proc `y=`*(v: var V; f: T) {.inline.} = {.emit: ["y(", v, "[0]) = ", f, ";"].}
+
+  func `$`*(v: V): string {.inline.} = "(" & $v.x & ", " & $v.y & ")"
+
+  func `N`*(x, y: T): V {.solh, importc: FNAME(N, "set").}
+
 IX2(i32x2, int32, int32x2)
 IX2(i64x2, int64, int64x2)
 
@@ -247,6 +254,14 @@ template IX3(N, T, V: untyped) =
   func x*(v: V): T {.inline.} = {.emit: [result, " = x(", v, ");"].}
   func y*(v: V): T {.inline.} = {.emit: [result, " = y(", v, ");"].}
   func z*(v: V): T {.inline.} = {.emit: [result, " = z(", v, ");"].}
+
+  proc `x=`*(v: var V; f: T) {.inline.} = {.emit: ["x(", v, "[0]) = ", f, ";"].}
+  proc `y=`*(v: var V; f: T) {.inline.} = {.emit: ["y(", v, "[0]) = ", f, ";"].}
+  proc `z=`*(v: var V; f: T) {.inline.} = {.emit: ["z(", v, "[0]) = ", f, ";"].}
+
+  func `$`*(v: V): string {.inline.} = "(" & $v.x & ", " & $v.y & ", " & $v.z & ")"
+
+  func `N`*(x, y, z: T): V {.solh, importc: FNAME(N, "set").}
 
 IX3(i32x3, int32, int32x3)
 IX3(i64x3, int64, int64x3)
@@ -256,6 +271,15 @@ template IX4(N, T, V: untyped) =
   func y*(v: V): T {.inline.} = {.emit: [result, " = y(", v, ");"].}
   func z*(v: V): T {.inline.} = {.emit: [result, " = z(", v, ");"].}
   func w*(v: V): T {.inline.} = {.emit: [result, " = w(", v, ");"].}
+
+  proc `x=`*(v: var V; f: T) {.inline.} = {.emit: ["x(", v, "[0]) = ", f, ";"].}
+  proc `y=`*(v: var V; f: T) {.inline.} = {.emit: ["y(", v, "[0]) = ", f, ";"].}
+  proc `z=`*(v: var V; f: T) {.inline.} = {.emit: ["z(", v, "[0]) = ", f, ";"].}
+  proc `w=`*(v: var V; f: T) {.inline.} = {.emit: ["w(", v, "[0]) = ", f, ";"].}
+
+  func `$`*(v: V): string {.inline.} = "(" & $v.x & ", " & $v.y & ", " & $v.z & ", " & $v.w & ")"
+
+  func `N`*(x, y, z, w: T): V {.solh, importc: FNAME(N, "set").}
 
 IX4(i32x4, int32, int32x4)
 IX4(i64x4, int64, int64x4)
@@ -271,6 +295,13 @@ template UX2(N, T, V: untyped) =
   func x*(v: V): T {.inline.} = {.emit: [result, " = x(", v, ");"].}
   func y*(v: V): T {.inline.} = {.emit: [result, " = y(", v, ");"].}
 
+  proc `x=`*(v: var V; f: T) {.inline.} = {.emit: ["x(", v, "[0]) = ", f, ";"].}
+  proc `y=`*(v: var V; f: T) {.inline.} = {.emit: ["y(", v, "[0]) = ", f, ";"].}
+
+  func `$`*(v: V): string {.inline.} = "(" & $v.x & ", " & $v.y & ")"
+
+  func `N`*(x, y: T): V {.solh, importc: FNAME(N, "set").}
+
 UX2( u8x2,  uint8,  uint8x2)
 UX2(u32x2, uint32, uint32x2)
 UX2(u64x2, uint64, uint64x2)
@@ -279,6 +310,14 @@ template UX3(N, T, V: untyped) =
   func x*(v: V): T {.inline.} = {.emit: [result, " = x(", v, ");"].}
   func y*(v: V): T {.inline.} = {.emit: [result, " = y(", v, ");"].}
   func z*(v: V): T {.inline.} = {.emit: [result, " = z(", v, ");"].}
+
+  proc `x=`*(v: var V; f: T) {.inline.} = {.emit: ["x(", v, "[0]) = ", f, ";"].}
+  proc `y=`*(v: var V; f: T) {.inline.} = {.emit: ["y(", v, "[0]) = ", f, ";"].}
+  proc `z=`*(v: var V; f: T) {.inline.} = {.emit: ["z(", v, "[0]) = ", f, ";"].}
+
+  func `$`*(v: V): string {.inline.} = "(" & $v.x & ", " & $v.y & ", " & $v.z & ")"
+
+  func `N`*(x, y, z: T): V {.solh, importc: FNAME(N, "set").}
 
 UX3( u8x3,  uint8,  uint8x3)
 UX3(u32x3, uint32, uint32x3)
@@ -289,6 +328,11 @@ template UX4(N, T, V: untyped) =
   func y*(v: V): T {.inline.} = {.emit: [result, " = y(", v, ");"].}
   func z*(v: V): T {.inline.} = {.emit: [result, " = z(", v, ");"].}
   func w*(v: V): T {.inline.} = {.emit: [result, " = w(", v, ");"].}
+  
+  proc `x=`*(v: var V; f: T) {.inline.} = {.emit: ["x(", v, "[0]) = ", f, ";"].}
+  proc `y=`*(v: var V; f: T) {.inline.} = {.emit: ["y(", v, "[0]) = ", f, ";"].}
+  proc `z=`*(v: var V; f: T) {.inline.} = {.emit: ["z(", v, "[0]) = ", f, ";"].}
+  proc `w=`*(v: var V; f: T) {.inline.} = {.emit: ["w(", v, "[0]) = ", f, ";"].}
 
 UX4( u8x4,  uint8,  uint8x4)
 UX4(u32x4, uint32, uint32x4)
