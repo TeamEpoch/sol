@@ -163,9 +163,12 @@ static const f64 f64_pi_sq = f64_pi * f64_pi;
 
 #define FX1(T) \
 \
-_sol_ T T##_abs(T f);  \
-_sol_ T T##_sq(T f);   \
-_sol_ T T##_sqrt(T f); \
+_sol_ T T##_sq(T f);               \
+_sol_ T T##_sqrt(T f);             \
+_sol_ T T##_abs(T f);              \
+_sol_ T T##_neg(T f);              \
+_sol_ T T##_neg_if(T f, u64 cond); \
+_sol_ T T##_mod(T x, T y);         \
 \
 _sol_ T T##_sin(T f);  \
 _sol_ T T##_cos(T f);  \

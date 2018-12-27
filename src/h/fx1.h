@@ -27,6 +27,11 @@
 /* Math Functions */ \
 \
 _sol_ \
+T T##_sq(T f) { \
+  return f * f; \
+}               \
+\
+_sol_ \
 T T##_sqrt(T f) {                               \
   return (sizeof(T) == 8) ? sqrt(f) : sqrtf(f); \
 }                                               \

@@ -187,7 +187,7 @@ FX3(f64, f64x3, u64x3, f64x4)
 #undef FX3_OP2
 
 _sol_
-f32x3 f32x2_swiz(f32x3 v, u32x3 m) {
+f32x3 f32x3_swiz(f32x3 v, u32x3 m) {
   #if defined(SOL_GNU) && defined(__AVX__)
     return (f32x4) _mm_blendv_ps(v, v, (f32x4) m);
   #else

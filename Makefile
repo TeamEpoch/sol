@@ -15,5 +15,10 @@ build:
 	$(CC) $(WFLAGS) -DSOL_GNU src/sol.h
 	$(CC) $(WFLAGS) -DSOL_GNU -mavx src/sol.h
 
+test:
+	$(CC) $(CFLAGS) -Og -fno-omit-frame-pointer -fsanitize=undefined tests/test.c -L. -L./src -I. -Ilib/snow -DSNOW_ENABLED -g -o test.o $(LDFLAGS)
+	-@./test.o
+	-@rm -rf *.o
+
 clean:
 	-@rm -rf *.gch *.o src/*.gch src/*.o
