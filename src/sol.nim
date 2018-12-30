@@ -145,6 +145,16 @@ template FX2(N, T, V: untyped) =
   func `/`*(v: V; f: T): V {.solh, importc: FNAME(N, "divf").}
   func `/`*(f: T; v: V): V {.solh, importc: FNAME(N, "fdiv").}
 
+  # TODO: Sanitize manually by setting variables to a/b/v/f.
+  template `+=`*(a, b: V)    {.dirty.} = a = a + b
+  template `+=`*(v: V; f: T) {.dirty.} = v = v + f
+  template `-=`*(a, b: V)    {.dirty.} = a = a - b
+  template `-=`*(v: V; f: T) {.dirty.} = v = v - f
+  template `*=`*(a, b: V)    {.dirty.} = a = a * b
+  template `*=`*(v: V; f: T) {.dirty.} = v = v * f
+  template `/=`*(a, b: V)    {.dirty.} = a = a / b
+  template `/=`*(v: V; f: T) {.dirty.} = v = v / f
+
 FX2(f32x2, float32, float32x2)
 FX2(f64x2, float64, float64x2)
 
@@ -188,6 +198,17 @@ template FX3(N, T, V, Q: untyped) =
   func `/`*(v: V; f: T): V {.solh, importc: FNAME(N, "divf").}
   func `/`*(f: T; v: V): V {.solh, importc: FNAME(N, "fdiv").}
 
+  # TODO: Sanitize manually by setting variables to a/b/v/f.
+  # TODO: Consider proper procs with term rewriting as an optimization?
+  template `+=`*(a, b: V)    {.dirty.} = a = a + b
+  template `+=`*(v: V; f: T) {.dirty.} = v = v + f
+  template `-=`*(a, b: V)    {.dirty.} = a = a - b
+  template `-=`*(v: V; f: T) {.dirty.} = v = v - f
+  template `*=`*(a, b: V)    {.dirty.} = a = a * b
+  template `*=`*(v: V; f: T) {.dirty.} = v = v * f
+  template `/=`*(a, b: V)    {.dirty.} = a = a / b
+  template `/=`*(v: V; f: T) {.dirty.} = v = v / f
+
 FX3(f32x3, float32, float32x3, float32x4)
 FX3(f64x3, float64, float64x3, float32x4)
 
@@ -226,6 +247,17 @@ template FX4(N, T, V: untyped) =
   func `/`*(a, b: V): V    {.solh, importc: FNAME(N, "div").}
   func `/`*(v: V; f: T): V {.solh, importc: FNAME(N, "divf").}
   func `/`*(f: T; v: V): V {.solh, importc: FNAME(N, "fdiv").}
+
+  # TODO: Sanitize manually by setting variables to a/b/v/f.
+  # TODO: Consider proper procs with term rewriting as an optimization?
+  template `+=`*(a, b: V)    {.dirty.} = a = a + b
+  template `+=`*(v: V; f: T) {.dirty.} = v = v + f
+  template `-=`*(a, b: V)    {.dirty.} = a = a - b
+  template `-=`*(v: V; f: T) {.dirty.} = v = v - f
+  template `*=`*(a, b: V)    {.dirty.} = a = a * b
+  template `*=`*(v: V; f: T) {.dirty.} = v = v * f
+  template `/=`*(a, b: V)    {.dirty.} = a = a / b
+  template `/=`*(v: V; f: T) {.dirty.} = v = v / f
 
 FX4(f32x4, float32, float32x4)
 FX4(f64x4, float64, float64x4)
