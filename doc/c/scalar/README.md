@@ -1,3 +1,6 @@
 # Sol
 
-## [doc](../..)/[c](..)/scalar
+## Documentation
+
+[doc](../..)/[c](..)/scalar
+

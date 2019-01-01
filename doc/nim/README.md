@@ -1,13 +1,7 @@
 # Sol
 
-## Nim Documentation
+## Documentation
 
-The documentation for the Sol Nim API.
-
-### [Scalar Types](scalar)
-
-The documentation for scalar types and their functions.
-
-### [Vector Types](vector)
-
-The documentation for vector types and their functions.
+[doc](..)/nim
+| - [scalar](scalar)
+| - [vector](vector)
