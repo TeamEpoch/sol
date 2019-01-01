@@ -2,6 +2,6 @@
 
 ## Documentation
 
-[doc](..)/nim
-| - [scalar](scalar)
+[doc](..)/nim  
+| - [scalar](scalar)  
 | - [vector](vector)
