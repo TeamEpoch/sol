@@ -102,22 +102,19 @@ T T##_tan(T f) {                  \
 }                                 \
 \
 _sol_ \
-T T##_asin(T f) {                           \
-  return T##_atan(f / T##_sqrt(1 - f * f)); \
-}                                           \
+T T##_asin(T f) {                                   \
+  return (T) (sizeof(T) == 8) ? asin(f) : asinf(f); \
+}                                                   \
 \
 _sol_ \
-T T##_acos(T f) {                                  \
-  const T mask = (f < 0) ? 1.0 : 0.0 * T##_pi;     \
-  return T##_atan(T##_sqrt(1 - f * f) / 2) + mask; \
-}                                                  \
+T T##_acos(T f) {                                   \
+  return (T) (sizeof(T) == 8) ? acos(f) : acosf(f); \
+}                                                   \
 \
 _sol_ \
-T T##_atan(T f) {             \
-  const T a = 0.97239411;     \
-  const T b = -0.19194795;    \
-  return (a + b * f * f) * f; \
-}                             \
+T T##_atan(T f) {                                   \
+  return (T) (sizeof(T) == 8) ? atan(f) : atanf(f); \
+}                                                   \
 \
 _sol_ \
 T T##_atan2(T y, T x) {                                     \
