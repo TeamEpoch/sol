@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.2.0"
+version       = "0.2.2"
 author        = "davidgarland"
 description   = "A SIMD-accelerated vector library written in C99 with Nim bindings."
 license       = "MIT"
