@@ -279,6 +279,19 @@ template IX2(N, T, V: untyped) {.dirty.} =
 
   func `N`*(x, y: T): V {.solh, importc: FNAME(N, "set").}
 
+  func `+`*(a, b: V): V    {.solh, importc: FNAME(N, "add").}
+  func `+`*(v: V; f: T): V {.solh, importc: FNAME(N, "addf").}
+  func `+`*(f: T; v: V): V {.inline.} = v + f
+  func `-`*(a, b: V): V    {.solh, importc: FNAME(N, "sub").}
+  func `-`*(v: V; f: T): V {.solh, importc: FNAME(N, "subf").}
+  func `-`*(f: T; v: V): V {.solh, importc: FNAME(N, "fsub").}
+  func `*`*(a, b: V): V    {.solh, importc: FNAME(N, "mul").}
+  func `*`*(v: V; f: T): V {.solh, importc: FNAME(N, "mulf").}
+  func `*`*(f: T; v: V): V {.inline.} = v * f
+  func `/`*(a, b: V): V    {.solh, importc: FNAME(N, "div").}
+  func `/`*(v: V; f: T): V {.solh, importc: FNAME(N, "divf").}
+  func `/`*(f: T; v: V): V {.solh, importc: FNAME(N, "fdiv").}
+
 IX2(i32x2, int32, int32x2)
 IX2(i64x2, int64, int64x2)
 
@@ -294,6 +307,19 @@ template IX3(N, T, V: untyped) {.dirty.} =
   func `$`*(v: V): string {.inline.} = "(" & $v.x & ", " & $v.y & ", " & $v.z & ")"
 
   func `N`*(x, y, z: T): V {.solh, importc: FNAME(N, "set").}
+
+  func `+`*(a, b: V): V    {.solh, importc: FNAME(N, "add").}
+  func `+`*(v: V; f: T): V {.solh, importc: FNAME(N, "addf").}
+  func `+`*(f: T; v: V): V {.inline.} = v + f
+  func `-`*(a, b: V): V    {.solh, importc: FNAME(N, "sub").}
+  func `-`*(v: V; f: T): V {.solh, importc: FNAME(N, "subf").}
+  func `-`*(f: T; v: V): V {.solh, importc: FNAME(N, "fsub").}
+  func `*`*(a, b: V): V    {.solh, importc: FNAME(N, "mul").}
+  func `*`*(v: V; f: T): V {.solh, importc: FNAME(N, "mulf").}
+  func `*`*(f: T; v: V): V {.inline.} = v * f
+  func `/`*(a, b: V): V    {.solh, importc: FNAME(N, "div").}
+  func `/`*(v: V; f: T): V {.solh, importc: FNAME(N, "divf").}
+  func `/`*(f: T; v: V): V {.solh, importc: FNAME(N, "fdiv").}
 
 IX3(i32x3, int32, int32x3)
 IX3(i64x3, int64, int64x3)
@@ -311,8 +337,20 @@ template IX4(N, T, V: untyped) {.dirty.} =
 
   func `$`*(v: V): string {.inline.} = "(" & $v.x & ", " & $v.y & ", " & $v.z & ", " & $v.w & ")"
 
-  func `N`*(x, y, z, w: T): V {.solh, importc: FNAME(N, "set").} ##\
-    ## ok This is Epic
+  func `N`*(x, y, z, w: T): V {.solh, importc: FNAME(N, "set").}
+
+  func `+`*(a, b: V): V    {.solh, importc: FNAME(N, "add").}
+  func `+`*(v: V; f: T): V {.solh, importc: FNAME(N, "addf").}
+  func `+`*(f: T; v: V): V {.inline.} = v + f
+  func `-`*(a, b: V): V    {.solh, importc: FNAME(N, "sub").}
+  func `-`*(v: V; f: T): V {.solh, importc: FNAME(N, "subf").}
+  func `-`*(f: T; v: V): V {.solh, importc: FNAME(N, "fsub").}
+  func `*`*(a, b: V): V    {.solh, importc: FNAME(N, "mul").}
+  func `*`*(v: V; f: T): V {.solh, importc: FNAME(N, "mulf").}
+  func `*`*(f: T; v: V): V {.inline.} = v * f
+  func `/`*(a, b: V): V    {.solh, importc: FNAME(N, "div").}
+  func `/`*(v: V; f: T): V {.solh, importc: FNAME(N, "divf").}
+  func `/`*(f: T; v: V): V {.solh, importc: FNAME(N, "fdiv").}
 
 IX4(i32x4, int32, int32x4)
 IX4(i64x4, int64, int64x4)
@@ -378,6 +416,11 @@ template UX3(N, T, V: untyped) {.dirty.} =
   func `-`*(v: V; f: T): V {.solh, importc: FNAME(N, "subf").}
   func `-`*(f: T; v: V): V {.solh, importc: FNAME(N, "fsub").}
   func `*`*(a, b: V): V    {.solh, importc: FNAME(N, "mul").}
+  func `*`*(v: V; f: T): V {.solh, importc: FNAME(N, "mulf").}
+  func `*`*(f: T; v: V): V {.inline.} = v * f
+  func `/`*(a, b: V): V    {.solh, importc: FNAME(N, "div").}
+  func `/`*(v: V; f: T): V {.solh, importc: FNAME(N, "divf").}
+  func `/`*(f: T; v: V): V {.solh, importc: FNAME(N, "fdiv").}
 
 UX3( u8x3,  uint8,  uint8x3)
 UX3(u32x3, uint32, uint32x3)
@@ -393,6 +436,19 @@ template UX4(N, T, V: untyped) {.dirty.} =
   proc `y=`*(v: var V; f: T) {.inline.} = {.emit: ["y(", v, "[0]) = ", f, ";"].}
   proc `z=`*(v: var V; f: T) {.inline.} = {.emit: ["z(", v, "[0]) = ", f, ";"].}
   proc `w=`*(v: var V; f: T) {.inline.} = {.emit: ["w(", v, "[0]) = ", f, ";"].}
+
+  func `+`*(a, b: V): V    {.solh, importc: FNAME(N, "add").}
+  func `+`*(v: V; f: T): V {.solh, importc: FNAME(N, "addf").}
+  func `+`*(f: T; v: V): V {.inline.} = v + f
+  func `-`*(a, b: V): V    {.solh, importc: FNAME(N, "sub").}
+  func `-`*(v: V; f: T): V {.solh, importc: FNAME(N, "subf").}
+  func `-`*(f: T; v: V): V {.solh, importc: FNAME(N, "fsub").}
+  func `*`*(a, b: V): V    {.solh, importc: FNAME(N, "mul").}
+  func `*`*(v: V; f: T): V {.solh, importc: FNAME(N, "mulf").}
+  func `*`*(f: T; v: V): V {.inline.} = v * f
+  func `/`*(a, b: V): V    {.solh, importc: FNAME(N, "div").}
+  func `/`*(v: V; f: T): V {.solh, importc: FNAME(N, "divf").}
+  func `/`*(f: T; v: V): V {.solh, importc: FNAME(N, "fdiv").}
 
 UX4( u8x4,  uint8,  uint8x4)
 UX4(u32x4, uint32, uint32x4)
