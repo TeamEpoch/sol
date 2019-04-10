@@ -20,6 +20,8 @@
 
 #define FX4(T, V) \
 \
+/* Initializers */ \
+\
 _sol_ \
 V V##_set(T x, T y, T z, T w) { \
   const V out = {x, y, z, w};   \
@@ -35,6 +37,8 @@ _sol_ \
 V V##_zero(void) {        \
   return V##_setf((T) 0); \
 }                         \
+\
+/* Basic Math */ \
 \
 _sol_ \
 T V##_sum(V v) {                    \

@@ -1,6 +1,10 @@
 # Sol
 ## Changelog
 
+### 0.2.3
+
+Adds basic math operations for integer vector types.
+
 ### 0.2.2
 
 Changes the `arc-` trigonometric functions to be the stdlib definition instead.

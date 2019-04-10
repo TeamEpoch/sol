@@ -6,17 +6,117 @@
 #ifndef SOL_UX4_H
 #define SOL_UX4_H
 
+#ifdef SOL_GNU
+  #define UX4_OP(A, OP, B) A OP B
+  #define UX4_OPF(V, OP, F) V OP F
+  #define UX4_FOP(F, OP, V) F OP V
+  #define UX4_OP2(A, AB, B, BC, C) (A AB B) BC C
+#else
+  #define UX4_OP(A, OP, B) {x(A) OP x(B), y(A) OP y(B), z(A) OP z(B), w(A) OP w(B)}
+  #define UX4_OPF(V, OP, F) {x(V) OP F, y(V) OP F, z(V) OP F, w(V) OP F}
+  #define UX4_FOP(F, OP, V) {F OP x(V), F OP y(V), F OP z(V), F OP w(V)}
+  #define UX4_OP2(A, AB, B, BC, C) {(x(A) AB x(B)) BC x(C), (y(A) AB y(B)) BC y(C), (z(A) AB z(B)) BC z(C), (w(A) AB w(B)) BC w(C)}
+#endif
+
 #define UX4(T, V) \
+\
+/* Initializers */ \
 \
 _sol_ \
 V V##_set(T x, T y, T z, T w) { \
   const V out = {x, y, z, w};   \
   return out;                   \
-}                               \
+} \
 \
 _sol_ \
-V V##_setf(T f) {              \
-  return V##_setf(f, f, f, f); \
-}
+V V##_setf(T f) {             \
+  return V##_set(f, f, f, f); \
+}                             \
+\
+_sol_ \
+V V##_zero(void) {    \
+  return V##_setf(0); \
+}                     \
+\
+_sol_ \
+T V##_sum(V v) {                    \
+  return x(v) + y(v) + z(v) + w(v); \
+}                                   \
+\
+_sol_ \
+V V##_add(V a, V b) {            \
+  const V out = UX4_OP(a, +, b); \
+  return out;                    \
+}                                \
+\
+_sol_ \
+V V##_addf(V v, T f) {            \
+  const V out = UX4_OPF(v, +, f); \
+  return out;                     \
+}                                 \
+\
+_sol_ \
+V V##_sub(V a, V b) {            \
+  const V out = UX4_OP(a, -, b); \
+  return out;                    \
+}                                \
+\
+_sol_ \
+V V##_subf(V v, T f) {            \
+  const V out = UX4_OPF(v, -, f); \
+  return out;                     \
+}                                 \
+\
+_sol_ \
+V V##_mul(V a, V b) {            \
+  const V out = UX4_OP(a, *, b); \
+  return out;                    \
+}                                \
+\
+_sol_ \
+V V##_mulf(V v, T f) {            \
+  const V out = UX4_OPF(v, *, f); \
+  return out;                     \
+}                                 \
+\
+_sol_ \
+V V##_div(V a, V b) {            \
+  const V out = UX4_OP(a, /, b); \
+  return out;                    \
+}                                \
+\
+_sol_ \
+V V##_divf(V v, T f) {            \
+  const V out = UX4_OPF(v, /, f); \
+  return out;                     \
+}                                 \
+\
+_sol_ \
+V V##_fdiv(T f, V v) {            \
+  const V out = UX4_FOP(f, /, v); \
+  return out;                     \
+}                                 \
+\
+_sol_ \
+V V##_fma(V a, V b, V c) {              \
+  const V out = UX4_OP2(a, *, b, +, c); \
+  return out;                           \
+}                                       \
+\
+_sol_ \
+V V##_fms(V a, V b, V c) {              \
+  const V out = UX4_OP2(a, *, b, -, c); \
+  return out;                           \
+}                                       \
+
+UX4(u8,   u8x4)
+UX4(u32, u32x4)
+UX4(u64, u64x4)
+
+#undef UX4
+#undef UX4_OP
+#undef UX4_OPF
+#undef UX4_FOP
+#undef UX4_OP2
 
 #endif /* SOL_UX4_H */
