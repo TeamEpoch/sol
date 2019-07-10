@@ -40,9 +40,12 @@
 
 typedef float    f32;
 typedef double   f64;
+typedef int8_t   i8;
+typedef int16_t  i16;
 typedef int32_t  i32;
 typedef int64_t  i64;
-typedef uint8_t   u8;
+typedef uint8_t  u8;
+typedef uint16_t u16;
 typedef uint32_t u32;
 typedef uint64_t u64;
 
@@ -61,6 +64,10 @@ typedef uint64_t u64;
   typedef f64 f64x2 vectype(f64, 2);
   typedef f64 f64x3 vectype(f64, 4);
   typedef f64 f64x4 vectype(f64, 4);
+  /* i8 */
+  typedef i8 i8x2 vectype(i8, 2);
+  typedef i8 i8x3 vectype(i8, 4);
+  typedef i8 i8x4 vectype(i8, 4);
   /* i32 */
   typedef i32 i32x2 vectype(i32, 2);
   typedef i32 i32x3 vectype(i32, 4);
@@ -92,6 +99,10 @@ typedef uint64_t u64;
   typedef struct { f64 x, y; }       f64x2;
   typedef struct { f64 x, y, z; }    f64x3;
   typedef struct { f64 x, y, z, w; } f64x4;
+  /* i8 */
+  typedef struct { i8 x, y; }        i8x2;
+  typedef struct { i8 x, y, z; }     i8x3;
+  typedef struct { i8 x, y, z, w; }  i8x4;
   /* i32 */
   typedef struct { i32 x, y; }       i32x2;
   typedef struct { i32 x, y, z; }    i32x3;
@@ -316,6 +327,7 @@ _sol_ V V##_fdiv(T f, V v);     \
 _sol_ V V##_fma(V a, V b, V c); \
 _sol_ V V##_fms(V a, V b, V c); \
 
+IX2(i8,   i8x2)
 IX2(i32, i32x2)
 IX2(i64, i64x2)
 
@@ -342,6 +354,7 @@ _sol_ V V##_fdiv(T f, V v);     \
 _sol_ V V##_fma(V a, V b, V c); \
 _sol_ V V##_fms(V a, V b, V c); \
 
+IX3(i8,   i8x3)
 IX3(i32, i32x3)
 IX3(i64, i64x3)
 
@@ -368,6 +381,7 @@ _sol_ V V##_fdiv(T f, V v);     \
 _sol_ V V##_fma(V a, V b, V c); \
 _sol_ V V##_fms(V a, V b, V c); \
 
+IX4(i8,   i8x4)
 IX4(i32, i32x4)
 IX4(i64, i64x4)
 

@@ -122,6 +122,7 @@ V V##_fms(V a, V b, V c) {              \
   return out;                           \
 }                                       \
 
+IX2(i8,  i8x2)
 IX2(i32, i32x2)
 IX2(i64, i64x2)
 
