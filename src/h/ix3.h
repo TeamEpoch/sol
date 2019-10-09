@@ -122,6 +122,8 @@ V V##_fms(V a, V b, V c) {              \
   return out;                           \
 }                                       \
 
+IX3(i8,   i8x3)
+IX3(i16, i16x3)
 IX3(i32, i32x3)
 IX3(i64, i64x3)
 

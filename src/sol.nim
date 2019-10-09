@@ -4,9 +4,7 @@
 #
 
 import
-  strformat,
-  macros,
-  math
+  strformat
 
 #
 # Ugly Workaround To Actually Make The Bindings Work Why Does This Exist This Is Not Okay
@@ -35,6 +33,14 @@ type float64x2* {.solh, importc: "f64x2".} = object
 type float64x3* {.solh, importc: "f64x3".} = object
 type float64x4* {.solh, importc: "f64x4".} = object
 
+type int8x2* {.solh, importc: "i8x2".} = object
+type int8x3* {.solh, importc: "i8x3".} = object
+type int8x4* {.solh, importc: "i8x4".} = object
+
+type int16x2* {.solh, importc: "i16x2".} = object
+type int16x3* {.solh, importc: "i16x3".} = object
+type int16x4* {.solh, importc: "i16x4".} = object
+
 type int32x2*   {.solh, importc: "i32x2".} = object
 type int32x3*   {.solh, importc: "i32x3".} = object
 type int32x4*   {.solh, importc: "i32x4".} = object
@@ -46,6 +52,10 @@ type int64x4*   {.solh, importc: "i64x4".} = object
 type uint8x2* {.solh, importc: "u8x2".} = object
 type uint8x3* {.solh, importc: "u8x3".} = object
 type uint8x4* {.solh, importc: "u8x4".} = object
+
+type uint16x2* {.solh, importc: "u16x2".} = object
+type uint16x3* {.solh, importc: "u16x3".} = object
+type uint16x4* {.solh, importc: "u16x4".} = object
 
 type uint32x2*  {.solh, importc: "u32x2".} = object
 type uint32x3*  {.solh, importc: "u32x3".} = object
@@ -292,6 +302,8 @@ template IX2(N, T, V: untyped) {.dirty.} =
   func `/`*(v: V; f: T): V {.solh, importc: FNAME(N, "divf").}
   func `/`*(f: T; v: V): V {.solh, importc: FNAME(N, "fdiv").}
 
+IX2(i8x2,  int8,   int8x2)
+IX2(i16x2, int16, int16x2)
 IX2(i32x2, int32, int32x2)
 IX2(i64x2, int64, int64x2)
 
@@ -321,6 +333,8 @@ template IX3(N, T, V: untyped) {.dirty.} =
   func `/`*(v: V; f: T): V {.solh, importc: FNAME(N, "divf").}
   func `/`*(f: T; v: V): V {.solh, importc: FNAME(N, "fdiv").}
 
+IX3(i8x3,  int8,   int8x3)
+IX3(i16x3, int16, int16x3)
 IX3(i32x3, int32, int32x3)
 IX3(i64x3, int64, int64x3)
 
@@ -352,6 +366,8 @@ template IX4(N, T, V: untyped) {.dirty.} =
   func `/`*(v: V; f: T): V {.solh, importc: FNAME(N, "divf").}
   func `/`*(f: T; v: V): V {.solh, importc: FNAME(N, "fdiv").}
 
+IX4(i8x4,  int8,   int8x4)
+IX4(i16x4, int16, int16x4)
 IX4(i32x4, int32, int32x4)
 IX4(i64x4, int64, int64x4)
 
@@ -359,6 +375,7 @@ template UX1(N, T: untyped) {.dirty.} =
   discard
 
 UX1( u8,  uint8)
+UX1(u16, uint16)
 UX1(u32, uint32)
 UX1(u64, uint64)
 
@@ -390,6 +407,7 @@ template UX2(N, T, V: untyped) {.dirty.} =
   func `/`*(f: T; v: V): V {.solh, importc: FNAME(N, "fdiv").}
 
 UX2( u8x2,  uint8,  uint8x2)
+UX2(u16x2, uint16, uint16x2)
 UX2(u32x2, uint32, uint32x2)
 UX2(u64x2, uint64, uint64x2)
 
@@ -423,6 +441,7 @@ template UX3(N, T, V: untyped) {.dirty.} =
   func `/`*(f: T; v: V): V {.solh, importc: FNAME(N, "fdiv").}
 
 UX3( u8x3,  uint8,  uint8x3)
+UX3(u16x3, uint16, uint16x3)
 UX3(u32x3, uint32, uint32x3)
 UX3(u64x3, uint64, uint64x3)
 
@@ -451,5 +470,6 @@ template UX4(N, T, V: untyped) {.dirty.} =
   func `/`*(f: T; v: V): V {.solh, importc: FNAME(N, "fdiv").}
 
 UX4( u8x4,  uint8,  uint8x4)
+UX4(u16x4, uint16, uint16x4)
 UX4(u32x4, uint32, uint32x4)
 UX4(u64x4, uint64, uint64x4)

@@ -110,6 +110,7 @@ V V##_fms(V a, V b, V c) {              \
 }                                       \
 
 UX4(u8,   u8x4)
+UX4(u16, u16x4)
 UX4(u32, u32x4)
 UX4(u64, u64x4)
 

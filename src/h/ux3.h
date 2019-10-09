@@ -121,6 +121,7 @@ V V##_fms(V a, V b, V c) {              \
 }                                       \
 
 UX3(u8,   u8x3)
+UX3(u16, u16x3)
 UX3(u32, u32x3)
 UX3(u64, u64x3)
 

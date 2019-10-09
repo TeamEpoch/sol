@@ -68,6 +68,10 @@ typedef uint64_t u64;
   typedef i8 i8x2 vectype(i8, 2);
   typedef i8 i8x3 vectype(i8, 4);
   typedef i8 i8x4 vectype(i8, 4);
+  /* i16 */
+  typedef i16 i16x2 vectype(i16, 2);
+  typedef i16 i16x3 vectype(i16, 4);
+  typedef i16 i16x4 vectype(i16, 4);
   /* i32 */
   typedef i32 i32x2 vectype(i32, 2);
   typedef i32 i32x3 vectype(i32, 4);
@@ -80,6 +84,10 @@ typedef uint64_t u64;
   typedef u8 u8x2 vectype(u8, 2);
   typedef u8 u8x3 vectype(u8, 4);
   typedef u8 u8x4 vectype(u8, 4);
+  /* u16 */
+  typedef u16 u16x2 vectype(u16, 2);
+  typedef u16 u16x3 vectype(u16, 4);
+  typedef u16 u16x4 vectype(u16, 4);
   /* u32 */
   typedef u32 u32x2 vectype(u32, 2);
   typedef u32 u32x3 vectype(u32, 4);
@@ -103,6 +111,10 @@ typedef uint64_t u64;
   typedef struct { i8 x, y; }        i8x2;
   typedef struct { i8 x, y, z; }     i8x3;
   typedef struct { i8 x, y, z, w; }  i8x4;
+  /* i16 */
+  typedef struct { i16 x, y; }       i16x2;
+  typedef struct { i16 x, y, z; }    i16x3;
+  typedef struct { i16 x, y, z, w; } i16x4;
   /* i32 */
   typedef struct { i32 x, y; }       i32x2;
   typedef struct { i32 x, y, z; }    i32x3;
@@ -115,6 +127,10 @@ typedef uint64_t u64;
   typedef struct { u8 x, y; }        u8x2;
   typedef struct { u8 x, y, z; }     u8x3;
   typedef struct { u8 x, y, z, w; }  u8x4;
+  /* u16 */
+  typedef struct { u16 x, y; }       u16x2;
+  typedef struct { u16 x, y, z; }    u16x3;
+  typedef struct { u16 x, y, z, w; } u16x4;
   /* u32 */
   typedef struct { u32 x, y; }       u32x2;
   typedef struct { u32 x, y, z; }    u32x3;
@@ -157,13 +173,13 @@ typedef uint64_t u64;
 */
 
 static const f32 f32_pi    = 3.14159265358979323846f;
-static const f32 f32_tau   = f32_pi * 2;
-static const f32 f32_pi_2  = f32_pi / 2;
+static const f32 f32_tau   = f32_pi * 2.0f;
+static const f32 f32_pi_2  = f32_pi / 2.0f;
 static const f32 f32_pi_sq = f32_pi * f32_pi;
 
 static const f64 f64_pi    = 3.14159265358979323846;
-static const f64 f64_tau   = f64_pi * 2;
-static const f64 f64_pi_2  = f64_pi / 2;
+static const f64 f64_tau   = f64_pi * 2.0;
+static const f64 f64_pi_2  = f64_pi / 2.0;
 static const f64 f64_pi_sq = f64_pi * f64_pi;
 
 /*
@@ -328,6 +344,7 @@ _sol_ V V##_fma(V a, V b, V c); \
 _sol_ V V##_fms(V a, V b, V c); \
 
 IX2(i8,   i8x2)
+IX2(i16, i16x2)
 IX2(i32, i32x2)
 IX2(i64, i64x2)
 
@@ -355,6 +372,7 @@ _sol_ V V##_fma(V a, V b, V c); \
 _sol_ V V##_fms(V a, V b, V c); \
 
 IX3(i8,   i8x3)
+IX3(i16, i16x3)
 IX3(i32, i32x3)
 IX3(i64, i64x3)
 
@@ -382,6 +400,7 @@ _sol_ V V##_fma(V a, V b, V c); \
 _sol_ V V##_fms(V a, V b, V c); \
 
 IX4(i8,   i8x4)
+IX4(i16, i16x4)
 IX4(i32, i32x4)
 IX4(i64, i64x4)
 
@@ -409,6 +428,7 @@ _sol_ V V##_fma(V a, V b, V c); \
 _sol_ V V##_fms(V a, V b, V c); \
 
 UX2(u8,   u8x2)
+UX2(u16, u16x2)
 UX2(u32, u32x2)
 UX2(u64, u64x2)
 
@@ -436,6 +456,7 @@ _sol_ V V##_fma(V a, V b, V c); \
 _sol_ V V##_fms(V a, V b, V c); \
 
 UX3(u8,   u8x3)
+UX3(u16, u16x3)
 UX3(u32, u32x3)
 UX3(u64, u64x3)
 
@@ -463,6 +484,7 @@ _sol_ V V##_fma(V a, V b, V c); \
 _sol_ V V##_fms(V a, V b, V c); \
 
 UX4(u8,   u8x4)
+UX4(u16, u16x4)
 UX4(u32, u32x4)
 UX4(u64, u64x4)
 

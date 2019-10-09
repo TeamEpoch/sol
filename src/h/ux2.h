@@ -123,6 +123,7 @@ V V##_fms(V a, V b, V c) {              \
 }                                       \
 
 UX2(u8,   u8x2)
+UX2(u16, u16x2)
 UX2(u32, u32x2)
 UX2(u64, u64x2)
 
