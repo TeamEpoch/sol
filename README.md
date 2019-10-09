@@ -1,5 +1,5 @@
 # Sol
-## 0.2.3
+## 0.2.4
 
 Sol *(not to be confused with [sol](https://github.com/ThePhD/sol2) or [sol](https://github.com/Rapptz/sol)
 or [sol](https://github.com/solus-project/sol))* is a fast and portable vector library written in C with first-class Nim bindings.

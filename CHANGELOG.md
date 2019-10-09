@@ -1,6 +1,10 @@
 # Sol
 ## Changelog
 
+### 0.2.4
+
+Add `u16x#`, `i16x#`, and `i8x#`.
+
 ### 0.2.3
 
 Adds basic math operations for integer vector types.
