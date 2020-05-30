@@ -74,7 +74,7 @@ const f64_pi_sq*: float64 = f64_pi * f64_pi
 ]#
 
 type
-  Vec = concept v
+  Vec* = concept v
     type V = v.type
     type T = v.x.type
     var f: T
@@ -90,15 +90,15 @@ type
     v / v is V
     v / f is V
     f / v is V
-  Vec2 = concept v
+  Vec2* = concept v
     v is Vec
     type T = v.x.type
     v.y is T
-  Vec3 = concept v
+  Vec3* = concept v
     v is Vec2
     type T = v.x.type
     v.z is T
-  Vec4 = concept v
+  Vec4* = concept v
     v is Vec3
     type T = v.x.type
     v.w is T
@@ -111,7 +111,20 @@ template FNAME(T: untyped; F: string): string =
   astToStr(T) & "_" & F
 
 template FX1(N, T: untyped) {.dirty.} =
-  discard
+  func `N sq`*(f: T): T {.solh, importc: FNAME(N, "sq").}
+  func `N sqrt`*(f: T): T {.solh, importc: FNAME(N, "sqrt").}
+  func `N abs`*(f: T): T {.solh, importc: FNAME(N, "abs").}
+  func `N abs neg`*(f: T) {.solh, importc: FNAME(N, "abs_neg").}
+  func `N neg`*(f: T): T {.solh, importc: FNAME(N, "neg").}
+  func `N neg if`*(f: T, c: uint64): T {.solh, importc: FNAME(N, "neg_if").}
+  func `N mod`*(x, y: T): T {.solh, importc: FNAME(N, "mod").}
+  func `N sin`*(f: T): T {.solh, importc: FNAME(N, "sin").}
+  func `N cos`*(f: T): T {.solh, importc: FNAME(N, "cos").}
+  func `N tan`*(f: T): T {.solh, importc: FNAME(N, "tan").}
+  func `N asin`*(f: T): T {.solh, importc: FNAME(N, "asin").}
+  func `N acos`*(f: T): T {.solh, importc: FNAME(N, "acos").}
+  func `N atan`*(f: T): T {.solh, importc: FNAME(N, "atan").}
+  func `N atan2`*(x, y: T): T {.solh, importc: FNAME(N, "atan2").}
 
 FX1(f32, float32)
 FX1(f64, float64)
