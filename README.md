@@ -107,9 +107,60 @@ be clean with naming here.
 | TxW TxW_div(TxW a, TxW b) | Divide each lane in `a` by the same lane of `b`.       |
 | TxW TxW_divf(TxW v, T f)  | Shorthand for `TxW_div(v, TxW_setf(f))`.               |
 | TxW TxW_fdiv(T f, TxW v)  | Shorthand for `TxW_div(TxW_setf(f), v)`.               |
+| T TxW_sum(TxW v)          | Find the sum of all lanes in `v`.                      |
+| TxW TxW_sq(TxW v)         | Square each lane in `v`.                               |
 
 The nim names are a bit different:
 
 - `TxW_set` is now written just `TxW`, where `T` is named as if it were in C. `f32x2_set` becomes `f32x2`, for instance.
 - `TxW_setf` is not available in Nim.
 - `TxW_add`, `TxW_addf`, `TxW_sub`, `TxW_subf`, `TxW_fsub`, `TxW_mul`, `TxW_mulf`, `TxW_div`, `TxW_divf`, and `TxW_fdiv` are all just their symbolic operators now. `f32x2_add(a, b)` becomes `a + b`, for instance. As operators, `mulf` and `addf` may also be called "backwards" now, like `2 * v`.
+- `TxW_sum` and `TxW_sq` drop their prefix and are simply overloaded. For instance, `f32x2_sum(f32x2_set(1, 0))` is instead `sum(f32x2(1, 0))` or `f32x2(1, 0).sum`.
+- Simple `op=` operators are supported, so you may do `+=` and the like.
+- All vectors have `$` defined, so they may be converted to a string.
+- Vector lane set is now written `v.x = 5` rather `x(v) = 5`.
+- Thanks to Nim UFCS, vector lane get can be written `v.x` now rather than `x(v)`-- but you can do either.
+
+##### Floating 2D Vectors
+
+`T` here is either `f32` or `f64`.
+
+| Name                       | Description
+| -------------------------- | ---------------------------------------------------------------------------- |
+| Tx2 Tx2_rot(Tx2 v, T rad)  | Rotate `v` by `rad` radians.                                                 |
+| Tx2 Tx2_scale(Tx2 v, T f)  | Shorthand for `Tx2_mulf(Tx2_norm(v), f)`.                                    |
+| Tx2 Tx2_norm(Tx2 v)        | Normalize `v` so that its magnitude is 1.                                    |
+| T Tx2_mag(Tx2 v)           | Find the magnitude of `v`.                                                   |
+| Tx2 Tx2_proj(Tx2 a, Tx2 b) | Find the projection of `a` onto `b`.                                         |
+| Tx2 Tx2_rej(Tx2 a, Tx2 b)  | Find the rejection of `a` from `b`.                                          |
+| T Tx2_angle(Tx2 a, Tx2 b)  | Find the angle between `a` and `b` in radians.                               |
+| T Tx2_cross(Tx2 a, Tx2 b)  | Find the "scalar cross product" of `a` and `b`. `x(a) * y(b) - x(b) * y(a)`. |
+| T Tx2_dot(Tx2 a, Tx2 b)    | Find the dot product of `a` and `b`.                                         |
+
+In Nim, the prefixes for all of these functions are dropped and they are simply overloaded.
+
+##### Floating 3D Vectors
+
+| Name                        | Description
+| -------------------------   | -------------
+| Tx3 Tx3_rot(Tx3 v, Tx4 q)   | Rotate `v` by the quaternion `q`.
+| Tx3 Tx3_scale(Tx3 v, T f)   | Shorthand for `Tx3_mulf(Tx3_norm(v), f)`.
+| Tx3 Tx3_norm(Tx3 v)         | Normalize `v` so that its magnitude is 1.
+| T Tx3_mag(Tx3 v)            | Find the magnitude of `v`.
+| Tx3 Tx3_proj(Tx3 a, Tx3 b)  | Find the projection of `a` onto `b`.
+| Tx3 Tx3_rej(Tx3 a, Tx3 b)   | Find the rejection of `a` from `b`.
+| T Tx3_angle(Tx3 a, Tx3 b)   | Find the angle between `a` and `b`.
+| Tx3 Tx3_cross(Tx3 a, Tx3 b) | Find the cross product of `a` and `b`.
+| T Tx3_dot(Tx3 a, Tx3 b)     | Find the dot product of `a` and `b`.
+
+In Nim, the prefixes for all of these functions are dropped and they are simply overloaded.
+
+##### Floating 4D Vectors
+
+| Name                 | Description                               |
+| -------------------- | ----------------------------------------- |
+| Tx4 Tx4_scale(Tx4 v) | Shorthand for `Tx4_mulf(Tx4_norm(v), f)`. |
+| Tx4 Tx4_norm(Tx4 v)  | Normalize `v` so that its magnitude is 1. |
+| T Tx4_mag(Tx4 v)     | Find the magnitude of `v`.                |
+
+In Nim, the prefixes for all of these functions are dropped and they are simply overloaded.

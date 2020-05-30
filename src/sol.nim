@@ -296,6 +296,9 @@ template IX2(N, T, V: untyped) {.dirty.} =
 
   func `N`*(x, y: T): V {.solh, importc: FNAME(N, "set").}
 
+  func sum*(v: V): T {.solh, importc: FNAME(N, "sum").}
+  func sq*(v: V): V {.solh, importc: FNAME(N, "sq").}
+
   func `+`*(a, b: V): V    {.solh, importc: FNAME(N, "add").}
   func `+`*(v: V; f: T): V {.solh, importc: FNAME(N, "addf").}
   func `+`*(f: T; v: V): V {.inline.} = v + f
@@ -308,6 +311,16 @@ template IX2(N, T, V: untyped) {.dirty.} =
   func `/`*(a, b: V): V    {.solh, importc: FNAME(N, "div").}
   func `/`*(v: V; f: T): V {.solh, importc: FNAME(N, "divf").}
   func `/`*(f: T; v: V): V {.solh, importc: FNAME(N, "fdiv").}
+
+  template `+=`*(a, b: V)    {.dirty.} = a = a + b
+  template `+=`*(v: V; f: T) {.dirty.} = v = v + f
+  template `-=`*(a, b: V)    {.dirty.} = a = a - b
+  template `-=`*(v: V; f: T) {.dirty.} = v = v - f
+  template `*=`*(a, b: V)    {.dirty.} = a = a * b
+  template `*=`*(v: V; f: T) {.dirty.} = v = v * f
+  template `/=`*(a, b: V)    {.dirty.} = a = a / b
+  template `/=`*(v: V; f: T) {.dirty.} = v = v / f
+
 
 IX2(i8x2,  int8,   int8x2)
 IX2(i16x2, int16, int16x2)
@@ -327,6 +340,9 @@ template IX3(N, T, V: untyped) {.dirty.} =
 
   func `N`*(x, y, z: T): V {.solh, importc: FNAME(N, "set").}
 
+  func sum*(v: V): T {.solh, importc: FNAME(N, "sum").}
+  func sq*(v: V): V {.solh, importc: FNAME(N, "sq").}
+
   func `+`*(a, b: V): V    {.solh, importc: FNAME(N, "add").}
   func `+`*(v: V; f: T): V {.solh, importc: FNAME(N, "addf").}
   func `+`*(f: T; v: V): V {.inline.} = v + f
@@ -339,6 +355,15 @@ template IX3(N, T, V: untyped) {.dirty.} =
   func `/`*(a, b: V): V    {.solh, importc: FNAME(N, "div").}
   func `/`*(v: V; f: T): V {.solh, importc: FNAME(N, "divf").}
   func `/`*(f: T; v: V): V {.solh, importc: FNAME(N, "fdiv").}
+
+  template `+=`*(a, b: V)    {.dirty.} = a = a + b
+  template `+=`*(v: V; f: T) {.dirty.} = v = v + f
+  template `-=`*(a, b: V)    {.dirty.} = a = a - b
+  template `-=`*(v: V; f: T) {.dirty.} = v = v - f
+  template `*=`*(a, b: V)    {.dirty.} = a = a * b
+  template `*=`*(v: V; f: T) {.dirty.} = v = v * f
+  template `/=`*(a, b: V)    {.dirty.} = a = a / b
+  template `/=`*(v: V; f: T) {.dirty.} = v = v / f
 
 IX3(i8x3,  int8,   int8x3)
 IX3(i16x3, int16, int16x3)
@@ -360,6 +385,9 @@ template IX4(N, T, V: untyped) {.dirty.} =
 
   func `N`*(x, y, z, w: T): V {.solh, importc: FNAME(N, "set").}
 
+  func sum*(v: V): T {.solh, importc: FNAME(N, "sum").}
+  func sq*(v: V): V {.solh, importc: FNAME(N, "sq").}
+
   func `+`*(a, b: V): V    {.solh, importc: FNAME(N, "add").}
   func `+`*(v: V; f: T): V {.solh, importc: FNAME(N, "addf").}
   func `+`*(f: T; v: V): V {.inline.} = v + f
@@ -372,6 +400,15 @@ template IX4(N, T, V: untyped) {.dirty.} =
   func `/`*(a, b: V): V    {.solh, importc: FNAME(N, "div").}
   func `/`*(v: V; f: T): V {.solh, importc: FNAME(N, "divf").}
   func `/`*(f: T; v: V): V {.solh, importc: FNAME(N, "fdiv").}
+
+  template `+=`*(a, b: V)    {.dirty.} = a = a + b
+  template `+=`*(v: V; f: T) {.dirty.} = v = v + f
+  template `-=`*(a, b: V)    {.dirty.} = a = a - b
+  template `-=`*(v: V; f: T) {.dirty.} = v = v - f
+  template `*=`*(a, b: V)    {.dirty.} = a = a * b
+  template `*=`*(v: V; f: T) {.dirty.} = v = v * f
+  template `/=`*(a, b: V)    {.dirty.} = a = a / b
+  template `/=`*(v: V; f: T) {.dirty.} = v = v / f
 
 IX4(i8x4,  int8,   int8x4)
 IX4(i16x4, int16, int16x4)
@@ -413,6 +450,15 @@ template UX2(N, T, V: untyped) {.dirty.} =
   func `/`*(v: V; f: T): V {.solh, importc: FNAME(N, "divf").}
   func `/`*(f: T; v: V): V {.solh, importc: FNAME(N, "fdiv").}
 
+  template `+=`*(a, b: V)    {.dirty.} = a = a + b
+  template `+=`*(v: V; f: T) {.dirty.} = v = v + f
+  template `-=`*(a, b: V)    {.dirty.} = a = a - b
+  template `-=`*(v: V; f: T) {.dirty.} = v = v - f
+  template `*=`*(a, b: V)    {.dirty.} = a = a * b
+  template `*=`*(v: V; f: T) {.dirty.} = v = v * f
+  template `/=`*(a, b: V)    {.dirty.} = a = a / b
+  template `/=`*(v: V; f: T) {.dirty.} = v = v / f
+
 UX2( u8x2,  uint8,  uint8x2)
 UX2(u16x2, uint16, uint16x2)
 UX2(u32x2, uint32, uint32x2)
@@ -447,6 +493,15 @@ template UX3(N, T, V: untyped) {.dirty.} =
   func `/`*(v: V; f: T): V {.solh, importc: FNAME(N, "divf").}
   func `/`*(f: T; v: V): V {.solh, importc: FNAME(N, "fdiv").}
 
+  template `+=`*(a, b: V)    {.dirty.} = a = a + b
+  template `+=`*(v: V; f: T) {.dirty.} = v = v + f
+  template `-=`*(a, b: V)    {.dirty.} = a = a - b
+  template `-=`*(v: V; f: T) {.dirty.} = v = v - f
+  template `*=`*(a, b: V)    {.dirty.} = a = a * b
+  template `*=`*(v: V; f: T) {.dirty.} = v = v * f
+  template `/=`*(a, b: V)    {.dirty.} = a = a / b
+  template `/=`*(v: V; f: T) {.dirty.} = v = v / f
+
 UX3( u8x3,  uint8,  uint8x3)
 UX3(u16x3, uint16, uint16x3)
 UX3(u32x3, uint32, uint32x3)
@@ -467,6 +522,9 @@ template UX4(N, T, V: untyped) {.dirty.} =
 
   func `N`*(x, y, z, w: T): V {.solh, importc: FNAME(N, "set").}
 
+  func sum*(v: V): T {.solh, importc: FNAME(N, "sum").}
+  func sq*(v: V): V {.solh, importc: FNAME(N, "sum").}
+
   func `+`*(a, b: V): V    {.solh, importc: FNAME(N, "add").}
   func `+`*(v: V; f: T): V {.solh, importc: FNAME(N, "addf").}
   func `+`*(f: T; v: V): V {.inline.} = v + f
@@ -479,6 +537,15 @@ template UX4(N, T, V: untyped) {.dirty.} =
   func `/`*(a, b: V): V    {.solh, importc: FNAME(N, "div").}
   func `/`*(v: V; f: T): V {.solh, importc: FNAME(N, "divf").}
   func `/`*(f: T; v: V): V {.solh, importc: FNAME(N, "fdiv").}
+
+  template `+=`*(a, b: V)    {.dirty.} = a = a + b
+  template `+=`*(v: V; f: T) {.dirty.} = v = v + f
+  template `-=`*(a, b: V)    {.dirty.} = a = a - b
+  template `-=`*(v: V; f: T) {.dirty.} = v = v - f
+  template `*=`*(a, b: V)    {.dirty.} = a = a * b
+  template `*=`*(v: V; f: T) {.dirty.} = v = v * f
+  template `/=`*(a, b: V)    {.dirty.} = a = a / b
+  template `/=`*(v: V; f: T) {.dirty.} = v = v / f
 
 UX4( u8x4,  uint8,  uint8x4)
 UX4(u16x4, uint16, uint16x4)
