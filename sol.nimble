@@ -1,14 +1,14 @@
 # Package
 
-version       = "0.2.4"
+version       = "0.3.0"
 author        = "davidgarland"
-description   = "A SIMD-accelerated vector library written in C99 with Nim bindings."
+description   = "A portable SIMD-accelerated vector library written in C99 with Nim bindings."
 license       = "MIT"
 srcDir        = "src"
 
 # Dependencies
 
-requires "nim >= 0.18.0"
+requires "nim >= 1.2.0"
 
 # Tasks
 
