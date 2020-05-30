@@ -1,29 +1,24 @@
-#
-# sol.nim | The Sol Vector Library | Nim Bindings
-# https://github.com/davidgarland/sol
-#
+#[
+## sol.nim | The Sol Vector Library | Nim Bindings
+## https://github.com/davidgarland/sol
+]#
 
 import
   strformat
 
-#
-# Ugly Workaround To Actually Make The Bindings Work Why Does This Exist This Is Not Okay
-#
+#[
+## Pragmas
+]#
 
 from os import splitPath
 {.passC:"-I" & currentSourcePath().splitPath.head.}
-
-#
-# Pragmas
-#
-
 {.passc: "-I.".}
 {.pragma: solh, header: "sol.h".}
 {.pragma: sol, solh, importc.}
 
-#
-# Vector Types
-#
+#[
+## Vector Types
+]#
 
 type float32x2* {.solh, importc: "f32x2".} = object
 type float32x3* {.solh, importc: "f32x3".} = object
@@ -65,18 +60,18 @@ type uint64x2*  {.solh, importc: "u64x2".} = object
 type uint64x3*  {.solh, importc: "u64x3".} = object
 type uint64x4*  {.solh, importc: "u64x4".} = object
 
-#
-# Constants
-#
+#[
+## Constants
+]#
 
 const f32_pi*: float32    = 3.14159265358979323846'f32
 const f32_pi_sq*: float32 = f32_pi * f32_pi
 const f64_pi*: float64    = 3.14159265358979323846'f64
 const f64_pi_sq*: float64 = f64_pi * f64_pi
 
-#
-# Concept Types
-#
+#[
+## Concept Types
+]#
 
 type
   Vec = concept v
@@ -108,6 +103,10 @@ type
     type T = v.x.type
     v.w is T
 
+#[
+## Implementations
+]#
+
 template FNAME(T: untyped; F: string): string =
   astToStr(T) & "_" & F
 
@@ -126,7 +125,7 @@ template FX2(N, T, V: untyped) {.dirty.} =
 
   func `$`*(v: V): string {.inline.} = "(" & $v.x & ", " & $v.y & ")" 
 
-  func `N`*(x, y: T): V    {.solh, importc: FNAME(N, "set").}
+  func `N`*(x, y: T): V {.solh, importc: FNAME(N, "set").}
 
   func rot*(v: V; rad: T): V {.solh, importc: FNAME(N, "rot").}
   func scale*(v: V; f: T): V {.solh, importc: FNAME(N, "scale").}
@@ -155,7 +154,6 @@ template FX2(N, T, V: untyped) {.dirty.} =
   func `/`*(v: V; f: T): V {.solh, importc: FNAME(N, "divf").}
   func `/`*(f: T; v: V): V {.solh, importc: FNAME(N, "fdiv").}
 
-  # TODO: Sanitize manually by setting variables to a/b/v/f.
   template `+=`*(a, b: V)    {.dirty.} = a = a + b
   template `+=`*(v: V; f: T) {.dirty.} = v = v + f
   template `-=`*(a, b: V)    {.dirty.} = a = a - b
@@ -208,8 +206,6 @@ template FX3(N, T, V, Q: untyped) {.dirty.} =
   func `/`*(v: V; f: T): V {.solh, importc: FNAME(N, "divf").}
   func `/`*(f: T; v: V): V {.solh, importc: FNAME(N, "fdiv").}
 
-  # TODO: Sanitize manually by setting variables to a/b/v/f.
-  # TODO: Consider proper procs with term rewriting as an optimization?
   template `+=`*(a, b: V)    {.dirty.} = a = a + b
   template `+=`*(v: V; f: T) {.dirty.} = v = v + f
   template `-=`*(a, b: V)    {.dirty.} = a = a - b
@@ -258,8 +254,6 @@ template FX4(N, T, V: untyped) {.dirty.} =
   func `/`*(v: V; f: T): V {.solh, importc: FNAME(N, "divf").}
   func `/`*(f: T; v: V): V {.solh, importc: FNAME(N, "fdiv").}
 
-  # TODO: Sanitize manually by setting variables to a/b/v/f.
-  # TODO: Consider proper procs with term rewriting as an optimization?
   template `+=`*(a, b: V)    {.dirty.} = a = a + b
   template `+=`*(v: V; f: T) {.dirty.} = v = v + f
   template `-=`*(a, b: V)    {.dirty.} = a = a - b
@@ -455,6 +449,10 @@ template UX4(N, T, V: untyped) {.dirty.} =
   proc `y=`*(v: var V; f: T) {.inline.} = {.emit: ["y(", v, "[0]) = ", f, ";"].}
   proc `z=`*(v: var V; f: T) {.inline.} = {.emit: ["z(", v, "[0]) = ", f, ";"].}
   proc `w=`*(v: var V; f: T) {.inline.} = {.emit: ["w(", v, "[0]) = ", f, ";"].}
+
+  func `$`*(v: V): string {.inline.} = "(" & $v.x & "," & $v.y & ", " & $v.z & ", " & $v.w & ")"
+
+  func `N`*(x, y, z, w: T): V {.solh, importc: FNAME(N, "set").}
 
   func `+`*(a, b: V): V    {.solh, importc: FNAME(N, "add").}
   func `+`*(v: V; f: T): V {.solh, importc: FNAME(N, "addf").}

@@ -45,7 +45,7 @@ T T##_abs(T f) {                              \
 }                                             \
 \
 _sol_ \
-T T##_neg(T f) {                               \
+T T##_abs_neg(T f) {                           \
   U* u = ((U*) &f);                            \
   *u |= (sizeof(T) == 8) ? ~0x7fffffffffffffff \
       : ~0x7fffffff;                           \
@@ -57,7 +57,7 @@ T T##_neg_if(T f, u64 cond) {                         \
   if (cond)                                           \
     cond |= (sizeof(T) == 8) ? ~0ull : ~0u;           \
   U* u = ((U*) &f);                                   \
-  *u |= (sizeof(T) == 8) ? cond & ~0x7fffffffffffffff \
+  *u ^= (sizeof(T) == 8) ? cond & ~0x7fffffffffffffff \
       : cond & ~0x7fffffff;                           \
   return f;                                           \
 }                                                     \
