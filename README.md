@@ -95,8 +95,8 @@ be clean with naming here.
 
 | Name                      | Description                                            |
 | ------------------------- | ------------------------------------------------------ |
-| TxW_set(...)              | Takes `W` arguments of type `T` to construct a vector. |
-| TxW_setf(T f)             | Fill all `W` lanes with `f` to construct a vector.     |
+| TxW TxW_set(...)          | Takes `W` arguments of type `T` to construct a vector. |
+| TxW TxW_setf(T f)         | Fill all `W` lanes with `f` to construct a vector.     |
 | TxW TxW_add(TxW a, TxW b) | Does a lane-wise addition of `a` and `b`.              |
 | TxW TxW_addf(TxW v, T f)  | Shorthand for `TxW_add(v, TxW_setf(f)`.                |
 | TxW TxW_sub(TxW a, TxW b) | Subtract each lane of `b` from the same lane of `a`.   |
@@ -112,4 +112,4 @@ The nim names are a bit different:
 
 - `TxW_set` is now written just `TxW`, where `T` is named as if it were in C. `f32x2_set` becomes `f32x2`, for instance.
 - `TxW_setf` is not available in Nim.
-- `TxW_add`, `TxW_addf`, `TxW_sub`, `TxW_subf`, `TxW_fsub`, `TxW_mul`, `TxW_mulf`, `TxW_div`, `TxW_divf`, and `TxW_fdiv` are all just their symbolic operators now. `f32x2_add(a, b)` becomes `a + b`, for instance.
+- `TxW_add`, `TxW_addf`, `TxW_sub`, `TxW_subf`, `TxW_fsub`, `TxW_mul`, `TxW_mulf`, `TxW_div`, `TxW_divf`, and `TxW_fdiv` are all just their symbolic operators now. `f32x2_add(a, b)` becomes `a + b`, for instance. As operators, `mulf` and `addf` may also be called "backwards" now, like `2 * v`.
