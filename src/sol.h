@@ -34,6 +34,10 @@
   #undef SOL_GNU
 #endif
 
+#ifndef __has_builtin
+  #define __has_builtin(x) 0
+#endif
+
 /*
 ** Scalar Types
 */
@@ -286,9 +290,6 @@ FX3(f32, f32x3)
 FX3(f64, f64x3)
 
 #undef FX3
-
-static inline f32x3 f32x3_swiz(f32x3 v, u32x3 m);
-static inline f64x3 f64x3_swiz(f64x3 v, u64x3 m);
 
 #define FX4(T, V) \
 \

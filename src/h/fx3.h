@@ -172,44 +172,35 @@ V V##_fms(V a, V b, V c) {              \
   const V out = FX3_OP2(a, *, b, -, c); \
   return out;                           \
 }                                       \
-\
-_sol_ \
-V V##_yzx(V v) {                        \
-  return V##_swiz(v, M##_set(1, 2, 0)); \
-}
 
 FX3(f32, f32x3, u32x3, f32x4)
 FX3(f64, f64x3, u64x3, f64x4)
+
+_sol_
+f32x3 f32x3_yzx(f32x3 v) {
+  #if __has_builtin(__builtin_shufflevector)
+    return __builtin_shufflevector(v, v, 1, 2, 0, 0);
+  #elif __has_builtin(__builtin_shuffle)
+    return __builtin_shuffle(v, (u32x4) {1, 2, 0, 0});
+  #else
+    return (f32x3) {y(v), z(v), x(v), x(v)};
+  #endif
+}
+
+_sol_
+f64x3 f64x3_yzx(f64x3 v) {
+  #if __has_builtin(__builtin_shufflevector)
+    return __builtin_shufflevector(v, v, 1, 2, 0, 0);
+  #elif __has_builtin(__builtin_shuffle)
+    return __builtin_shuffle(v, (u64x4) {1, 2, 0, 0});
+  #else
+    return (f64x3) {y(v), z(v), x(v), x(v)};
+  #endif
+}
 
 #undef FX3
 #undef FX3_OPF
 #undef FX3_FOP
 #undef FX3_OP2
-
-_sol_
-f32x3 f32x3_swiz(f32x3 v, u32x3 m) {
-  #if defined(SOL_GNU) && defined(__AVX__)
-    return (f32x4) _mm_blendv_ps(v, v, (f32x4) m);
-  #else
-    f32x3 out;
-    x(out) = vec(v)[x(m)];
-    y(out) = vec(v)[y(m)];
-    z(out) = vec(v)[z(m)];
-    return out;
-  #endif
-}
-
-_sol_
-f64x3 f64x3_swiz(f64x3 v, u64x3 m) {
-  #if defined(SOL_GNU) && defined(__AVX__)  
-    return (f64x4) _mm256_blendv_pd(v, v, (f64x4) m);
-  #else
-    f64x3 out;
-    x(out) = vec(v)[x(m)];
-    y(out) = vec(v)[y(m)];
-    z(out) = vec(v)[z(m)];
-    return out;
-  #endif
-}
 
 #endif /* SOL_FX3_H */

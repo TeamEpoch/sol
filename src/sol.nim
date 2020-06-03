@@ -188,7 +188,7 @@ template FX3(N, T, V, Q: untyped) {.dirty.} =
   proc `y=`*(v: var V; f: T) {.inline.} = {.emit: ["y(", v, "[0]) = ", f, ";"].}
   proc `z=`*(v: var V; f: T) {.inline.} = {.emit: ["z(", v, "[0]) = ", f, ";"].}
 
-  func `$`*(v: V): string {.inline.} = "(" & $v.x & ", " & $v.y & "," & $v.z & ")"
+  func `$`*(v: V): string {.inline.} = "(" & $v.x & ", " & $v.y & ", " & $v.z & ")"
 
   func `N`*(x, y, z: T): V {.solh, importc: FNAME(N, "set").}
 
