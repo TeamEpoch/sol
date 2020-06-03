@@ -1,6 +1,2 @@
 lib/* linguist-vendored
-*.t linguist-language=Terra
 *.h linguist-language=C
-*.nim linguist-language=Nim
-*.rs linguist-language=Rust
-*.jift linguist-language=Jift
