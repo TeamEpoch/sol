@@ -1,5 +1,5 @@
 # Sol
-## 0.3.0
+## 0.4.0
 
 Sol exposes fully portable vector operations for C and Nim that use SIMD when
 possible, but use scalar operations otherwise.
